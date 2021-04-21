@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "require": [
+    "outdir",
+    "modules"
+  ],
+  "properties": {
+    "outdir": {
+      "type": "string"
+    },
+    "fileNamingStyle": {
+      "type": "string"
+    },
+    "modules": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "url": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

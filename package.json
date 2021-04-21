@@ -1,0 +1,98 @@
+{
+  "name": "keq-cli",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "lib/index.d.ts",
+  "bin": {
+    "keq-cli": "lib/index.js"
+  },
+  "description": "Tansform Swagger 3.0 to the function that send request by keq",
+  "scripts": {
+    "test": "ava",
+    "test:debug": "ava --verbose",
+    "test:update": "ava -u",
+    "report": "nyc --reporter=html --reporter=text-summary --skip-full ava",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "ci": "git-cz",
+    "ca": "git add -A && git-cz -av",
+    "release": "standard-version --no-verify",
+    "release:alpha": "standard-version --prerelease alpha",
+    "release:first": "standard-version --first-release",
+    "prepublishOnly": "npm test && npm run build && pinst --disable",
+    "postpublish": "pinst --enable && git push",
+    "clean": "rm -rf ./lib/*",
+    "prebuild": "npm run clean",
+    "build:es": "ttsc -p build/tsconfig.es.json && npm run copyfile:es",
+    "build:lib": "ttsc -p build/tsconfig.lib.json && npm run copyfile:lib",
+    "build": "npm run build:lib && npm run build:es",
+    "watch": "NODE_ENV=development ttsc -p build/tsconfig.lib.json -w",
+    "copyfile:es:js": "copyfiles -e \"@(build|es|lib)/**/*.js\" **/*.js es",
+    "copyfile:es:dts": "copyfiles -e \"@(build|es|lib)/**/*.d.ts\" **/*.d.ts es",
+    "copyfile:lib:js": "copyfiles -e \"@(build|es|lib)/**/*.js\" **/*.js lib",
+    "copyfile:lib:dts": "copyfiles -e \"@(build|es|lib)/**/*.d.ts\" **/*.d.ts lib",
+    "postinstall": "is-ci || husky install",
+    "copyfile:es": "copyfiles -e \"@(build|es|lib|node_modules|tests|doc)/**/*.!(ts)\" -e \"@(README.md|CHANGELOG.md|ava.config.js|backers.md)\" \"**/*.!(ts)\" es",
+    "copyfile:lib": "copyfiles -e \"@(build|es|lib|node_modules|tests|doc)/**/*.!(ts)\" -e \"@(README.md|CHANGELOG.md|ava.config.js|backers.md)\" \"**/*.!(ts)\" lib"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^12.0.0",
+    "@commitlint/config-conventional": "^12.0.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.15.2",
+    "@typescript-eslint/parser": "^4.15.2",
+    "ava": "^3.10.1",
+    "commitizen": "^4.2.3",
+    "copyfiles": "^2.4.1",
+    "coveralls": "^3.1.0",
+    "cz-conventional-changelog": "^3.2.0",
+    "eslint": "^7.20.0",
+    "husky": "^5.1.1",
+    "is-ci": "^2.0.0",
+    "keq": "^1.2.1",
+    "lint-staged": "^10.5.4",
+    "mili": "^3.9.3",
+    "nyc": "^15.1.0",
+    "pinst": "^2.1.6",
+    "sinon": "^9.2.4",
+    "standard-version": "^9.1.1",
+    "ts-node": "^9.1.1",
+    "ttypescript": "^1.5.12",
+    "typescript": "^4.2.2",
+    "typescript-transform-paths": "^2.2.3"
+  },
+  "dependencies": {
+    "@apidevtools/swagger-parser": "^10.0.2",
+    "@types/fs-extra": "^9.0.11",
+    "@types/mustache": "^4.1.1",
+    "@types/node": "^14.14.31",
+    "ajv": "^6.12.6",
+    "change-case": "^4.1.2",
+    "commander": "^7.2.0",
+    "cosmiconfig": "^7.0.0",
+    "js-yaml": "^3.14.1",
+    "mustache": "^4.2.0",
+    "openapi-types": "^8.0.0",
+    "semver": "^7.3.5",
+    "ts-custom-error": "^3.2.0"
+  },
+  "version": "1.0.0",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keq-request/keq-cli.git"
+  },
+  "keywords": [
+    "keq",
+    "cli",
+    "command"
+  ],
+  "author": "Val.istar.Guo <val.istar.guo@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/keq-request/keq-cli/issues"
+  },
+  "homepage": "https://github.com/keq-request/keq-cli#readme"
+}

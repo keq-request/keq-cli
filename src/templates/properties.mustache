@@ -1,0 +1,16 @@
+  {{#additionalPropertiesType}}
+      [key: string]: {{{additionalPropertiesType}}}{{#hasProperties}} | any{{/hasProperties}}
+
+  {{/additionalPropertiesType}}
+  {{#properties}}
+
+    /**
+    * {{{description}}}
+    * @type {{=<% %>=}}{<%jsDocDataType%>}<%={{ }}=%>
+    * @memberof {{classname}}
+    {{#deprecated}}
+    * @deprecated
+    {{/deprecated}}
+    */
+    {{key}}{{^required}}?{{/required}}: {{>t_model}}
+  {{/properties}}

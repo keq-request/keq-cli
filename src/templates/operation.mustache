@@ -1,0 +1,75 @@
+import { request } from 'keq'
+{{#dependencies}}
+import {{>t_model}} from './components/schema/{{refFilename}}'
+{{/dependencies}}
+
+
+
+{{#responses}}
+{{#description}}
+/**
+ * {{{.}}}
+ */
+{{/description}}
+{{#content}}
+{{>t_schema_component}}
+{{/content}}
+{{/responses}}
+
+/**
+ * {{&description}}
+ {{#summary}}
+ * @summary {{&summary}}
+ {{/summary}}
+ {{#parameters}}
+ * @param {{=<% %>=}}{<%model.jsDocDataType%>}<%={{ }}=%> {{^required}}[{{/required}}{{{name}}}{{^required}}]{{/required}} {{description}}
+ {{/parameters}}
+ * @throws {RequiredError}
+ */
+export default async function {{nickname}}(
+  arg: {
+{{#parameters}}
+    {{{name}}}{{^required}}?{{/required}}: {{#model}}{{>t_model}}{{/model}},
+{{/parameters}}
+  }
+): Promise<{{#responses}}Response_{{code}}{{^last}} | {{/last}}{{/responses}}> {
+
+{{!必填参数校验}}
+{{#parameters}}
+{{#required}}
+  // verify required parameter '{{name}}' is not null or undefined
+  if (arg['{{name}}'] === null || arg['{{name}}'] === undefined) {
+      throw new Error(`Required parameter {{name}} was null or undefined when calling {{nickname}}.`);
+  }
+{{/required}}
+{{/parameters}}
+
+  const req = request.{{method}}<{{#responses}}Response_{{code}}{{^last}} | {{/last}}{{/responses}}>("{{{pathname}}}")
+    .option('module', "{{{moduleName}}}")
+
+{{#parameters}}
+{{#isHeader}}
+  {{^required}}if ('{{name}}' in arg) {{/required}}req.header({{name}}, arg['{{name}}'])
+{{/isHeader}}
+{{/parameters}}
+
+{{#parameters}}
+{{#isQuery}}
+  {{^required}}if ('{{name}}' in arg) {{/required}}req.query('{{name}}', String(arg['{{name}}']))
+{{/isQuery}}
+{{/parameters}}
+
+{{#parameters}}
+{{#isParam}}
+  {{^required}}if ('{{name}}' in arg) {{/required}}req.params('{{name}}', String(arg['{{name}}']))
+{{/isParam}}
+{{/parameters}}
+
+{{#parameters}}
+{{#isBody}}
+  {{^required}}if ('{{name}}' in arg) {{/required}}req.send({ '{{name}}': arg['{{name}}'] })
+{{/isBody}}
+{{/parameters}}
+
+  return req
+}
