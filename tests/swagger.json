@@ -6,17 +6,6 @@
     "version": "0.0.1",
     "contact": {}
   },
-  "tags": [
-    {
-      "name": "reporter",
-      "description": "sotest 报告服务"
-    }
-  ],
-  "servers": [
-    {
-      "url": "http://172.31.113.24:8080"
-    }
-  ],
   "components": {
     "schemas": {
       "User": {
