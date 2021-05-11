@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.3](https://www.github.com/keq-request/keq-cli/compare/v1.0.2...v1.0.3) (2021-05-11)
+
+
+### Bug Fixes
+
+* cannot find ramda ([4270dca](https://www.github.com/keq-request/keq-cli/commit/4270dca65d5a5ce2c8cc08368692199dc9f13227))
+
 ### [1.0.2](https://www.github.com/keq-request/keq-cli/compare/v1.0.1...v1.0.2) (2021-05-11)
 
 
