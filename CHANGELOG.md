@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://www.github.com/keq-request/keq-cli/compare/v1.0.3...v1.1.0) (2021-05-11)
+
+
+### Features
+
+* can get swagger file from url ([3f64462](https://www.github.com/keq-request/keq-cli/commit/3f64462c0dc2ed2c845c812d6a32e32135e1836b)), closes [#4](https://www.github.com/keq-request/keq-cli/issues/4)
+
 ### [1.0.3](https://www.github.com/keq-request/keq-cli/compare/v1.0.2...v1.0.3) (2021-05-11)
 
 
