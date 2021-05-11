@@ -3,9 +3,7 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
-  "bin": {
-    "keq-cli": "lib/index.js"
-  },
+  "bin": "lib/src/cli.js",
   "description": "Tansform Swagger 3.0 to the function that send request by keq",
   "scripts": {
     "test": "ava",
@@ -40,6 +38,7 @@
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
+    "ajv": "^8.3.0",
     "ava": "^3.10.1",
     "commitizen": "^4.2.3",
     "copyfiles": "^2.4.1",
