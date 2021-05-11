@@ -72,6 +72,7 @@
     "js-yaml": "^3.14.1",
     "mustache": "^4.2.0",
     "openapi-types": "^8.0.0",
+    "ramda": "^0.27.1",
     "semver": "^7.3.5",
     "ts-custom-error": "^3.2.0"
   },
