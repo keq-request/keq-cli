@@ -11,7 +11,7 @@ import * as configSchema from './schema/config.json'
 
 const program = new Command()
 const explore = cosmiconfig('keq')
-const ajv = new Ajv()
+const ajv = new Ajv({ useDefaults: true })
 const validate = ajv.compile(configSchema)
 
 
@@ -41,6 +41,7 @@ program
   .requiredOption('-o, --outdir <outdir>', 'The output directory')
   .requiredOption('-m --module-name <module_name>', 'The module name')
   .addOption(new Option('--file-naming-style <fileNamingStyle>').choices(['camelCase' , 'capitalCase' , 'constantCase' , 'dotCase' , 'headerCase' , 'noCase' , 'paramCase' , 'pascalCase' , 'pathCase' , 'sentenceCase' , 'snakeCase']).default('snakeCase'))
+  .option('--no-strict', 'disable strict mode', true)
   .action(async(filepath, options) => {
     await compile(options.moduleName, filepath, options)
   })

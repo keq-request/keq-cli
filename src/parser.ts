@@ -20,10 +20,12 @@ export class Parser {
   operations: Operation[] = []
   schemas: Schema[] = []
   fileNamingStyle: NamingStyle
+  strict: boolean
 
 
   constructor(document: OpenAPIV3.Document, options: Required<Options>) {
     this.document = document
+    this.strict = options.strict
 
     this.getRefName = R.memoizeWith(R.prop('$ref'), this.getRefName)
     this.getRef = R.memoizeWith(R.prop('$ref'), this.getRef)
@@ -47,10 +49,18 @@ export class Parser {
     this.schemas.push(schema)
   }
 
+  private hasRef(ref: OpenAPIV3.ReferenceObject): boolean {
+    const refs = ref.$ref.split('/')
+    const name = R.last(refs)
+    return Boolean(name)
+  }
+
   private getRefName(ref: OpenAPIV3.ReferenceObject): string {
     const refs = ref.$ref.split('/')
     const name = R.last(refs)
     if (!name) throw new NotFoundException(`Cannot find $ref=${ref.$ref} in the swagger document`)
+
+
     return name
   }
 
@@ -97,6 +107,8 @@ export class Parser {
   }
 
   private createRefModel(ref: OpenAPIV3.ReferenceObject): Model {
+    if (!this.hasRef(ref)) return this.createAnyModel()
+
     return {
       isAny: false,
       isInt: false,

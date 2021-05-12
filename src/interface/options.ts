@@ -6,6 +6,7 @@ export interface Options {
    * @default 'KEQ_ENV'
    */
   envName?: string
+  strict: boolean
   fileNamingStyle?: NamingStyle
   services: {
     env: string

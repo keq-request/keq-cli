@@ -6,6 +6,7 @@ import * as swagger from './swagger.json'
 test('Parser', async t => {
   const parser = new Parser(swagger as any, {
     outdir: './output',
+    strict: true,
     envName: 'KEQ_ENV',
     fileNamingStyle: 'snakeCase',
     services: [],
