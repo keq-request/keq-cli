@@ -3,7 +3,7 @@ import * as yaml from 'js-yaml'
 import * as path from 'path'
 import { genModuleCode } from './gencode'
 import { Options } from './interface'
-import validUrl from 'valid-url'
+import * as validUrl from 'valid-url'
 import { request } from 'keq'
 
 
