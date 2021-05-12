@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.2](https://www.github.com/keq-request/keq-cli/compare/v1.1.1...v1.1.2) (2021-05-12)
+
+
+### Bug Fixes
+
+* cannot find ajv ([0e4fd9c](https://www.github.com/keq-request/keq-cli/commit/0e4fd9cdae9f74d996effb423aac33c370458f37))
+
 ### [1.1.1](https://www.github.com/keq-request/keq-cli/compare/v1.1.0...v1.1.1) (2021-05-12)
 
 
