@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://www.github.com/keq-request/keq-cli/compare/v1.1.0...v1.1.1) (2021-05-12)
+
+
+### Bug Fixes
+
+* keq should be dependencies ([b862714](https://www.github.com/keq-request/keq-cli/commit/b8627141afa95703614392cb53afde715942fbaa))
+* valid-url is undefined ([bdacad6](https://www.github.com/keq-request/keq-cli/commit/bdacad6f952701e08217a1d2a0ea5631b5f865a4))
+
 ## [1.1.0](https://www.github.com/keq-request/keq-cli/compare/v1.0.3...v1.1.0) (2021-05-11)
 
 
