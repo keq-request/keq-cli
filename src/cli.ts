@@ -5,7 +5,7 @@ import { build } from './build'
 import { compile } from './compile'
 import { cosmiconfig } from 'cosmiconfig'
 import { CosmiconfigResult } from 'cosmiconfig/dist/types'
-import * as Ajv from 'ajv'
+import Ajv from 'ajv'
 import * as configSchema from './schema/config.json'
 
 
