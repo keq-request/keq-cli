@@ -42,7 +42,16 @@ interface File {
 
 export async function genModuleCode(moduleName: string, json: string | OpenAPIV3.Document, options: Options): Promise<void> {
   const swaggerParser = new SwaggerParser()
-  await swaggerParser.bundle(json)
+  let api: OpenAPIV3.Document
+  try {
+    await swaggerParser.bundle(json)
+
+    if (!('openapi' in swaggerParser.api && semver.satisfies(swaggerParser.api.openapi, '^3'))) throw new Error('Only supports OpenAPI3')
+    api = swaggerParser.api
+  } catch (e) {
+    console.warn('Swagger file does not conform to the swagger@3.0 standard specifications or have grammatical errors, which may cause unexpected errors')
+    api = json as any
+  }
 
   const fileNamingStyle: NamingStyle = options.fileNamingStyle || 'snakeCase'
   const envName = options.envName || 'KEQ_ENV'
@@ -53,8 +62,7 @@ export async function genModuleCode(moduleName: string, json: string | OpenAPIV3
   }
 
 
-  if (!('openapi' in swaggerParser.api && semver.satisfies(swaggerParser.api.openapi, '^3'))) throw new Error('Only supports OpenAPI3')
-  const openapiParser = new Parser(swaggerParser.api, {
+  const openapiParser = new Parser(api, {
     ...options,
     fileNamingStyle,
     envName,

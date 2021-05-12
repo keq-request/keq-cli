@@ -20,10 +20,12 @@ export class Parser {
   operations: Operation[] = []
   schemas: Schema[] = []
   fileNamingStyle: NamingStyle
+  strict: boolean
 
 
   constructor(document: OpenAPIV3.Document, options: Required<Options>) {
     this.document = document
+    this.strict = options.strict
 
     this.getRefName = R.memoizeWith(R.prop('$ref'), this.getRefName)
     this.getRef = R.memoizeWith(R.prop('$ref'), this.getRef)
@@ -47,10 +49,18 @@ export class Parser {
     this.schemas.push(schema)
   }
 
+  private hasRef(ref: OpenAPIV3.ReferenceObject): boolean {
+    const refs = ref.$ref.split('/')
+    const name = R.last(refs)
+    return Boolean(name)
+  }
+
   private getRefName(ref: OpenAPIV3.ReferenceObject): string {
     const refs = ref.$ref.split('/')
     const name = R.last(refs)
     if (!name) throw new NotFoundException(`Cannot find $ref=${ref.$ref} in the swagger document`)
+
+
     return name
   }
 
@@ -97,6 +107,8 @@ export class Parser {
   }
 
   private createRefModel(ref: OpenAPIV3.ReferenceObject): Model {
+    if (!this.hasRef(ref)) return this.createAnyModel()
+
     return {
       isAny: false,
       isInt: false,
@@ -153,6 +165,7 @@ export class Parser {
   }
 
   private calcJsDocType(schemaOrRef: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject): string {
+    if ('$ref' in schemaOrRef && !this.hasRef(schemaOrRef) && !this.strict) return 'any'
     const schema = '$ref' in schemaOrRef ? this.getRef<OpenAPIV3.SchemaObject>(schemaOrRef) : schemaOrRef
 
     if (schema.type === 'array' && schema.items) {
@@ -393,6 +406,10 @@ export class Parser {
     }
 
     for (const parameter of parameters) {
+      if ('$ref' in parameter && !this.hasRef(parameter) && !this.strict) {
+        continue
+      }
+
       const result = this.parseParameter(parameter)
       operation.parameters.push(result)
       if (result.model) operation.dependencies.push(...result.model.dependencies)

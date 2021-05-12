@@ -8,6 +8,10 @@
     "outdir": {
       "type": "string"
     },
+    "strict": {
+      "type": "boolean",
+      "default": true
+    },
     "fileNamingStyle": {
       "type": "string"
     },

@@ -6,6 +6,7 @@ import { genExportCode } from './gencode'
 interface Config {
   outdir: string
   fileNamingStyle?: NamingStyle
+  strict: boolean
   modules: {
     [moduleName: string]: string
   }
@@ -20,6 +21,7 @@ export async function build(config: Config): Promise<void> {
   const promises = Object.keys(config.modules).map(async moduleName => {
     const options: Options = {
       outdir: config.outdir,
+      strict: config.strict,
       fileNamingStyle: config.fileNamingStyle || 'snakeCase',
       services: Object.keys(config.url).map(env => ({ env, url: config.url[env][moduleName] })),
     }
