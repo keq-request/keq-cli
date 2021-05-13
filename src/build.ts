@@ -19,11 +19,12 @@ interface Config {
 
 export async function build(config: Config): Promise<void> {
   const promises = Object.keys(config.modules).map(async moduleName => {
+    const services = config.url ? Object.keys(config.url).map(env => ({ env, url: config.url[env][moduleName] })) : []
     const options: Options = {
       outdir: config.outdir,
       strict: config.strict,
       fileNamingStyle: config.fileNamingStyle || 'snakeCase',
-      services: Object.keys(config.url).map(env => ({ env, url: config.url[env][moduleName] })),
+      services,
     }
     await compile(moduleName, config.modules[moduleName], options)
   })

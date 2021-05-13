@@ -23,11 +23,8 @@
     "build:es": "ttsc -p build/tsconfig.es.json && npm run copyfile:es",
     "build:lib": "ttsc -p build/tsconfig.lib.json && npm run copyfile:lib",
     "build": "npm run build:lib && npm run build:es",
+    "prewatch": "npm run copyfile:lib",
     "watch": "NODE_ENV=development ttsc -p build/tsconfig.lib.json -w",
-    "copyfile:es:js": "copyfiles -e \"@(build|es|lib)/**/*.js\" **/*.js es",
-    "copyfile:es:dts": "copyfiles -e \"@(build|es|lib)/**/*.d.ts\" **/*.d.ts es",
-    "copyfile:lib:js": "copyfiles -e \"@(build|es|lib)/**/*.js\" **/*.js lib",
-    "copyfile:lib:dts": "copyfiles -e \"@(build|es|lib)/**/*.d.ts\" **/*.d.ts lib",
     "postinstall": "is-ci || husky install",
     "copyfile:es": "copyfiles -e \"@(build|es|lib|node_modules|tests|doc)/**/*.!(ts)\" -e \"@(README.md|CHANGELOG.md|ava.config.js|backers.md)\" \"**/*.!(ts)\" es",
     "copyfile:lib": "copyfiles -e \"@(build|es|lib|node_modules|tests|doc)/**/*.!(ts)\" -e \"@(README.md|CHANGELOG.md|ava.config.js|backers.md)\" \"**/*.!(ts)\" lib"
