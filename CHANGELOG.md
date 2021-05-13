@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://www.github.com/keq-request/keq-cli/compare/v1.2.1...v1.3.0) (2021-05-13)
+
+
+### Features
+
+* add CodeQL analysis ([138d28c](https://www.github.com/keq-request/keq-cli/commit/138d28cf0b2b794819c4ad402ab0d31e2aa7b4d2))
+
 ### [1.2.1](https://www.github.com/keq-request/keq-cli/compare/v1.2.0...v1.2.1) (2021-05-13)
 
 
