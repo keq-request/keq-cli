@@ -31,7 +31,7 @@ program
     }
 
     const valid = validate(result.config)
-    if (!valid) console.error(ajv.errorsText(validate.errors))
+    if (!valid) throw new Error(`Invalid Config: ${ajv.errorsText(validate.errors)}`)
     await build(result.config)
   })
 
