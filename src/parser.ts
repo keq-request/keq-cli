@@ -29,6 +29,7 @@ export class Parser {
 
     this.getRefName = R.memoizeWith(R.prop('$ref'), this.getRefName)
     this.getRef = R.memoizeWith(R.prop('$ref'), this.getRef)
+    this.hasRef = R.memoizeWith(R.prop('$ref'), this.hasRef)
 
     this.fileNamingStyle = options.fileNamingStyle
   }
@@ -107,7 +108,7 @@ export class Parser {
   }
 
   private createRefModel(ref: OpenAPIV3.ReferenceObject): Model {
-    if (!this.hasRef(ref)) return this.createAnyModel()
+    if (!this.hasRef(ref) && !this.strict) return this.createAnyModel()
 
     return {
       isAny: false,
@@ -228,7 +229,7 @@ export class Parser {
       for (const key in schema.properties) {
         const submodel = this.parseSchema(schema.properties[key])
 
-        if (submodel.isRef) model.dependencies.push(model)
+        if (submodel.isRef) model.dependencies.push(submodel)
         model.dependencies.push(...submodel.dependencies)
 
         model.properties.push({
@@ -383,8 +384,6 @@ export class Parser {
     }
 
     if (schema.requestBody) {
-      operation.dependencies.push(...operation.request.model.dependencies)
-
       const requestBody = '$ref' in schema.requestBody ? this.getRef<OpenAPIV3.RequestBodyObject>(schema.requestBody) : schema.requestBody
 
       for (const contentType in requestBody.content) {
@@ -412,7 +411,10 @@ export class Parser {
 
       const result = this.parseParameter(parameter)
       operation.parameters.push(result)
-      if (result.model) operation.dependencies.push(...result.model.dependencies)
+      if (result.model) {
+        if (result.model.isRef) operation.dependencies.push(result.model)
+        operation.dependencies.push(...result.model.dependencies)
+      }
     }
 
     operation.parameters = R.uniqBy(parameter => parameter.name, operation.parameters)
