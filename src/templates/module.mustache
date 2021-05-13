@@ -17,7 +17,7 @@ function setUrl(): Middleware {
     }
     {{/services}}
 
-    uri = uri.replace(/\/+$/, '') + '/' + ctx.url.href.replace(/^\/+/, '')
+    uri = `${uri.replace(/\/+$/, '')}/${ctx.url.href.replace(/^\/+/, '')}`
 
     ctx.url = {
       ...url.parse(uri, true),
