@@ -7,6 +7,7 @@ import * as semver from 'semver'
 import * as changeCase from 'change-case'
 import { NamingStyle, Options } from './interface/options'
 import { OpenAPIV3 } from 'openapi-types'
+import * as chalk from 'chalk'
 
 
 function readTemplate(filename: string, fold = false): string {
@@ -49,7 +50,7 @@ export async function genModuleCode(moduleName: string, json: string | OpenAPIV3
     if (!('openapi' in swaggerParser.api && semver.satisfies(swaggerParser.api.openapi, '^3'))) throw new Error('Only supports OpenAPI3')
     api = swaggerParser.api
   } catch (e) {
-    console.warn('Swagger file does not conform to the swagger@3.0 standard specifications or have grammatical errors, which may cause unexpected errors')
+    console.warn(chalk.yellow('Swagger file does not conform to the swagger@3.0 standard specifications or have grammatical errors, which may cause unexpected errors'))
     api = json as any
   }
 

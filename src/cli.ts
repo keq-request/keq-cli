@@ -7,6 +7,7 @@ import { cosmiconfig } from 'cosmiconfig'
 import { CosmiconfigResult } from 'cosmiconfig/dist/types'
 import Ajv from 'ajv'
 import * as configSchema from './schema/config.json'
+import * as chalk from 'chalk'
 
 
 const program = new Command()
@@ -31,7 +32,7 @@ program
     }
 
     const valid = validate(result.config)
-    if (!valid) throw new Error(`Invalid Config: ${ajv.errorsText(validate.errors)}`)
+    if (!valid) throw new Error(chalk.red(`Invalid Config: ${ajv.errorsText(validate.errors, { dataVar: 'config' })}`))
     await build(result.config)
   })
 
@@ -46,5 +47,16 @@ program
     await compile(options.moduleName, filepath, options)
   })
 
+async function main(): Promise<void> {
+  program.on('command:*', function(operands) {
+    throw new Error(`Unknown command '${operands[0]}'`)
+  })
 
-program.parseAsync(process.argv)
+  try {
+    await program.parseAsync(process.argv)
+  } catch (e) {
+    console.error(chalk.red(e.message))
+  }
+}
+
+main()
