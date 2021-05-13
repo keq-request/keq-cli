@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://www.github.com/keq-request/keq-cli/compare/v1.1.3...v1.2.0) (2021-05-13)
+
+
+### Features
+
+* add strict mode ([1f0391d](https://www.github.com/keq-request/keq-cli/commit/1f0391dc2ec4f1890339bb951d19cebe9400b9b3))
+* beautify stderr ([7782e38](https://www.github.com/keq-request/keq-cli/commit/7782e381b91f00465f5952d627e18ff3e44bf042))
+
+
+### Bug Fixes
+
+* `$ref` is not imported ([6a202b2](https://www.github.com/keq-request/keq-cli/commit/6a202b2f41dbf491acee9195dc95e7ec3e1048c8))
+* not throw error when config invalid ([83abe3b](https://www.github.com/keq-request/keq-cli/commit/83abe3b9d045ff27a532cc48a6335afcaf6b165e))
+* unknown keyword "require" in ajv@8 ([aba034c](https://www.github.com/keq-request/keq-cli/commit/aba034c8a7d2daa9abd7214e41e3baaecef32d91))
+
 ### [1.1.3](https://www.github.com/keq-request/keq-cli/compare/v1.1.2...v1.1.3) (2021-05-12)
 
 
