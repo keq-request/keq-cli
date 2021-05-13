@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://www.github.com/keq-request/keq-cli/compare/v1.2.0...v1.2.1) (2021-05-13)
+
+
+### Bug Fixes
+
+* url is optional field but throw error when it is not set ([14140a2](https://www.github.com/keq-request/keq-cli/commit/14140a2b9d754d36510c6cef1ffd1c7de0f2ca2b))
+
 ## [1.2.0](https://www.github.com/keq-request/keq-cli/compare/v1.1.3...v1.2.0) (2021-05-13)
 
 
