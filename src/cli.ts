@@ -8,6 +8,7 @@ import { CosmiconfigResult } from 'cosmiconfig/dist/types'
 import Ajv from 'ajv'
 import * as configSchema from './schema/config.json'
 import * as chalk from 'chalk'
+import { watch } from '@/action/watch.action'
 
 
 const program = new Command()
@@ -46,6 +47,15 @@ program
   .action(async(filepath, options) => {
     await compile(options.moduleName, filepath, options)
   })
+
+program
+  .command('watch <filepath>')
+  .description('Watch the swagger file')
+  .requiredOption('-o, --outdir <outdir>', 'The output directory')
+  .requiredOption('-m --module-name <module_name>', 'The module name')
+  .addOption(new Option('--file-naming-style <fileNamingStyle>').choices(['camelCase' , 'capitalCase' , 'constantCase' , 'dotCase' , 'headerCase' , 'noCase' , 'paramCase' , 'pascalCase' , 'pathCase' , 'sentenceCase' , 'snakeCase']).default('snakeCase'))
+  .option('--no-strict', 'disable strict mode', true)
+  .action(watch)
 
 async function main(): Promise<void> {
   program.on('command:*', function(operands) {

@@ -41,7 +41,7 @@ interface File {
 }
 
 
-export async function genModuleCode(moduleName: string, json: string | OpenAPIV3.Document, options: Options): Promise<void> {
+export async function genModuleCode(moduleName: string, json: string | OpenAPIV3.Document, options: Options): Promise<string> {
   const swaggerParser = new SwaggerParser()
   let api: OpenAPIV3.Document
   try {
@@ -123,6 +123,7 @@ export async function genModuleCode(moduleName: string, json: string | OpenAPIV3
     const filepath = path.join(output, `${moduleFile.filename}.ts`)
     fs.ensureFileSync(filepath)
     fs.writeFileSync(filepath, moduleFile.content)
+    return filepath
   }
 }
 
