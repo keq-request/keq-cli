@@ -74,7 +74,7 @@
     "ts-custom-error": "^3.2.0",
     "valid-url": "^1.0.9"
   },
-  "version": "1.2.1",
+  "version": "1.2.2",
   "directories": {
     "lib": "lib",
     "test": "tests"

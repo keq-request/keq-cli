@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.2](https://www.github.com/keq-request/keq-cli/compare/v1.2.1...v1.2.2) (2021-05-14)
+
+
+### Bug Fixes
+
+* unused env variable in module template ([7d3b567](https://www.github.com/keq-request/keq-cli/commit/7d3b56703adf7e7d2c3fb1e6edce926698d4c910))
+
 ### [1.2.1](https://www.github.com/keq-request/keq-cli/compare/v1.2.0...v1.2.1) (2021-05-13)
 
 
