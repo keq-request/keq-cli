@@ -5,12 +5,12 @@
 {{#properties}}
 
   /**
-  * {{{description}}}
-  * @type {{=<% %>=}}{<%jsDocDataType%>}<%={{ }}=%>
-  * @memberof {{classname}}
-  {{#deprecated}}
-  * @deprecated
-  {{/deprecated}}
-  */
+   * {{{description}}}
+   * @type {{=<% %>=}}{<%jsDocDataType%>}<%={{ }}=%>
+   * @memberof {{classname}}
+{{#deprecated}}
+   * @deprecated
+{{/deprecated}}
+   */
   {{key}}{{^required}}?{{/required}}: {{>t_model}}
 {{/properties}}

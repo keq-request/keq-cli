@@ -18,12 +18,12 @@ import {{>t_model}} from './components/schema/{{refFilename}}'
 
 /**
  * {{&description}}
- {{#summary}}
+{{#summary}}
  * @summary {{&summary}}
- {{/summary}}
- {{#parameters}}
+{{/summary}}
+{{#parameters}}
  * @param {{=<% %>=}}{<%model.jsDocDataType%>}<%={{ }}=%> {{^required}}[{{/required}}{{{name}}}{{^required}}]{{/required}} {{description}}
- {{/parameters}}
+{{/parameters}}
  * @throws {RequiredError}
  */
 export default async function {{nickname}}(arg: {
@@ -34,15 +34,15 @@ export default async function {{nickname}}(arg: {
 {{!必填参数校验}}
 {{#parameters}}
 {{#required}}
-  // verify required parameter '{{name}}' is not null or undefined
+  // verify required parameter `{{name}}` is not null or undefined
   if (arg['{{name}}'] === null || arg['{{name}}'] === undefined) {
     throw new Error(`Required parameter {{name}} was null or undefined when calling {{nickname}}.`)
   }
 {{/required}}
 {{/parameters}}
 
-  const req = request.{{method}}<{{#responses}}Response_{{code}}{{^last}} | {{/last}}{{/responses}}>("{{{pathname}}}")
-    .option('module', "{{{moduleName}}}")
+  const req = request.{{method}}<{{#responses}}Response_{{code}}{{^last}} | {{/last}}{{/responses}}>('{{{pathname}}}')
+    .option('module', '{{{moduleName}}}')
 
 {{#parameters}}
 {{#isHeader}}
@@ -64,7 +64,7 @@ export default async function {{nickname}}(arg: {
 
 {{#parameters}}
 {{#isBody}}
-  {{^required}}if ('{{name}}' in arg) {{/required}}req.send({'{{name}}': arg['{{name}}']})
+  {{^required}}if ('{{name}}' in arg) {{/required}}req.send({ '{{name}}': arg['{{name}}'] })
 {{/isBody}}
 {{/parameters}}
 
