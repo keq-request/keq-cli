@@ -8,7 +8,9 @@ function setUrl(): Middleware {
       pathname: ctx.url.href,
     }
 
+    {{#services.length}}
     const env = process.env["{{{envName}}}"] || process.env.NODE_ENV
+    {{/services.length}}
     let uri = '/'
 
     {{#services}}
