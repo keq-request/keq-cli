@@ -8,6 +8,7 @@ export interface Options {
   envName?: string
   strict: boolean
   fileNamingStyle?: NamingStyle
+  plugins: string[]
   services: {
     env: string
     url: string

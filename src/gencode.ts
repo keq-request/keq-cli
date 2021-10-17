@@ -124,6 +124,11 @@ export async function genModuleCode(moduleName: string, json: string | OpenAPIV3
     fs.ensureFileSync(filepath)
     fs.writeFileSync(filepath, moduleFile.content)
   }
+
+  for (const plugin of options.plugins) {
+    const plg = await import(plugin)
+    await plg(output)
+  }
 }
 
 

@@ -8,6 +8,12 @@
     "outdir": {
       "type": "string"
     },
+    "plugins": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "strict": {
       "type": "boolean",
       "default": true

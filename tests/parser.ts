@@ -9,6 +9,7 @@ test('Parser', async t => {
     strict: true,
     envName: 'KEQ_ENV',
     fileNamingStyle: 'snakeCase',
+    plugins: [],
     services: [],
   })
 
