@@ -439,9 +439,13 @@ export class Parser {
 
     for (const classname in document.components.schemas) {
       const schema = document.components.schemas[classname]
+      const model = this.parseSchema(schema)
+      // remove the self dependency
+      model.dependencies = model.dependencies.filter(dep => dep.ref !== classname)
+
       this.addSchema({
         classname,
-        model: this.parseSchema(schema),
+        model,
       })
     }
   }
