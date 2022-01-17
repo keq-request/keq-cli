@@ -47,25 +47,25 @@ export default async function {{nickname}}(arg: {
 
 {{#parameters}}
 {{#isHeader}}
-  {{^required}}if ('{{name}}' in arg) {{/required}}req.header({{name}}, arg['{{name}}'])
+  {{^required}}if ('{{name}}' in arg) {{/required}}void req.header({{name}}, arg['{{name}}'])
 {{/isHeader}}
 {{/parameters}}
 
 {{#parameters}}
 {{#isQuery}}
-  {{^required}}if ('{{name}}' in arg) {{/required}}req.query('{{name}}', String(arg['{{name}}']))
+  {{^required}}if ('{{name}}' in arg) {{/required}}void req.query('{{name}}', String(arg['{{name}}']))
 {{/isQuery}}
 {{/parameters}}
 
 {{#parameters}}
 {{#isParam}}
-  {{^required}}if ('{{name}}' in arg) {{/required}}req.params('{{name}}', String(arg['{{name}}']))
+  {{^required}}if ('{{name}}' in arg) {{/required}}void req.params('{{name}}', String(arg['{{name}}']))
 {{/isParam}}
 {{/parameters}}
 
 {{#parameters}}
 {{#isBody}}
-  {{^required}}if ('{{name}}' in arg) {{/required}}req.send({ '{{name}}': arg['{{name}}'] })
+  {{^required}}if ('{{name}}' in arg) {{/required}}void req.send({ '{{name}}': arg['{{name}}'] })
 {{/isBody}}
 {{/parameters}}
 
