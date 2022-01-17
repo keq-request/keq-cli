@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import * as SwaggerParser from '@apidevtools/swagger-parser'
 import { Parser } from './parser'
 import * as Mustache from 'mustache'
@@ -39,6 +40,7 @@ const templates = {
 interface File {
   filename: string
   content: string
+  exports: string[]
 }
 
 
@@ -78,10 +80,11 @@ export async function genModuleCode(moduleName: string, json: string | OpenAPIV3
     const content = Mustache.render(templates.t_schema_component, {
       ...schemaComponent,
       ...view,
-      exportDefaulted: true,
+      exportDefaulted: false,
     }, templates)
     schemaComponentFiles.push({
       filename: changeCase[fileNamingStyle](schemaComponent.classname),
+      exports: [schemaComponent.classname],
       content,
     })
   }
@@ -89,21 +92,17 @@ export async function genModuleCode(moduleName: string, json: string | OpenAPIV3
 
   const operationFiles: File[] = []
   for (const operation of openapiParser.operations) {
-    const content = Mustache.render(templates.t_operation, {
+    const operationView = {
       ...operation,
       ...view,
-    }, templates)
+    }
+    const content = Mustache.render(templates.t_operation, operationView, templates)
     operationFiles.push({
       filename: changeCase[fileNamingStyle](operation.nickname),
+      exports: [operation.nickname],
       content,
     })
   }
-
-  const moduleFile = {
-    content: Mustache.render(templates.t_module, view, templates),
-    filename: changeCase[fileNamingStyle]('index') ,
-  }
-
 
   const output = path.join(options.outdir, changeCase[fileNamingStyle](moduleName))
 
@@ -120,7 +119,32 @@ export async function genModuleCode(moduleName: string, json: string | OpenAPIV3
   }))
 
 
+  if (schemaComponentFiles.length) {
+    const moduleView = {
+      ...view,
+      files: schemaComponentFiles,
+    }
+    const moduleFile = {
+      content: Mustache.render(templates.t_module, moduleView, templates),
+      filename: changeCase[fileNamingStyle]('index') ,
+    }
+
+    const filepath = path.join(output, 'components', 'schema', `${moduleFile.filename}.ts`)
+    fs.ensureFileSync(filepath)
+    fs.writeFileSync(filepath, moduleFile.content)
+  }
+
   {
+    const moduleView = {
+      ...view,
+      files: operationFiles,
+    }
+
+    const moduleFile = {
+      content: Mustache.render(templates.t_module, moduleView, templates),
+      filename: changeCase[fileNamingStyle]('index') ,
+    }
+
     const filepath = path.join(output, `${moduleFile.filename}.ts`)
     fs.ensureFileSync(filepath)
     fs.writeFileSync(filepath, moduleFile.content)
@@ -142,5 +166,5 @@ export async function genExportCode(modules: string[], options: Pick<Options, 'o
 
 export async function gencode(moduleName: string, filepath: string, options: Options): Promise<void> {
   await genModuleCode(moduleName, filepath, options)
-  await genExportCode([moduleName], { outdir: options.outdir })
+  await genExportCode([moduleName], R.pick(['outdir', 'fileNamingStyle'], options))
 }

@@ -1,35 +1,7 @@
-import { request, mount, Middleware } from 'keq'
-import * as url from 'url'
-
-function setUrl(): Middleware {
-  return async (ctx, next) => {
-    ctx.module = {
-      name: ctx.options.module,
-      pathname: ctx.url.href,
-    }
-
-    {{#services.length}}
-    const env = process.env["{{{envName}}}"] || process.env.NODE_ENV
-    {{/services.length}}
-    let uri = '/'
-
-    {{#services}}
-    if (env === "{{env}}") {
-      uri = "{{{url}}}"
-    }
-    {{/services}}
-
-    uri = `${uri.replace(/\/+$/, '')}/${ctx.url.href.replace(/^\/+/, '')}`
-
-    ctx.url = {
-      ...url.parse(uri, true),
-      params: ctx.url.params,
-    }
-
-    await next()
-  }
-}
-
-
-request
-  .use(mount.module("{{{moduleName}}}"), setUrl())
+{{#files}}
+export {
+{{#exports}}
+  {{{.}}},
+{{/exports}}
+} from "./{{{filename}}}"
+{{/files}}

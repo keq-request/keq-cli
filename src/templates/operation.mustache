@@ -27,7 +27,7 @@ import {{>t_model}} from './components/schema/{{refFilename}}'
 {{/parameters}}
  * @throws {RequiredError}
  */
-export default async function {{nickname}}(arg: {
+export async function {{nickname}}(arg: {
 {{#parameters}}
   {{{name}}}{{^required}}?{{/required}}: {{#model}}{{>t_model}}{{/model}}
 {{/parameters}}
@@ -43,7 +43,10 @@ export default async function {{nickname}}(arg: {
 {{/parameters}}
 
   const req = request.{{method}}<{{#responses}}Response_{{code}}{{^last}} | {{/last}}{{/responses}}>('{{{pathname}}}')
-    .option('module', '{{{moduleName}}}')
+    .option('module', {
+      name: '{{{moduleName}}}',
+      pathname: '{{{pathname}}}'
+    })
 
 {{#parameters}}
 {{#isHeader}}

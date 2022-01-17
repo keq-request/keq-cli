@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import { compile } from './compile'
 import { Options, NamingStyle } from './interface/options'
 import { genExportCode } from './gencode'
@@ -31,5 +32,5 @@ export async function build(config: Config): Promise<void> {
 
   await Promise.all(promises)
 
-  await genExportCode(Object.keys(config.modules), { outdir: config.outdir })
+  await genExportCode(Object.keys(config.modules), R.pick(['outdir', 'fileNamingStyle'], config))
 }
