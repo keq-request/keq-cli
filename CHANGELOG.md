@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://www.github.com/keq-request/keq-cli/compare/v1.2.2...v2.0.0) (2022-01-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* Never export operation/schema as default; No longer support keq-proxy<1.2, keq<1.7.
+
+### Features
+
+* change the import method and auto export all module operations ([1cc5038](https://www.github.com/keq-request/keq-cli/commit/1cc50380f2fb80c7948442134db7d399585ee761))
+
+
+### Bug Fixes
+
+* import the self file ([4110d1d](https://www.github.com/keq-request/keq-cli/commit/4110d1d76bf34c5e9fe191561efb792dafa50c37))
+* incorrect file path import ([53fadc7](https://www.github.com/keq-request/keq-cli/commit/53fadc787f572da3cd9e3c2a131c6908f1df5801))
+* multiline comments do not handle line break ([c6e407a](https://www.github.com/keq-request/keq-cli/commit/c6e407a214cd909970ed64cb424d7263b92d971c))
+
 ### [1.2.2](https://www.github.com/keq-request/keq-cli/compare/v1.2.1...v1.2.2) (2021-05-14)
 
 
