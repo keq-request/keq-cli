@@ -78,6 +78,7 @@ export class Parser {
 
   private createAnyModel(): Model {
     return {
+      descriptions: [],
       isAny: true,
       isInt: false,
       isNumber: false,
@@ -111,6 +112,7 @@ export class Parser {
     if (!this.hasRef(ref) && !this.strict) return this.createAnyModel()
 
     return {
+      descriptions: [],
       isAny: false,
       isInt: false,
       isNumber: false,
@@ -190,7 +192,8 @@ export class Parser {
     const isBasicDataType = Boolean(schema.type && ['string', 'integer', 'number', 'boolean'].includes(schema.type))
 
     const model: Model = {
-      ...R.omit(['properties'], schema),
+      ...R.omit(['properties', 'description'], schema),
+      descriptions: [],
       isAny: false,
       // isString: schema.type === 'string',
       isInt: schema.type === 'integer',
@@ -218,6 +221,10 @@ export class Parser {
       unionTypes: [],
 
       last: false,
+    }
+
+    if (schema.description && typeof schema.description === 'string') {
+      model.descriptions = schema.description.split(/\r?\n/)
     }
 
     if (isBasicDataType) model.basicDataType = this.calcBasicType(schema.type)
@@ -310,6 +317,7 @@ export class Parser {
       dependencies: [],
       last: false,
     }
+    if (schema.description) response.description = schema.description
 
     response.dependencies.push(...response.content.model.dependencies)
     if (response.content.model.isRef) response.dependencies.push(response.content.model)
@@ -356,6 +364,7 @@ export class Parser {
 
     const operation: Operation = {
       ...schema,
+      descriptions: schema.description ? schema.description.split(/[\r?\n]/) : [],
       nickname: schema.operationId || this.calcOperationNickname(pathname, method),
 
       pathname,
@@ -418,6 +427,20 @@ export class Parser {
     }
 
     operation.parameters = R.uniqBy(parameter => parameter.name, operation.parameters)
+
+    // format description
+    for (const parameter of operation.parameters) {
+      if (
+        parameter.schema &&
+        !('$ref' in parameter.schema) &&
+        parameter.schema.description
+      ) {
+        parameter.schema = {
+          ...parameter.schema,
+          description: parameter.schema.description.replace(/\n/g, ' '),
+        }
+      }
+    }
 
     if (schema.responses) {
       for (const code in schema.responses) {

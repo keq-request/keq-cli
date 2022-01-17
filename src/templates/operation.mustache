@@ -4,25 +4,26 @@ import {{>t_model}} from './components/schema/{{refFilename}}'
 {{/dependencies}}
 
 
-
 {{#responses}}
-{{#description}}
+{{#response.description}}
 /**
  * {{{.}}}
  */
-{{/description}}
+{{/response.description}}
 {{#content}}
 {{>t_schema}}
 {{/content}}
 {{/responses}}
 
 /**
- * {{&description}}
+{{#descriptions}}
+ * {{{.}}}
+{{/descriptions}}
 {{#summary}}
  * @summary {{&summary}}
 {{/summary}}
 {{#parameters}}
- * @param {{=<% %>=}}{<%model.jsDocDataType%>}<%={{ }}=%> {{^required}}[{{/required}}{{{name}}}{{^required}}]{{/required}} {{description}}
+ * @param {{=<% %>=}}{<%model.jsDocDataType%>}<%={{ }}=%> {{^required}}[{{/required}}{{{name}}}{{^required}}]{{/required}}{{#schema.description}} {{{.}}}{{/schema.description}}
 {{/parameters}}
  * @throws {RequiredError}
  */
@@ -36,7 +37,7 @@ export default async function {{nickname}}(arg: {
 {{#required}}
   // verify required parameter `{{name}}` is not null or undefined
   if (arg['{{name}}'] === null || arg['{{name}}'] === undefined) {
-    throw new Error(`Required parameter {{name}} was null or undefined when calling {{nickname}}.`)
+    throw new Error('Required parameter {{name}} was null or undefined when calling {{nickname}}.')
   }
 {{/required}}
 {{/parameters}}

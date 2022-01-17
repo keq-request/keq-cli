@@ -1,6 +1,8 @@
 {{#model.isObject}}
 /**
- * {{{model.description}}}
+{{#model.descriptions}}
+ * {{{.}}}
+{{/model.descriptions}}
  * @export
  * @interface {{classname}}
  */
