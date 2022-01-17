@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://www.github.com/keq-request/keq-cli/compare/v2.0.0...v2.0.1) (2022-01-17)
+
+
+### Bug Fixes
+
+* component schmea not find in operation ([6084457](https://www.github.com/keq-request/keq-cli/commit/6084457e921be01ad8fe3bdc14e3d231a1f21fdc))
+
 ## [2.0.0](https://www.github.com/keq-request/keq-cli/compare/v1.2.2...v2.0.0) (2022-01-17)
 
 
