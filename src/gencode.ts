@@ -26,6 +26,7 @@ const templates = {
   t_model_intersection_types: readTemplate('model-intersection-types'),
   t_model_union_types: readTemplate('model-union-types'),
   t_model: readTemplate('model', true),
+  t_schema: readTemplate('schema'),
 
   t_schema_component: readTemplate('schema-component'),
   t_operation: readTemplate('operation'),
