@@ -2,7 +2,10 @@ import { OpenAPIV3 } from 'openapi-types'
 import { Property } from './property'
 
 
-export interface Model extends Omit<OpenAPIV3.BaseSchemaObject, 'properties'> {
+export interface Model extends Omit<OpenAPIV3.BaseSchemaObject, 'properties' | 'description'> {
+  // Handling multi-line text
+  descriptions: string[]
+
   isAny: boolean
   // isString: boolean
   isInt: boolean

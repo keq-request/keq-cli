@@ -5,7 +5,9 @@
 {{#properties}}
 
   /**
-   * {{{description}}}
+{{#descriptions}}
+   * {{{.}}}
+{{/descriptions}}
    * @type {{=<% %>=}}{<%jsDocDataType%>}<%={{ }}=%>
    * @memberof {{classname}}
 {{#deprecated}}

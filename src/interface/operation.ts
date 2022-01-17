@@ -25,7 +25,8 @@ export interface OperationResponse {
   last: boolean
 }
 
-export interface Operation extends Omit<OpenAPIV3.OperationObject, 'responses'> {
+export interface Operation extends Omit<OpenAPIV3.OperationObject, 'responses' | 'description'> {
+  descriptions: string[]
   nickname: string
   pathname: string
   method: string
