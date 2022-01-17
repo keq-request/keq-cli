@@ -55,7 +55,7 @@ async function main(): Promise<void> {
   try {
     await program.parseAsync(process.argv)
   } catch (e) {
-    console.error(chalk.red(e.message))
+    console.error(chalk.red(e instanceof Error ? e.message : String(e)))
   }
 }
 
