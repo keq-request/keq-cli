@@ -27,7 +27,7 @@ import { {{>t_model}} } from './components/schema/{{refFilename}}'
 {{/parameters}}
  * @throws {RequiredError}
  */
-export async function {{nickname}}(arg: {
+export async function {{nickname}}(arg{{^parameters.length}}?{{/parameters.length}}: {
 {{#parameters}}
   {{{name}}}{{^required}}?{{/required}}: {{#model}}{{>t_model}}{{/model}}
 {{/parameters}}
