@@ -16,9 +16,9 @@ export {{#exportDefaulted}}default {{/exportDefaulted}}interface {{classname}} {
  * @export
  * @interface {{classname}}
  */
-export {{#exportDefaulted}}default {{/exportDefaulted}}interface {{classname}} extends Array{{#extends}}, {{{extends}}}{{/extends}} {{#implements}}implements {{{implements}}} {{/implements}}{
+export {{#exportDefaulted}}default {{/exportDefaulted}}type {{classname}} = Array<{
 {{#model}}{{>t_properties}}{{/model}}
-}
+}>
 {{/model.isArray}}
 {{^model.isObject}}
 {{^model.isArray}}
