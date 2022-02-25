@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://www.github.com/keq-request/keq-cli/compare/v2.0.2...v2.1.0) (2022-02-25)
+
+
+### Features
+
+* it is no longer necessary to fill in the parameter, if no parameters ([05c0f44](https://www.github.com/keq-request/keq-cli/commit/05c0f44553aadf10e8d09f7a235689826891dbf7))
+
+
+### Bug Fixes
+
+* generate error when response body is an array ([a4cdfc0](https://www.github.com/keq-request/keq-cli/commit/a4cdfc07c14121bfe443ad7eb0d247961d27fcfe))
+
 ### [2.0.2](https://www.github.com/keq-request/keq-cli/compare/v2.0.1...v2.0.2) (2022-01-17)
 
 
