@@ -1,4 +1,4 @@
-import { request } from 'keq'
+import { request, Keq } from 'keq'
 {{#dependencies}}
 import { {{>t_model}} } from './components/schema/{{refFilename}}'
 {{/dependencies}}
@@ -27,11 +27,11 @@ import { {{>t_model}} } from './components/schema/{{refFilename}}'
 {{/parameters}}
  * @throws {RequiredError}
  */
-export async function {{nickname}}(arg{{^parameters.length}}?{{/parameters.length}}: {
+export function {{nickname}}(arg{{^parameters.length}}?{{/parameters.length}}: {
 {{#parameters}}
   {{{name}}}{{^required}}?{{/required}}: {{#model}}{{>t_model}}{{/model}}
 {{/parameters}}
-}): Promise<{{#responses}}Response_{{code}}{{^last}} | {{/last}}{{/responses}}> {
+}): Keq<{{#responses}}Response_{{code}}{{^last}} | {{/last}}{{/responses}}> {
 {{!必填参数校验}}
 {{#parameters}}
 {{#required}}
