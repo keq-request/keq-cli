@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.2](https://www.github.com/keq-request/keq-cli/compare/v2.1.1...v2.1.2) (2022-03-21)
+
+
+### Bug Fixes
+
+* the return type of operation is a Keq<T> rather than Promise ([30f4db4](https://www.github.com/keq-request/keq-cli/commit/30f4db4e5e12636f8ea2b489314493ff433ef97f))
+
 ### [2.1.1](https://www.github.com/keq-request/keq-cli/compare/v2.1.0...v2.1.1) (2022-03-01)
 
 
