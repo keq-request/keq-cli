@@ -367,7 +367,7 @@ export class Parser {
       descriptions: schema.description ? schema.description.split(/[\r?\n]/) : [],
       nickname: schema.operationId || this.calcOperationNickname(pathname, method),
 
-      pathname,
+      pathname: pathname.replace(/{(.*?)}/g, ':$1'),
       method: method.toLocaleLowerCase(),
 
 
