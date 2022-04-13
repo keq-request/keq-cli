@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://www.github.com/keq-request/keq-cli/compare/v2.2.0...v2.3.0) (2022-04-13)
+
+
+### Features
+
+* enable change the request instance and set environment vairable ([3c2cf96](https://www.github.com/keq-request/keq-cli/commit/3c2cf960231865b15dcc5947061366a06beb5ffc))
+
 ## [2.2.0](https://www.github.com/keq-request/keq-cli/compare/v2.1.2...v2.2.0) (2022-04-11)
 
 
