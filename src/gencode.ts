@@ -1,4 +1,3 @@
-import * as R from 'ramda'
 import * as SwaggerParser from '@apidevtools/swagger-parser'
 import { Parser } from './parser'
 import * as Mustache from 'mustache'
@@ -6,7 +5,7 @@ import * as fs from 'fs-extra'
 import * as path from 'path'
 import * as semver from 'semver'
 import * as changeCase from 'change-case'
-import { NamingStyle, Options } from './interface/options'
+import { Options } from './interface/options'
 import { OpenAPIV3 } from 'openapi-types'
 import * as chalk from 'chalk'
 
@@ -33,7 +32,6 @@ const templates = {
   t_operation: readTemplate('operation'),
 
   t_module: readTemplate('module'),
-  t_export: readTemplate('export'),
 }
 
 
@@ -44,7 +42,8 @@ interface File {
 }
 
 
-export async function genModuleCode(moduleName: string, json: string | OpenAPIV3.Document, options: Options): Promise<void> {
+async function genModuleCode(moduleName: string, json: string | OpenAPIV3.Document, options: Required<Options>): Promise<void> {
+  const { fileNamingStyle } = options
   const swaggerParser = new SwaggerParser()
   let api: OpenAPIV3.Document
   try {
@@ -57,20 +56,14 @@ export async function genModuleCode(moduleName: string, json: string | OpenAPIV3
     api = json as any
   }
 
-  const fileNamingStyle: NamingStyle = options.fileNamingStyle || 'snakeCase'
-  const envName = options.envName || 'KEQ_ENV'
   const view = {
     moduleName,
-    services: options.services,
-    envName,
+    env: JSON.stringify(options.env, null, 2),
+    envName: options.envName,
   }
 
 
-  const openapiParser = new Parser(api, {
-    ...options,
-    fileNamingStyle,
-    envName,
-  })
+  const openapiParser = new Parser(api, options)
   openapiParser.parse()
 
 
@@ -89,12 +82,14 @@ export async function genModuleCode(moduleName: string, json: string | OpenAPIV3
     })
   }
 
+  const output = path.join(options.outdir, changeCase[fileNamingStyle](moduleName))
 
   const operationFiles: File[] = []
   for (const operation of openapiParser.operations) {
     const operationView = {
       ...operation,
       ...view,
+      request: options.request.includes('/') ? path.relative(output, options.request) : options.request,
     }
     const content = Mustache.render(templates.t_operation, operationView, templates)
     operationFiles.push({
@@ -104,7 +99,6 @@ export async function genModuleCode(moduleName: string, json: string | OpenAPIV3
     })
   }
 
-  const output = path.join(options.outdir, changeCase[fileNamingStyle](moduleName))
 
   await Promise.all(schemaComponentFiles.map(async file => {
     const filepath = path.join(output, 'components', 'schema', `${file.filename}.ts`)
@@ -152,19 +146,12 @@ export async function genModuleCode(moduleName: string, json: string | OpenAPIV3
 }
 
 
-export async function genExportCode(modules: string[], options: Pick<Options, 'outdir' | 'fileNamingStyle'>): Promise<void> {
-  const fileNamingStyle: NamingStyle = options.fileNamingStyle || 'snakeCase'
-
-  const content = Mustache.render(templates.t_export, {
-    modules: modules.map(m => changeCase[fileNamingStyle](m)),
-  }, templates)
-
-  const filepath = path.join(options.outdir, `${changeCase[fileNamingStyle]('index')}.ts`)
-  await fs.ensureFile(filepath)
-  await fs.writeFile(filepath, content)
-}
-
 export async function gencode(moduleName: string, filepath: string, options: Options): Promise<void> {
-  await genModuleCode(moduleName, filepath, options)
-  await genExportCode([moduleName], R.pick(['outdir', 'fileNamingStyle'], options))
+  await genModuleCode(moduleName, filepath, {
+    ...options,
+    strict: options.strict || true,
+    fileNamingStyle: options.fileNamingStyle || 'snakeCase',
+    envName: options.envName || 'KEQ_ENV',
+    env: options.env || {},
+  })
 }

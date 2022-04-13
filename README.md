@@ -91,7 +91,8 @@ Options:
 :----------------------|:------------------------
  `-o --outdir`         | The output directory
  `-m --module-name`    | The module name
- `--file-naming-style` | File naming style
+ `--file-naming-style` | File naming style.(default 'snakeCase')
+ `--request`           | The request package used in compiled result.(default 'keq')
 
 
 ### Use In Coding
@@ -100,12 +101,7 @@ Options:
 import { request, mount } from 'keq'
 import { setHeader } from 'keq-header'
 import proxy from 'keq-proxy'
-/**
- * You have to import ./outdir before all custom middlewares and request function called .
- * keq-cli need to init some keq middleware
- */
-import "./outdir"
-import updateUser from './outdir/update_user'
+import updateUser from './outdir/userService/update_user'
 
 
 request

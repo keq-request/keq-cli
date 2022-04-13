@@ -42,6 +42,7 @@ program
   .requiredOption('-o, --outdir <outdir>', 'The output directory')
   .requiredOption('-m --module-name <module_name>', 'The module name')
   .addOption(new Option('--file-naming-style <fileNamingStyle>').choices(['camelCase' , 'capitalCase' , 'constantCase' , 'dotCase' , 'headerCase' , 'noCase' , 'paramCase' , 'pascalCase' , 'pathCase' , 'sentenceCase' , 'snakeCase']).default('snakeCase'))
+  .option('--request <request>', 'The request package used in compiled result')
   .option('--no-strict', 'disable strict mode', true)
   .action(async(filepath, options) => {
     await compile(options.moduleName, filepath, options)

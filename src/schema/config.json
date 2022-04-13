@@ -13,7 +13,24 @@
       "default": true
     },
     "fileNamingStyle": {
-      "type": "string"
+      "type": "string",
+      "enum": [
+        "camelCase",
+        "capitalCase",
+        "constantCase",
+        "dotCase",
+        "headerCase",
+        "noCase",
+        "paramCase",
+        "pascalCase",
+        "pathCase",
+        "sentenceCase",
+        "snakeCase"
+      ]
+    },
+    "request": {
+      "type": "string",
+      "default": "keq"
     },
     "modules": {
       "type": "object",
@@ -21,7 +38,7 @@
         "type": "string"
       }
     },
-    "url": {
+    "env": {
       "type": "object",
       "additionalProperties": {
         "type": "object",

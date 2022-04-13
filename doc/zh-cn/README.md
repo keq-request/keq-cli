@@ -90,6 +90,7 @@ npx keq-cli compile  -o ./output -m userService ./swagger.json
  `-o --outdir`         | 输出目录
  `-m --module-name`    | 模块名
  `--file-naming-style` | 文件命名风格
+ `--request`           | 在编译结果中使用的请求实例（默认使用keq的全局request）。
 
 ### 在编码中使用
 
@@ -97,12 +98,7 @@ npx keq-cli compile  -o ./output -m userService ./swagger.json
 import { request, mount } from 'keq'
 import { setHeader } from 'keq-header'
 import proxy from 'keq-proxy'
-/**
- * You have to import ./outdir before all custom middlewares and request function called .
- * keq-cli need to init some keq middleware
- */
-import "./outdir"
-import updateUser from './outdir/update_user'
+import updateUser from './outdir/userService/update_user'
 
 
 request

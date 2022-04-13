@@ -1,4 +1,5 @@
-import { request, Keq } from 'keq'
+import { Keq } from 'keq'
+import { request } from '{{{request}}}'
 {{#dependencies}}
 import { {{>t_model}} } from './components/schema/{{refFilename}}'
 {{/dependencies}}
@@ -14,6 +15,8 @@ import { {{>t_model}} } from './components/schema/{{refFilename}}'
 {{>t_schema}}
 {{/content}}
 {{/responses}}
+
+const env: Record<string, { url: string }> = {{{env}}}
 
 /**
 {{#descriptions}}
@@ -42,10 +45,13 @@ export function {{nickname}}(arg{{^parameters.length}}?{{/parameters.length}}: {
 {{/required}}
 {{/parameters}}
 
-  const req = request.{{method}}<{{#responses}}Response_{{code}}{{^last}} | {{/last}}{{/responses}}>('{{{pathname}}}')
+  const url = process.env.{{{envName}}} && env[process.env.{{{envName}}}] || ''
+
+  const req = request.{{method}}<{{#responses}}Response_{{code}}{{^last}} | {{/last}}{{/responses}}>(`${url}{{{pathname}}}`)
     .option('module', {
       name: '{{{moduleName}}}',
-      pathname: '{{{pathname}}}'
+      pathname: '{{{pathname}}}',
+      env,
     })
 
 {{#parameters}}

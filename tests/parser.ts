@@ -8,8 +8,9 @@ test('Parser', async t => {
     outdir: './output',
     strict: true,
     envName: 'KEQ_ENV',
+    request: 'keq',
     fileNamingStyle: 'snakeCase',
-    services: [],
+    env: {},
   })
 
   parser.parse()

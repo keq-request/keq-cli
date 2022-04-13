@@ -1,17 +1,17 @@
 import * as R from 'ramda'
 import { compile } from './compile'
 import { Options, NamingStyle } from './interface/options'
-import { genExportCode } from './gencode'
 
 
 interface Config {
   outdir: string
   fileNamingStyle?: NamingStyle
   strict: boolean
+  request?: string
   modules: {
     [moduleName: string]: string
   }
-  url: {
+  env?: {
     [env: string]: {
       [modelName: string]: string
     }
@@ -20,17 +20,26 @@ interface Config {
 
 export async function build(config: Config): Promise<void> {
   const promises = Object.keys(config.modules).map(async moduleName => {
-    const services = config.url ? Object.keys(config.url).map(env => ({ env, url: config.url[env][moduleName] })) : []
+    let env: Record<string, string> = {}
+
+    if (config.env) {
+      const pairs = R.toPairs(config.env).map(([envName, envValue]): [string, string] => ([
+        envName,
+        envValue[moduleName],
+      ]))
+
+      env = R.fromPairs(pairs)
+    }
+
     const options: Options = {
       outdir: config.outdir,
       strict: config.strict,
+      request: config.request || 'keq',
       fileNamingStyle: config.fileNamingStyle || 'snakeCase',
-      services,
+      env,
     }
     await compile(moduleName, config.modules[moduleName], options)
   })
 
   await Promise.all(promises)
-
-  await genExportCode(Object.keys(config.modules), R.pick(['outdir', 'fileNamingStyle'], config))
 }
