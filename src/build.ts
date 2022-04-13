@@ -8,6 +8,7 @@ interface Config {
   fileNamingStyle?: NamingStyle
   strict: boolean
   request?: string
+  envName?: string
   modules: {
     [moduleName: string]: string
   }
@@ -34,6 +35,7 @@ export async function build(config: Config): Promise<void> {
     const options: Options = {
       outdir: config.outdir,
       strict: config.strict,
+      envName: config.envName,
       request: config.request || 'keq',
       fileNamingStyle: config.fileNamingStyle || 'snakeCase',
       env,
