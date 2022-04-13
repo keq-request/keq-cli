@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.2](https://www.github.com/keq-request/keq-cli/compare/v2.3.1...v2.3.2) (2022-04-13)
+
+
+### Bug Fixes
+
+* the type error in compile result ([b044ec5](https://www.github.com/keq-request/keq-cli/commit/b044ec506f4aac48dcdb51a8d143d27821d9babe))
+
 ### [2.3.1](https://www.github.com/keq-request/keq-cli/compare/v2.3.0...v2.3.1) (2022-04-13)
 
 
