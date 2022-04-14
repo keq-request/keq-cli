@@ -142,7 +142,7 @@ fileNamingStyle: snakeCase
 modules:
   userService: ./swagger.json
   coreService: http://example.com/swagger.json
-url:
+env:
   prod:
     userService: http://prod.user-service.com/prefix
     coreService: http://prod.core-service.com
@@ -161,7 +161,7 @@ The json configuration file Example:
     "userService": "./swagger.json",
     "coreService": "http://example.com/swagger.json"
   },
-  "url": {
+  "env": {
     "prod": {
       "userService": "http://prod.user-service.com/prefix",
       "coreService": "http://prod.core-service.com"
