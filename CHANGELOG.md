@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.3](https://www.github.com/keq-request/keq-cli/compare/v2.3.2...v2.3.3) (2022-04-15)
+
+
+### Bug Fixes
+
+* additional properties generate wrong ts interface ([a6bf3a8](https://www.github.com/keq-request/keq-cli/commit/a6bf3a88e55b45a6bab8d5e5205cea48d6fc3e2a))
+
 ### [2.3.2](https://www.github.com/keq-request/keq-cli/compare/v2.3.1...v2.3.2) (2022-04-13)
 
 
