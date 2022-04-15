@@ -223,6 +223,14 @@ export class Parser {
       last: false,
     }
 
+    if (schema.additionalProperties) {
+      if (schema.additionalProperties === true) {
+        model.additionalPropertiesType = this.createAnyModel()
+      } else if (typeof schema.additionalProperties === 'object') {
+        model.additionalPropertiesType = this.parseSchema(schema.additionalProperties)
+      }
+    }
+
     if (schema.description && typeof schema.description === 'string') {
       model.descriptions = schema.description.split(/\r?\n/)
     }

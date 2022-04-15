@@ -25,7 +25,7 @@ export interface Model extends Omit<OpenAPIV3.BaseSchemaObject, 'properties' | '
   writeOnly: boolean
 
   hasProperties: boolean
-  additionalPropertiesType?: string
+  additionalPropertiesType?: Model
   properties?: Property[]
   tuple?: Model[]
   items?: Model
