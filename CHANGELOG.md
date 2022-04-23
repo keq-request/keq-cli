@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://www.github.com/keq-request/keq-cli/compare/v2.3.3...v2.4.0) (2022-04-23)
+
+
+### Features
+
+* remove unnecessary env definition ([384fee7](https://www.github.com/keq-request/keq-cli/commit/384fee7fc4a900ac79e5b337b01e3f0d8998d4be))
+
 ### [2.3.3](https://www.github.com/keq-request/keq-cli/compare/v2.3.2...v2.3.3) (2022-04-15)
 
 
