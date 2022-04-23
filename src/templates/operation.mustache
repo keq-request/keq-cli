@@ -16,7 +16,9 @@ import { {{>t_model}} } from './components/schema/{{refFilename}}'
 {{/content}}
 {{/responses}}
 
+{{#defineEnv}}
 const env: Record<string, string> = {{{env}}}
+{{/defineEnv}}
 
 /**
 {{#descriptions}}
@@ -45,13 +47,17 @@ export function {{nickname}}(arg{{^parameters.length}}?{{/parameters.length}}: {
 {{/required}}
 {{/parameters}}
 
+{{#defineEnv}}
   const url = process.env.{{{envName}}} && env[process.env.{{{envName}}}] || ''
+{{/defineEnv}}
 
-  const req = request.{{method}}<{{#responses}}Response_{{code}}{{^last}} | {{/last}}{{/responses}}>(`${url}{{{pathname}}}`)
+  const req = request.{{method}}<{{#responses}}Response_{{code}}{{^last}} | {{/last}}{{/responses}}>(`{{#defineEnv}}${url}{{/defineEnv}}{{{pathname}}}`)
     .option('module', {
       name: '{{{moduleName}}}',
       pathname: '{{{pathname}}}',
+      {{#defineEnv}}
       env,
+      {{/defineEnv}}
     })
 
 {{#parameters}}

@@ -58,6 +58,7 @@ async function genModuleCode(moduleName: string, json: string | OpenAPIV3.Docume
 
   const view = {
     moduleName,
+    defineEnv: Boolean(Object.values(options.env).length),
     env: JSON.stringify(options.env, null, 2),
     envName: options.envName,
   }
