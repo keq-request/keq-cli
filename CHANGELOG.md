@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://www.github.com/keq-request/keq-cli/compare/v2.4.0...v2.5.0) (2022-05-10)
+
+
+### Features
+
+* support nullable ([62cf7f6](https://www.github.com/keq-request/keq-cli/commit/62cf7f667638bcb149c57b804c63cdf5a7469602))
+
 ## [2.4.0](https://www.github.com/keq-request/keq-cli/compare/v2.3.3...v2.4.0) (2022-04-23)
 
 
