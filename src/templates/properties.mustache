@@ -10,7 +10,7 @@
    * @deprecated
 {{/deprecated}}
    */
-  {{key}}{{^required}}?{{/required}}: {{>t_model}}
+  {{key}}{{^required}}?{{/required}}: {{>t_model}}{{#nullable}} | null{{/nullable}}
 {{/properties}}
 
 {{#additionalPropertiesType}}
