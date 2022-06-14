@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://www.github.com/keq-request/keq-cli/compare/v2.5.0...v3.0.0) (2022-06-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* never support env setting
+
+### Code Refactoring
+
+* replace mustache with handlebars ([a1b381b](https://www.github.com/keq-request/keq-cli/commit/a1b381b454546197cab9e3fad9333ce7b30769d7))
+
 ## [2.5.0](https://www.github.com/keq-request/keq-cli/compare/v2.4.0...v2.5.0) (2022-05-10)
 
 
