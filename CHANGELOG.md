@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.2](https://www.github.com/keq-request/keq-cli/compare/v3.0.1...v3.0.2) (2022-06-14)
+
+
+### Bug Fixes
+
+* remove husky from postinstall ([6f730f4](https://www.github.com/keq-request/keq-cli/commit/6f730f41edb54bfb22a8e3b48c9d54c187236331))
+
 ### [3.0.1](https://www.github.com/keq-request/keq-cli/compare/v3.0.0...v3.0.1) (2022-06-14)
 
 
