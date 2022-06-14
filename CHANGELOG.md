@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.1](https://www.github.com/keq-request/keq-cli/compare/v3.0.0...v3.0.1) (2022-06-14)
+
+
+### Bug Fixes
+
+* cannot find command ([d597bdb](https://www.github.com/keq-request/keq-cli/commit/d597bdbbd74a7be89a23b70150a5204df4dcff1b))
+
 ## [3.0.0](https://www.github.com/keq-request/keq-cli/compare/v2.5.0...v3.0.0) (2022-06-14)
 
 
