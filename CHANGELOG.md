@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.3](https://www.github.com/keq-request/keq-cli/compare/v3.0.2...v3.0.3) (2022-06-14)
+
+
+### Bug Fixes
+
+* missing dependencies: @apidevtools/swagger-parser ([a195cf9](https://www.github.com/keq-request/keq-cli/commit/a195cf9a46e8bc99424ef7b8f5c4893d3d99222c))
+
 ### [3.0.2](https://www.github.com/keq-request/keq-cli/compare/v3.0.1...v3.0.2) (2022-06-14)
 
 
