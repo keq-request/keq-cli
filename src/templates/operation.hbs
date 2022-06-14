@@ -1,0 +1,109 @@
+import { Keq } from 'keq'
+import { request } from '{{{options.request}}}'
+{{#each
+  (uniq
+    (flatten
+      (concat
+        (map (compose (map (compose (pick-ref) (prop "schema"))) (values) (prop "content")) (values operation.responses))
+        (map (compose (pick-ref) (prop "schema")) (values operation.requestBody.content))
+      )
+    )
+  )
+}}
+import { {{ref-name this}} } from "./components/schemas/{{change-case @root.options.fileNamingStyle (ref-name this)}}"
+{{/each}}
+
+{{#each operation.responses as |responseBody code|~}}
+{{#each responseBody.content as |content contentType|~}}
+{{> t_interface name=(join "_" (array "Response" code (replace '/' '_' contentType) )) schema=content.schema}}
+
+{{/each~}}
+{{/each~}}
+
+interface QueryArg {
+  {{#each (filter (propEq "in" "query") operation.parameters)}}
+  {{name}}{{#unless required}}?{{/unless}}: {{> t_shape schema}}
+  {{/each}}
+}
+
+interface ParamArg {
+  {{#each (filter (propEq "in" "path") operation.parameters)}}
+  {{name}}{{#unless required}}?{{/unless}}: {{> t_shape schema}}
+  {{/each}}
+}
+
+interface HeaderArg {
+  {{#each (filter (propEq "in" "header") operation.parameters)}}
+  {{name}}{{#unless required}}?{{/unless}}: {{> t_shape schema}}
+  {{/each}}
+}
+
+
+{{> t_comments operation}}
+export function {{operation.operationId}}(arg?: QueryArg & ParamArg & HeaderArg
+{{~#unless (is-nil operation.requestBody.content)}}
+ & (
+{{~#each (map (prop "schema") (values operation.requestBody.content))}}
+{{> t_shape this}}{{#unless @last}} | {{/unless}}
+{{~/each~}}
+)
+{{~/unless~}}
+): Keq<
+  {{~#if operation.responses}}
+  {{~#unless (all (is-empty) (map (prop "content") (values operation.responses)))~}}
+  {{~#each operation.responses as |responseBody code|~}}
+  {{~#each responseBody.content as |content contentType|~}}
+  {{~join "_" (array "Response" code (replace '/' '_' contentType) )}}{{#unless @last}} | {{/unless~}}
+  {{~/each~}}
+  {{~/each~}}
+  {{~else~}}
+  any
+  {{~/unless~}}
+  {{~else~}}
+  any
+  {{~/if~}}
+> {
+  const req = request.{{method}}
+  {{~#if operation.responses}}
+  {{~#unless (all (is-empty) (map (prop "content") (values operation.responses)))~}}
+  <
+    {{~#each operation.responses as |responseBody code|~}}
+    {{~#each responseBody.content as |content contentType|~}}
+    {{~join "_" (array "Response" code (replace '/' '_' contentType) )}}{{#unless @last}} | {{/unless~}}
+    {{~/each~}}
+    {{~/each~}}
+  >
+  {{~/unless~}}
+  {{~/if~}}
+  (`{{{pathname}}}`)
+    .option('module', {
+      name: '{{{moduleName}}}',
+      pathname: '{{{pathname}}}',
+    })
+
+  {{#each (filter (propEq "in" "query") operation.parameters)}}
+  if (arg && "{{name}}" in arg) req.query("{{name}}", arg["{{name}}"])
+  {{/each~}}
+
+  {{#each (filter (propEq "in" "header") operation.parameters)}}
+  if (arg && "{{name}}" in arg) req.set("{{name}}", arg["{{name}}"])
+  {{/each~}}
+
+  {{#each (filter (propEq "in" "path") operation.parameters)}}
+  if (arg && "{{name}}" in arg) req.params("{{name}}", String(arg["{{name}}"]))
+  {{/each~}}
+
+  {{#each operation.responses as |responseBody code|~}}
+  {{~#each responseBody.content as |content contentType|~}}
+  {{~#if content.schema}}
+  {{#with (parse-schema content.schema)}}
+  {{#each properties}}
+  if (arg && "{{@key}}" in arg) req.send({ "{{@key}}": arg["{{@key}}"] })
+  {{/each~}}
+  {{~/with~}}
+  {{~/if~}}
+  {{~/each~}}
+  {{~/each}}
+
+  return req
+}

@@ -24,56 +24,7 @@
 
 ### 准备
 
-你需要先准备一份Swagger 3.0的接口文档文件。
-我们使用以下文件作为示例：
-
-```json
-{
-  "openapi": "3.0.0",
-  "info": {
-    "title": "user.service",
-    "description": "",
-    "version": "0.0.1",
-    "contact": {}
-  },
-  "paths": {
-    "/users/{id}": {
-       "put": {
-        "operationId": "UpdateUser",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        }
-      },
-    }
-  }
-}
-```
+你需要先准备一份[Swagger 3.0的接口文档文件](../../tests/swagger.json)。
 
 ### 编译
 
@@ -89,8 +40,8 @@ npx keq-cli compile  -o ./output -m userService ./swagger.json
 :----------------------|:------------------------
  `-o --outdir`         | 输出目录
  `-m --module-name`    | 模块名
- `--file-naming-style` | 文件命名风格
- `--request`           | 在编译结果中使用的请求实例（默认使用keq的全局request）。
+ `--file-naming-style` | 文件命名风格（默认：snakeCase，更多选项请查看[change-case](https://www.npmjs.com/package/change-case)
+ `--request`           | 在编译结果中使用的请求实例（默认使用keq的全局request）
 
 ### 在编码中使用
 
@@ -141,13 +92,6 @@ fileNamingStyle: snakeCase
 modules:
   userService: ./swagger.json
   coreService: http://example.com/swagger.json
-env:
-  prod:
-    userService: http://prod.user-service.com/prefix
-    coreService: http://prod.core-service.com
-  test:
-    userService: http://test.user-service.com
-    coreService: http://test.core-service.com
 ```
 
 JSON 格式的配置文件：
@@ -159,16 +103,6 @@ JSON 格式的配置文件：
   "modules": {
     "userService": "./swagger.json",
     "coreService": "http://example.com/swagger.json"
-  },
-  "env": {
-    "prod": {
-      "userService": "http://prod.user-service.com/prefix",
-      "coreService": "http://prod.core-service.com"
-    },
-    "test": {
-      "userService": "http://test.user-service.com",
-      "coreService": "http://test.core-service.com"
-    }
   }
 }
 ```

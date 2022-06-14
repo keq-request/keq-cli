@@ -3,7 +3,7 @@
   <img src="./images/logo.svg?sanitize=true" width="121" alt="logo" />
 </p>
 
-<h2 align="center" style="text-align: center">KEQ-CLI</h1>
+<h2 align="center" style="text-align: center">KEQ-CLI</h2>
 <!-- title -->
 
 [![version](https://img.shields.io/npm/v/keq-cli.svg?style=flat-square)](https://www.npmjs.com/package/keq-cli)
@@ -17,7 +17,7 @@
 <!-- description -->
 [简体中文](./doc/zh-cn/README.md)
 
-Tansform Swagger 3.0 to the function that send request by [keq](https://github.com/keq-request/keq).
+Transform Swagger 3.0 to the function that send request by [keq](https://github.com/keq-request/keq).
 <!-- description -->
 
 ## Usage
@@ -26,57 +26,7 @@ Tansform Swagger 3.0 to the function that send request by [keq](https://github.c
 
 ### Prepare
 
-You need a Swagger 3.0 file first.
-
-We use this document as an example:
-
-```json
-{
-  "openapi": "3.0.0",
-  "info": {
-    "title": "user.service",
-    "description": "",
-    "version": "0.0.1",
-    "contact": {}
-  },
-  "paths": {
-    "/users/{id}": {
-       "put": {
-        "operationId": "UpdateUser",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        }
-      },
-    }
-  }
-}
-```
+You need prepare a [Swagger 3.0 file](./tests/swagger.json) first.
 
 ### Compile
 
@@ -91,7 +41,7 @@ Options:
 :----------------------|:------------------------
  `-o --outdir`         | The output directory
  `-m --module-name`    | The module name
- `--file-naming-style` | File naming style.(default 'snakeCase')
+ `--file-naming-style` | File naming style.(default 'snakeCase', see more in [change-case](https://www.npmjs.com/package/change-case))
  `--request`           | The request package used in compiled result.(default 'keq')
 
 
@@ -142,13 +92,6 @@ fileNamingStyle: snakeCase
 modules:
   userService: ./swagger.json
   coreService: http://example.com/swagger.json
-env:
-  prod:
-    userService: http://prod.user-service.com/prefix
-    coreService: http://prod.core-service.com
-  test:
-    userService: http://test.user-service.com
-    coreService: http://test.core-service.com
 ```
 
 The json configuration file Example:
@@ -160,26 +103,17 @@ The json configuration file Example:
   "modules": {
     "userService": "./swagger.json",
     "coreService": "http://example.com/swagger.json"
-  },
-  "env": {
-    "prod": {
-      "userService": "http://prod.user-service.com/prefix",
-      "coreService": "http://prod.core-service.com"
-    },
-    "test": {
-      "userService": "http://test.user-service.com",
-      "coreService": "http://test.core-service.com"
-    }
   }
 }
 ```
-<!-- addition -->
 
 ## Sponsor
 
 Support code development on patron.
 
 [![patron](https://c5.patreon.com/external/logo/become_a_patron_button@2x.png)](https://www.patreon.com/bePatron?u=22478507)
+<!-- addition -->
+
 
 ## Contributing & Development
 

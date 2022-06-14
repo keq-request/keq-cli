@@ -1,0 +1,11 @@
+{{#each (pick-ref schema)}}
+import { {{ref-name this}} } from "./{{change-case @root.options.fileNamingStyle (ref-name this)}}"
+{{#if @last}}
+
+
+{{/if}}
+{{/each}}
+
+
+{{~> t_comments schema interface=name export=true}}
+{{> t_interface this}}

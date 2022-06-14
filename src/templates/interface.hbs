@@ -1,0 +1,6 @@
+{{~#if (or schema.nullable (not (or (equals schema.type "object") (is "object" schema.properties) schema.additionalProperties))) }}
+export type {{name}} = {{> t_shape schema}}
+{{else}}
+{{!-- only pure object --}}
+export interface {{name}} {{> t_shape schema}}
+{{/if}}
