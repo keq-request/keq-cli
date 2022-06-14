@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.4](https://www.github.com/keq-request/keq-cli/compare/v3.0.3...v3.0.4) (2022-06-14)
+
+
+### Bug Fixes
+
+* cannot find hbs files ([3c1210b](https://www.github.com/keq-request/keq-cli/commit/3c1210bdd87d9d8da3298d9537394cd7a524835c))
+
 ### [3.0.3](https://www.github.com/keq-request/keq-cli/compare/v3.0.2...v3.0.3) (2022-06-14)
 
 
