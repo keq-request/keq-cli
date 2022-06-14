@@ -1,0 +1,13 @@
+{{~#if items}}
+{{~#if (is "array" items)}}
+{{!-- is tuple --}}
+[
+  {{~#each items~}}
+  {{~> t_shape this}}
+  {{~#unless @last}}, {{/unless~}}
+  {{~/each~}}
+]
+{{~else~}}
+({{> t_shape items}})[]
+{{~/if~}}
+{{~/if~}}

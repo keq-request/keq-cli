@@ -1,10 +1,11 @@
 import * as fs from 'fs-extra'
 import * as yaml from 'js-yaml'
 import * as path from 'path'
-import { Options } from './interface'
+import { Options } from './interface/options'
 import * as validUrl from 'valid-url'
 import { request } from 'keq'
-import { gencode } from './gencode'
+import { genCode } from './gen-code'
+import { OpenAPIV3 } from 'openapi-types'
 
 
 export async function compile(moduleName: string, filepath: string, options: Options): Promise<void> {
@@ -20,16 +21,16 @@ export async function compile(moduleName: string, filepath: string, options: Opt
       throw new Error(`The swagger file get from url isn't json: ${filepath}`)
     }
 
-    await gencode(moduleName, content, options)
+    await genCode(moduleName, content, options)
   } else {
-    const fileext = path.extname(filepath)
+    const fileExt = path.extname(filepath)
     const content = await fs.readFile(filepath, 'utf8')
-    if (['.yml', '.yaml'].includes(fileext)) {
-      await gencode(moduleName, yaml.load(content), options)
-    } else if (fileext === '.json') {
-      await gencode(moduleName, JSON.parse(content), options)
+    if (['.yml', '.yaml'].includes(fileExt)) {
+      await genCode(moduleName, yaml.load(content) as OpenAPIV3.Document, options)
+    } else if (fileExt === '.json') {
+      await genCode(moduleName, JSON.parse(content), options)
     } else {
-      throw new Error(`File ${fileext} not support.`)
+      throw new Error(`File ${fileExt} not support.`)
     }
   }
 }

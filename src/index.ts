@@ -1,3 +1,3 @@
 
-export * from './gencode'
+export * from './gen-code'
 export * from './build'

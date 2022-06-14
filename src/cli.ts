@@ -50,7 +50,7 @@ program
 
 async function main(): Promise<void> {
   program.on('command:*', function(operands) {
-    throw new Error(`Unknown command '${operands[0]}'`)
+    throw new Error(`Unknown command '${String(operands[0])}'`)
   })
 
   try {
@@ -60,4 +60,4 @@ async function main(): Promise<void> {
   }
 }
 
-main()
+void main()
