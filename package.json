@@ -3,7 +3,7 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "lib/index.d.ts",
-  "bin": "lib/src/cli.js",
+  "bin": "lib/cli.js",
   "description": "Tansform Swagger 3.0 to the function that send request by keq",
   "scripts": {
     "test": "npm run build:test && ava",
