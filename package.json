@@ -25,7 +25,6 @@
     "build": "npm run build:lib && npm run build:es",
     "prewatch": "npm run copyfile:lib",
     "watch": "NODE_ENV=development ttsc -p build/tsconfig.lib.json -w",
-    "postinstall": "is-ci || husky install",
     "copyfile:es": "copyfiles -e \"@(build|es|lib|node_modules|test|doc)/**/*.!(ts)\" -e \"@(README.md|CHANGELOG.md|ava.config.js|backers.md)\" \"**/*.!(ts)\" es",
     "copyfile:lib": "copyfiles -e \"@(build|es|lib|node_modules|test|doc)/**/*.!(ts)\" -e \"@(README.md|CHANGELOG.md|ava.config.js|backers.md)\" \"**/*.!(ts)\" lib",
     "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\"  --fix",
