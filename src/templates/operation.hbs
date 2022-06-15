@@ -79,7 +79,11 @@ export function {{operation.operationId}}(arg?: QueryArg & ParamArg & HeaderArg
     })
 
   {{#each (filter (propEq "in" "query") operation.parameters)}}
-  if (arg && "{{name}}" in arg) req.query("{{name}}", arg["{{name}}"])
+  {{#if @first}}
+  const queryWrap = (value: any) => typeof value === 'boolean' ? String(value) : value
+
+  {{/if}}
+  if (arg && "{{name}}" in arg) req.query("{{name}}", queryWrap(arg["{{name}}"]))
   {{/each~}}
 
   {{#each (filter (propEq "in" "header") operation.parameters)}}
