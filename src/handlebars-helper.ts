@@ -68,7 +68,6 @@ function parseSchema(schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject,
 }
 
 
-Handlebars.registerHelper('ref-name', (ref: string) => R.last(ref.split('/')))
 Handlebars.registerHelper('change-case', (fileNamingStyle: string, filename: string) => changeCase[fileNamingStyle](filename))
 Handlebars.registerHelper('parse-schema', (schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject, options: Handlebars.HelperOptions) => parseSchema(schema, options.data.root.options.api))
 
@@ -80,6 +79,7 @@ function wrap(fn) {
 
 Handlebars.registerHelper('json-path', wrap((path, json) => JSONPath({ path, json })))
 Handlebars.registerHelper('pick-ref', wrap(R.curry(pickRef)))
+Handlebars.registerHelper('ref-name', wrap(R.curry((ref: string) => R.last(ref.split('/')))))
 
 Handlebars.registerHelper('any-pass', wrap(R.anyPass))
 Handlebars.registerHelper('all-pass', wrap(R.allPass))

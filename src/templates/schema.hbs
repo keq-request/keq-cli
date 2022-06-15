@@ -1,4 +1,4 @@
-{{#each (pick-ref schema)}}
+{{#each (filter (compose (not) (equals name) (ref-name)) (pick-ref schema))}}
 import { {{ref-name this}} } from "./{{change-case @root.options.fileNamingStyle (ref-name this)}}"
 {{#if @last}}
 
