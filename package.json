@@ -6,11 +6,11 @@
   "bin": "lib/src/cli.js",
   "description": "Transform Swagger 3.0 to the function that send request by keq",
   "scripts": {
-    "test": "npm run build:test && ava",
+    "test": "npm run build:test && nyc ava",
     "test:debug": "ava --verbose",
     "test:update": "ava -u",
     "report": "npm run build:test && nyc --reporter=html --reporter=text-summary --skip-full ava",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "ci": "git-cz",
     "ca": "git add -A && git-cz -av",
     "release": "standard-version",
