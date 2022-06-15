@@ -6,6 +6,7 @@ import * as Handlebars from 'handlebars'
 import { JSONPath } from 'jsonpath-plus'
 import { readTemplate } from './read-template'
 import { OpenAPIV3 } from 'openapi-types'
+import { getOperationId } from './get-operation-id'
 
 
 Handlebars.registerPartial('t_shape', readTemplate('shape'))
@@ -69,7 +70,8 @@ function parseSchema(schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject,
 
 
 Handlebars.registerHelper('change-case', (fileNamingStyle: string, filename: string) => changeCase[fileNamingStyle](filename))
-Handlebars.registerHelper('parse-schema', (schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject, options: Handlebars.HelperOptions) => parseSchema(schema, options.data.root.options.api))
+Handlebars.registerHelper('parse-schema', (schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject, options: Handlebars.HelperOptions) => parseSchema(schema, options.data.root.api))
+Handlebars.registerHelper('operation-id', getOperationId)
 
 
 function wrap(fn) {

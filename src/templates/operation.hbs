@@ -43,7 +43,7 @@ interface HeaderArg {
 
 
 {{> t_comments operation}}
-export function {{operation.operationId}}(arg?: QueryArg & ParamArg & HeaderArg
+export function {{operation-id pathname method operation}}(arg?: QueryArg & ParamArg & HeaderArg
 {{~#unless (is-nil operation.requestBody.content)}}
  & (
 {{~#each (map (prop "schema") (values operation.requestBody.content))}}
