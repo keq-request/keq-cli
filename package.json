@@ -6,7 +6,7 @@
   "bin": "lib/src/cli.js",
   "description": "Transform Swagger 3.0 to the function that send request by keq",
   "scripts": {
-    "test": "npm run build:test && nyc ava",
+    "test": "npm run clean && npm run build:test && nyc ava",
     "test:debug": "ava --verbose",
     "test:update": "ava -u",
     "report": "npm run build:test && nyc --reporter=html --reporter=text-summary --skip-full ava",
