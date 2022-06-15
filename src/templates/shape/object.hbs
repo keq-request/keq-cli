@@ -6,5 +6,5 @@
 {{~/if}}
 {{#if additionalProperties}}
 {{> t_comments additionalProperties}}
-[key: string]: {{#if (is "boolean" additionalProperties)}}any{{else}}{{> t_shape additionalProperties}}{{/if}}
+[key: string]: undefined | {{#if (is "boolean" additionalProperties)}}any{{else}}{{> t_shape additionalProperties}}{{/if}}
 {{/if~}}

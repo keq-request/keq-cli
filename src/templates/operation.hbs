@@ -54,10 +54,12 @@ export function {{operation.operationId}}(arg?: QueryArg & ParamArg & HeaderArg
 ): Keq<
   {{~#each operation.responses as |responseBody code|~}}
   {{~#each responseBody.content as |content contentType|~}}
-  {{~join "_" (array "Response" code (replace '/' '_' contentType) )}}{{#unless @last}} | {{/unless~}}
+  {{~join "_" (array "Response" code (replace '/' '_' contentType) )}}
+  {{~#unless @last}} | {{/unless~}}
   {{~else~}}
   any
   {{~/each~}}
+  {{~#unless @last}} | {{/unless~}}
   {{~else~}}
   any
   {{~/each~}}
@@ -67,8 +69,10 @@ export function {{operation.operationId}}(arg?: QueryArg & ParamArg & HeaderArg
   <
     {{~#each operation.responses as |responseBody code|~}}
     {{~#each responseBody.content as |content contentType|~}}
-    {{~join "_" (array "Response" code (replace '/' '_' contentType) )}}{{#unless @last}} | {{/unless~}}
+    {{~join "_" (array "Response" code (replace '/' '_' contentType) )}}
+    {{~#unless @last}} | {{/unless~}}
     {{~/each~}}
+    {{~#unless @last}} | {{/unless~}}
     {{~/each~}}
   >
   {{~/unless~}}
