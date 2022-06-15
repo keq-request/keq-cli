@@ -3,6 +3,7 @@
 import * as R from 'ramda'
 import * as changeCase from 'change-case'
 import * as Handlebars from 'handlebars'
+import { JSONPath } from 'jsonpath-plus'
 import { readTemplate } from './read-template'
 import { OpenAPIV3 } from 'openapi-types'
 
@@ -77,8 +78,11 @@ function wrap(fn) {
 }
 
 
+Handlebars.registerHelper('json-path', wrap((path, json) => JSONPath({ path, json })))
 Handlebars.registerHelper('pick-ref', wrap(R.curry(pickRef)))
 
+Handlebars.registerHelper('any-pass', wrap(R.anyPass))
+Handlebars.registerHelper('all-pass', wrap(R.allPass))
 Handlebars.registerHelper('is-empty', wrap(R.isEmpty))
 Handlebars.registerHelper('is-nil', wrap(R.isNil))
 Handlebars.registerHelper('all', wrap(R.all))

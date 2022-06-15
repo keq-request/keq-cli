@@ -3,9 +3,12 @@ import { request } from '{{{options.request}}}'
 {{#each
   (uniq
     (flatten
-      (concat
-        (map (compose (map (compose (pick-ref) (prop "schema"))) (values) (prop "content")) (values operation.responses))
-        (map (compose (pick-ref) (prop "schema")) (values operation.requestBody.content))
+      (map
+        (pick-ref)
+        (concat
+          (json-path "$.responses[*].content[*].schema" operation)
+          (json-path "$.requestBody.content[*].schema" operation)
+        )
       )
     )
   )
@@ -49,23 +52,18 @@ export function {{operation.operationId}}(arg?: QueryArg & ParamArg & HeaderArg
 )
 {{~/unless~}}
 ): Keq<
-  {{~#if operation.responses}}
-  {{~#unless (all (is-empty) (map (prop "content") (values operation.responses)))~}}
   {{~#each operation.responses as |responseBody code|~}}
   {{~#each responseBody.content as |content contentType|~}}
   {{~join "_" (array "Response" code (replace '/' '_' contentType) )}}{{#unless @last}} | {{/unless~}}
-  {{~/each~}}
+  {{~else~}}
+  any
   {{~/each~}}
   {{~else~}}
   any
-  {{~/unless~}}
-  {{~else~}}
-  any
-  {{~/if~}}
+  {{~/each~}}
 > {
   const req = request.{{method}}
-  {{~#if operation.responses}}
-  {{~#unless (all (is-empty) (map (prop "content") (values operation.responses)))~}}
+  {{~#unless (is-empty (json-path "$.responses[*].content[*]" operation))~}}
   <
     {{~#each operation.responses as |responseBody code|~}}
     {{~#each responseBody.content as |content contentType|~}}
@@ -74,7 +72,6 @@ export function {{operation.operationId}}(arg?: QueryArg & ParamArg & HeaderArg
     {{~/each~}}
   >
   {{~/unless~}}
-  {{~/if~}}
   (`{{{pathname}}}`)
     .option('module', {
       name: '{{{moduleName}}}',
