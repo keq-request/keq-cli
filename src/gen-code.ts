@@ -64,8 +64,6 @@ export async function compile(moduleName: string, json: string | OpenAPIV3.Docum
         path: filepath,
         content: fileContent,
       })
-      await fs.ensureFile(filepath)
-      await fs.writeFile(filepath, fileContent)
     }
   }
 
