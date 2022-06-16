@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.7](https://www.github.com/keq-request/keq-cli/compare/v3.0.6...v3.0.7) (2022-06-16)
+
+
+### Bug Fixes
+
+* export unnecessary type declarations ([5d36b87](https://www.github.com/keq-request/keq-cli/commit/5d36b87e68e5c281a8fbd04ddc1f3eda6d3edb0c))
+* schema dependencies are deduplicated ([7a6df88](https://www.github.com/keq-request/keq-cli/commit/7a6df88d0f741af3a18ad6672aef235c5822ab35))
+
 ### [3.0.6](https://www.github.com/keq-request/keq-cli/compare/v3.0.5...v3.0.6) (2022-06-15)
 
 
