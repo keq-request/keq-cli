@@ -1,5 +1,10 @@
-{{#each (filter (compose (not) (equals name) (ref-name)) (pick-ref schema))}}
-import { {{ref-name this}} } from "./{{change-case @root.options.fileNamingStyle (ref-name this)}}"
+{{#each
+  (filter
+    (compose (not) (equals name))
+    (uniq (map (ref-name) (pick-ref schema)))
+  )
+}}
+import { {{this}} } from "./{{change-case @root.options.fileNamingStyle this}}"
 {{#if @last}}
 
 
