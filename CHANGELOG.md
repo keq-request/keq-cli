@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.8](https://www.github.com/keq-request/keq-cli/compare/v3.0.7...v3.0.8) (2022-06-19)
+
+
+### Bug Fixes
+
+* the request body is not autofilled ([35e48e7](https://www.github.com/keq-request/keq-cli/commit/35e48e7e7496e723b1b2480698476110db7333b0))
+
 ### [3.0.7](https://www.github.com/keq-request/keq-cli/compare/v3.0.6...v3.0.7) (2022-06-16)
 
 
