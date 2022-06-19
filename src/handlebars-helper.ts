@@ -133,6 +133,7 @@ Handlebars.registerHelper('or', (...args) => {
 Handlebars.registerHelper('stringify', value => JSON.stringify(value, null, 2))
 
 
+Handlebars.registerHelper('regexp', (str, options: Handlebars.HelperOptions) => new RegExp(str, options.hash.flags))
 Handlebars.registerHelper('array', (...args) => R.dropLast(1, args))
 Handlebars.registerHelper('newline', () => '\n')
 export default Handlebars

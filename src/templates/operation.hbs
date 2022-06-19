@@ -76,7 +76,7 @@ export function {{operation-id pathname method operation}}(arg?: QueryArg & Para
     {{~/each~}}
   >
   {{~/unless~}}
-  (`{{{pathname}}}`)
+  (`{{{replace (regexp "{(.*?)}" flag="g") ":$1" pathname}}}`)
     .option('module', {
       name: '{{{moduleName}}}',
       pathname: '{{{pathname}}}',
