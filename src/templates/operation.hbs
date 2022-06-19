@@ -98,16 +98,14 @@ export function {{operation-id pathname method operation}}(arg?: QueryArg & Para
   if (arg && "{{name}}" in arg) req.params("{{name}}", String(arg["{{name}}"]))
   {{/each~}}
 
-  {{#each operation.responses as |responseBody code|~}}
-  {{~#each responseBody.content as |content contentType|~}}
-  {{~#if content.schema}}
-  {{#with (parse-schema content.schema)}}
+  {{#each (values operation.requestBody.content)}}
+  {{~#if this.schema}}
+  {{#with (parse-schema this.schema)}}
   {{#each properties}}
   if (arg && "{{@key}}" in arg) req.send({ "{{@key}}": arg["{{@key}}"] })
   {{/each~}}
   {{~/with~}}
   {{~/if~}}
-  {{~/each~}}
   {{~/each}}
 
   return req
