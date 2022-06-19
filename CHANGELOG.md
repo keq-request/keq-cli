@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.10](https://www.github.com/keq-request/keq-cli/compare/v3.0.9...v3.0.10) (2022-06-19)
+
+
+### Bug Fixes
+
+* url template not transformed in module pathname ([4dcc092](https://www.github.com/keq-request/keq-cli/commit/4dcc092b120111cc19b1f710350feb3f69ef71a0))
+
 ### [3.0.9](https://www.github.com/keq-request/keq-cli/compare/v3.0.8...v3.0.9) (2022-06-19)
 
 
