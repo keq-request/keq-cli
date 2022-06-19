@@ -226,7 +226,6 @@
         }
       },
       "post": {
-        "operationId": "post",
         "parameters": [
           {
             "name": "id",
