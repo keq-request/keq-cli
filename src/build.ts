@@ -3,7 +3,7 @@ import { compile } from './compile'
 import { Options, NamingStyle } from './interface/options'
 
 
-interface Config {
+export interface BuildConfig {
   outdir: string
   fileNamingStyle?: NamingStyle
   strict: boolean
@@ -19,7 +19,7 @@ interface Config {
   }
 }
 
-export async function build(config: Config): Promise<void> {
+export async function build(config: BuildConfig): Promise<void> {
   const promises = Object.keys(config.modules).map(async moduleName => {
     let env: Record<string, string> = {}
 

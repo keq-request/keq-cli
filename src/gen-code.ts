@@ -40,6 +40,7 @@ export async function compile(moduleName: string, json: string | OpenAPIV3.Docum
   const formatFilename = changeCase[fileNamingStyle]
   const outdir = options?.outdir || `${process.cwd()}/api`
   const output = path.join(outdir, formatFilename(moduleName))
+  const requestInstance = options?.request ? path.relative(output, options.request) : 'keq'
 
   const files: File[] = []
   if (api.components?.schemas && !R.isEmpty(api.components.schemas)) {
@@ -91,7 +92,7 @@ export async function compile(moduleName: string, json: string | OpenAPIV3.Docum
             operation,
             options: {
               fileNamingStyle,
-              request: options?.request || 'keq',
+              request: requestInstance,
             },
           })
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command, Option } from 'commander'
-import { build } from './build'
+import { build, BuildConfig } from './build'
 import { compile } from './compile'
 import { cosmiconfig } from 'cosmiconfig'
 import { CosmiconfigResult } from 'cosmiconfig/dist/types'
@@ -33,7 +33,9 @@ program
 
     const valid = validate(result.config)
     if (!valid) throw new Error(chalk.red(`Invalid Config: ${ajv.errorsText(validate.errors, { dataVar: 'config' })}`))
-    await build(result.config)
+
+    const config: BuildConfig = result.config
+    await build(config)
   })
 
 program
