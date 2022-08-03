@@ -29,8 +29,7 @@
       ]
     },
     "request": {
-      "type": "string",
-      "default": "keq"
+      "type": "string"
     },
     "modules": {
       "type": "object",
