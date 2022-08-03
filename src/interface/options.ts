@@ -12,6 +12,6 @@ export interface Options {
    */
   strict?: boolean
   fileNamingStyle?: NamingStyle
-  request: string
+  request?: string
   env?: Record<string, string>
 }

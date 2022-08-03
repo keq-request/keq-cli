@@ -36,7 +36,7 @@ export async function build(config: BuildConfig): Promise<void> {
       outdir: config.outdir,
       strict: config.strict,
       envName: config.envName,
-      request: config.request || 'keq',
+      request: config.request,
       fileNamingStyle: config.fileNamingStyle || 'snakeCase',
       env,
     }
