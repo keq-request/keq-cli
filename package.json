@@ -27,7 +27,7 @@
     "watch": "NODE_ENV=development ttsc -p build/tsconfig.lib.json -w",
     "copyfile:es": "copyfiles -u 1 \"src/**/*.!(ts)\" es/src",
     "copyfile:lib": "copyfiles -u 1 \"src/**/*.!(ts)\" lib/src",
-    "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\"  --fix",
+    "lint": "eslint \"src/**/*.ts\" \"tests/**/*.ts\"  --fix",
     "prepare": "is-ci || husky install"
   },
   "devDependencies": {
@@ -49,8 +49,8 @@
     "sinon": "^14.0.0",
     "standard-version": "^9.3.0",
     "ts-node": "^10.8.1",
-    "ttypescript": "^1.5.12",
-    "typescript": "^4.7.3",
+    "ttypescript": "^1.5.13",
+    "typescript": "^4.7.4",
     "typescript-transform-paths": "^3.3.1"
   },
   "dependencies": {

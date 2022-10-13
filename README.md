@@ -9,7 +9,7 @@
 [![version](https://img.shields.io/npm/v/keq-cli.svg?style=flat-square)](https://www.npmjs.com/package/keq-cli)
 [![downloads](https://img.shields.io/npm/dm/keq-cli.svg?style=flat-square)](https://www.npmjs.com/package/keq-cli)
 [![license](https://img.shields.io/npm/l/keq-cli.svg?style=flat-square)](https://www.npmjs.com/package/keq-cli)
-[![dependencies](https://img.shields.io/david/keq-request/keq-cli.svg?style=flat-square)](https://www.npmjs.com/package/keq-cli)
+[![dependencies](https://img.shields.io/librariesio/github/keq-request/keq-cli.svg?style=flat-square)](https://www.npmjs.com/package/keq-cli)
 [![coveralls](https://img.shields.io/coveralls/github/keq-request/keq-cli.svg?style=flat-square)](https://coveralls.io/github/keq-request/keq-cli)
 
 
