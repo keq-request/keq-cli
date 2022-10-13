@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.14](https://www.github.com/keq-request/keq-cli/compare/v3.0.13...v3.0.14) (2022-10-13)
+
+
+### Bug Fixes
+
+* program chashed when swagger without parameters ([bbe6105](https://www.github.com/keq-request/keq-cli/commit/bbe61051b6d6360d57ae4162007e8f239474351c))
+
 ### [3.0.13](https://www.github.com/keq-request/keq-cli/compare/v3.0.12...v3.0.13) (2022-08-03)
 
 
