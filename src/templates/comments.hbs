@@ -1,7 +1,7 @@
 {{#if (or description deprecated interface export)}}
 /**
 {{#if description}}
-{{#each (split (newline) description)}}
+{{#each (r__split (newline) description)}}
  * {{this}}
 {{/each}}
 {{#if (or deprecated interface export)}}

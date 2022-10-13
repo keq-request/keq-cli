@@ -7,6 +7,7 @@ import { JSONPath } from 'jsonpath-plus'
 import { readTemplate } from './read-template'
 import { OpenAPIV3 } from 'openapi-types'
 import { getOperationId } from './get-operation-id'
+import * as HandlebarsRamdaHelpers from 'handlebars-ramda-helpers'
 
 
 Handlebars.registerPartial('t_shape', readTemplate('shape'))
@@ -19,6 +20,8 @@ Handlebars.registerPartial('t_shape__all_of', readTemplate('shape/all-of'))
 Handlebars.registerPartial('t_comments', readTemplate('comments'))
 Handlebars.registerPartial('t_interface', readTemplate('interface'))
 
+
+HandlebarsRamdaHelpers.register(Handlebars)
 
 function pickRef(schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject): string[] {
   if ('oneOf' in schema && schema.oneOf) {
@@ -83,57 +86,12 @@ Handlebars.registerHelper('json-path', wrap((path, json) => JSONPath({ path, jso
 Handlebars.registerHelper('pick-ref', wrap(R.curry(pickRef)))
 Handlebars.registerHelper('ref-name', wrap(R.curry((ref: string) => R.last(ref.split('/')))))
 
-Handlebars.registerHelper('any-pass', wrap(R.anyPass))
-Handlebars.registerHelper('all-pass', wrap(R.allPass))
-Handlebars.registerHelper('is-empty', wrap(R.isEmpty))
-Handlebars.registerHelper('is-nil', wrap(R.isNil))
-Handlebars.registerHelper('all', wrap(R.all))
-Handlebars.registerHelper('concat', wrap(R.concat))
-Handlebars.registerHelper('complement', wrap(R.complement))
-Handlebars.registerHelper('propEq', wrap(R.propEq))
-Handlebars.registerHelper('flatten', wrap(R.flatten))
-Handlebars.registerHelper('filter', wrap(R.filter))
-Handlebars.registerHelper('unnest', wrap(R.unnest))
-Handlebars.registerHelper('compose', wrap(R.compose))
-Handlebars.registerHelper('values', wrap(R.values))
-Handlebars.registerHelper('prop', wrap(R.prop))
-Handlebars.registerHelper('uniq', wrap(R.uniq))
-Handlebars.registerHelper('map', wrap(R.map))
-Handlebars.registerHelper('replace', wrap(R.replace))
-Handlebars.registerHelper('join', wrap(R.join))
-Handlebars.registerHelper('add', wrap(R.add))
-Handlebars.registerHelper('range', wrap(R.range))
-Handlebars.registerHelper('split', wrap(R.split))
-Handlebars.registerHelper('includes', wrap(R.includes))
-Handlebars.registerHelper('equals', wrap(R.equals))
-Handlebars.registerHelper('is', (...args) => {
-  const arr = R.dropLast(1, args)
-  if (arr[0].toLowerCase() === 'object') arr[0] = Object
-  else if (arr[0].toLowerCase() === 'array') arr[0] = Array
-  else if (arr[0].toLowerCase() === 'string') arr[0] = String
-  else if (arr[0].toLowerCase() === 'number') arr[0] = Number
-  else if (arr[0].toLowerCase() === 'boolean') arr[0] = Boolean
 
-  // @ts-ignore
-  return R.is(...arr)
-})
-
-
-Handlebars.registerHelper('not', wrap(R.not))
-Handlebars.registerHelper('and', (...args) => {
-  const arr = R.dropLast(1, args)
-  return R.reduce(R.and, true as any, arr) as boolean
-})
 Handlebars.registerHelper('or', (...args) => {
   const arr = R.dropLast(1, args)
-  return R.reduce(R.or, false as any, arr) as boolean
+  return R.any(R.identity, arr)
 })
-
-
 Handlebars.registerHelper('stringify', value => JSON.stringify(value, null, 2))
-
-
 Handlebars.registerHelper('regexp', (str, options: Handlebars.HelperOptions) => new RegExp(str, options.hash.flags))
-Handlebars.registerHelper('array', (...args) => R.dropLast(1, args))
 Handlebars.registerHelper('newline', () => '\n')
 export default Handlebars

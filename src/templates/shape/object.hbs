@@ -1,10 +1,10 @@
-{{#if (is "object" properties)}}
+{{#if (r__isObject properties)}}
 {{#each properties}}
 {{> t_comments this}}
-{{@key}}{{#unless (includes @key (or ../required (array)))}}?{{/unless}}: {{> t_shape this}}
+{{@key}}{{#unless (r__includes @key (r__defaultTo (r__Array) ../required))}}?{{/unless}}: {{> t_shape this}}
 {{/each}}
 {{~/if}}
 {{#if additionalProperties}}
 {{> t_comments additionalProperties}}
-[key: string]: undefined | {{#if (is "boolean" additionalProperties)}}any{{else}}{{> t_shape additionalProperties}}{{/if}}
+[key: string]: undefined | {{#if (r__isBoolean additionalProperties)}}any{{else}}{{> t_shape additionalProperties}}{{/if}}
 {{/if~}}

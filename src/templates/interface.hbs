@@ -1,4 +1,4 @@
-{{~#if (or schema.nullable (not (or (equals schema.type "object") (is "object" schema.properties) schema.additionalProperties))) }}
+{{~#if (or schema.nullable (r__not (or (r__equals schema.type "object") (r__isObject schema.properties) schema.additionalProperties))) }}
 {{#if export}}export {{/if}}type {{name}} = {{> t_shape schema}}
 {{else}}
 {{!-- only pure object --}}

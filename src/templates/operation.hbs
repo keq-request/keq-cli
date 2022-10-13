@@ -1,11 +1,11 @@
 import { Keq } from 'keq'
 import { request } from '{{{options.request}}}'
 {{#each
-  (uniq
-    (flatten
-      (map
+  (r__uniq
+    (r__flatten
+      (r__map
         (pick-ref)
-        (concat
+        (r__concat
           (json-path "$.responses[*].content[*].schema" operation)
           (json-path "$.requestBody.content[*].schema" operation)
         )
@@ -18,35 +18,44 @@ import { {{ref-name this}} } from "./components/schemas/{{change-case @root.opti
 
 {{#each operation.responses as |responseBody code|~}}
 {{#each responseBody.content as |content contentType|~}}
-{{> t_interface name=(join "_" (array "Response" code (replace '/' '_' contentType) )) schema=content.schema}}
+{{> t_interface name=(r__join "_" (r__Array "Response" code (r__replace '/' '_' contentType) )) schema=content.schema}}
+{{/each~}}
+{{/each~}}
 
-{{/each~}}
-{{/each~}}
+{{#*inline "parameterProperty"}}
+  {{name}}{{#unless required}}?{{/unless}}: {{> t_shape schema}}
+{{/inline}}
 
 interface QueryArg {
-  {{#each (filter (propEq "in" "query") operation.parameters)}}
-  {{name}}{{#unless required}}?{{/unless}}: {{> t_shape schema}}
+  {{#if operation.parameters}}
+  {{#each (r__filter (r__propEq "in" "query") operation.parameters)}}
+  {{> parameterProperty}}
   {{/each}}
+  {{/if}}
 }
 
 interface ParamArg {
-  {{#each (filter (propEq "in" "path") operation.parameters)}}
-  {{name}}{{#unless required}}?{{/unless}}: {{> t_shape schema}}
+  {{#if operation.parameters}}
+  {{#each (r__filter (r__propEq "in" "path") operation.parameters)}}
+  {{> parameterProperty}}
   {{/each}}
+  {{/if}}
 }
 
 interface HeaderArg {
-  {{#each (filter (propEq "in" "header") operation.parameters)}}
-  {{name}}{{#unless required}}?{{/unless}}: {{> t_shape schema}}
+  {{#if operation.parameters}}
+  {{#each (r__filter (r__propEq "in" "header") operation.parameters)}}
+  {{> parameterProperty}}
   {{/each}}
+  {{/if}}
 }
 
 
 {{> t_comments operation}}
 export function {{operation-id pathname method operation}}(arg?: QueryArg & ParamArg & HeaderArg
-{{~#unless (is-nil operation.requestBody.content)}}
+{{~#unless (r__isNil operation.requestBody.content)}}
  & (
-{{~#each (map (prop "schema") (values operation.requestBody.content))}}
+{{~#each (r__map (r__prop "schema") (r__values operation.requestBody.content))}}
 {{> t_shape this}}{{#unless @last}} | {{/unless}}
 {{~/each~}}
 )
@@ -54,7 +63,7 @@ export function {{operation-id pathname method operation}}(arg?: QueryArg & Para
 ): Keq<
   {{~#each operation.responses as |responseBody code|~}}
   {{~#each responseBody.content as |content contentType|~}}
-  {{~join "_" (array "Response" code (replace '/' '_' contentType) )}}
+  Response_{{code}}_{{r__replace '/' '_' contentType}}
   {{~#unless @last}} | {{/unless~}}
   {{~else~}}
   any
@@ -65,24 +74,25 @@ export function {{operation-id pathname method operation}}(arg?: QueryArg & Para
   {{~/each~}}
 > {
   const req = request.{{method}}
-  {{~#unless (is-empty (json-path "$.responses[*].content[*]" operation))~}}
+  {{~#unless (r__isEmpty (json-path "$.responses[*].content[*]" operation))~}}
   <
     {{~#each operation.responses as |responseBody code|~}}
     {{~#each responseBody.content as |content contentType|~}}
-    {{~join "_" (array "Response" code (replace '/' '_' contentType) )}}
+    Response_{{code}}_{{r__replace '/' '_' contentType}}
     {{~#unless @last}} | {{/unless~}}
     {{~/each~}}
     {{~#unless @last}} | {{/unless~}}
     {{~/each~}}
   >
   {{~/unless~}}
-  ("{{{replace (regexp "{(.*?)}" flag="g") ":$1" pathname}}}")
+  ("{{{r__replace (regexp "{(.*?)}" flag="g") ":$1" pathname}}}")
     .option('module', {
       name: "{{{moduleName}}}",
-      pathname: "{{{replace (regexp "{(.*?)}" flag="g") ":$1" pathname}}}",
+      pathname: "{{{r__replace (regexp "{(.*?)}" flag="g") ":$1" pathname}}}",
     })
 
-  {{#each (filter (propEq "in" "query") operation.parameters)}}
+  {{#if operation.parameters}}
+  {{#each (r__filter (r__propEq "in" "query") operation.parameters)}}
   {{#if @first}}
   const queryWrap = (value: any) => typeof value === 'boolean' ? String(value) : value
 
@@ -90,15 +100,16 @@ export function {{operation-id pathname method operation}}(arg?: QueryArg & Para
   if (arg && "{{name}}" in arg) req.query("{{name}}", queryWrap(arg["{{name}}"]))
   {{/each~}}
 
-  {{#each (filter (propEq "in" "header") operation.parameters)}}
+  {{#each (r__filter (r__propEq "in" "header") operation.parameters)}}
   if (arg && "{{name}}" in arg) req.set("{{name}}", arg["{{name}}"])
   {{/each~}}
 
-  {{#each (filter (propEq "in" "path") operation.parameters)}}
+  {{#each (r__filter (r__propEq "in" "path") operation.parameters)}}
   if (arg && "{{name}}" in arg) req.params("{{name}}", String(arg["{{name}}"]))
   {{/each~}}
+  {{/if}}
 
-  {{#each (values operation.requestBody.content)}}
+  {{#each (r__values operation.requestBody.content)}}
   {{~#if this.schema}}
   {{#with (parse-schema this.schema)}}
   {{#each properties}}
@@ -107,6 +118,5 @@ export function {{operation-id pathname method operation}}(arg?: QueryArg & Para
   {{~/with~}}
   {{~/if~}}
   {{~/each}}
-
   return req
 }

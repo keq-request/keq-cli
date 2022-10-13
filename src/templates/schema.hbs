@@ -1,7 +1,7 @@
 {{#each
-  (filter
-    (compose (not) (equals name))
-    (uniq (map (ref-name) (pick-ref schema)))
+  (r__filter
+    (r__complement (r__equals name))
+    (r__uniq (r__map (ref-name) (pick-ref schema)))
   )
 }}
 import { {{this}} } from "./{{change-case @root.options.fileNamingStyle this}}"
