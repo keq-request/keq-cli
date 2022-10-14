@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.15](https://www.github.com/keq-request/keq-cli/compare/v3.0.14...v3.0.15) (2022-10-14)
+
+
+### Bug Fixes
+
+* the wrong file is output when the swagger file contentType exists */* ([fdec6dc](https://www.github.com/keq-request/keq-cli/commit/fdec6dcad1863f9bd2fbab474c1d22d4dd4520b1))
+
 ### [3.0.14](https://www.github.com/keq-request/keq-cli/compare/v3.0.13...v3.0.14) (2022-10-13)
 
 
