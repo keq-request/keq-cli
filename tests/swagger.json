@@ -261,7 +261,21 @@
       }
     },
     "/simple": {
-      "get": {}
+      "get": {},
+      "post": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

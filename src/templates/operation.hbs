@@ -16,9 +16,33 @@ import { request } from '{{{options.request}}}'
 import { {{ref-name this}} } from "./components/schemas/{{change-case @root.options.fileNamingStyle (ref-name this)}}"
 {{/each}}
 
+{{~#*inline "ResponseInterfaceName"~}}
+Response_{{code}}_
+{{~#if (r__equals contentType '*/*')~}}
+all
+{{~else~}}
+{{~r__replace '/' '_' contentType~}}
+{{/if}}
+{{~/inline~}}
+
+{{~#*inline "ResponseUnionInterface"~}}
+  {{~#each operation.responses as |responseBody code|~}}
+    {{~#each responseBody.content as |content contentType|~}}
+      {{~> ResponseInterfaceName code=code contentType=contentType~}}
+      {{~#unless @last}} | {{/unless~}}
+    {{~else~}}
+      any
+    {{~/each~}}
+    {{~#unless @last}} | {{/unless~}}
+  {{~else~}}
+    any
+  {{~/each~}}
+{{~/inline~}}
+
 {{#each operation.responses as |responseBody code|~}}
 {{#each responseBody.content as |content contentType|~}}
-{{> t_interface name=(r__join "_" (r__Array "Response" code (r__replace '/' '_' contentType) )) schema=content.schema}}
+{{#r__define "RESPONSE_INTERFACE_NAME"}}{{> ResponseInterfaceName code=code contentType=contentType}}{{/r__define}}
+{{> t_interface name=RESPONSE_INTERFACE_NAME schema=content.schema}}
 {{/each~}}
 {{/each~}}
 
@@ -60,30 +84,10 @@ export function {{operation-id pathname method operation}}(arg?: QueryArg & Para
 {{~/each~}}
 )
 {{~/unless~}}
-): Keq<
-  {{~#each operation.responses as |responseBody code|~}}
-  {{~#each responseBody.content as |content contentType|~}}
-  Response_{{code}}_{{r__replace '/' '_' contentType}}
-  {{~#unless @last}} | {{/unless~}}
-  {{~else~}}
-  any
-  {{~/each~}}
-  {{~#unless @last}} | {{/unless~}}
-  {{~else~}}
-  any
-  {{~/each~}}
-> {
+): Keq<{{> ResponseUnionInterface}}> {
   const req = request.{{method}}
   {{~#unless (r__isEmpty (json-path "$.responses[*].content[*]" operation))~}}
-  <
-    {{~#each operation.responses as |responseBody code|~}}
-    {{~#each responseBody.content as |content contentType|~}}
-    Response_{{code}}_{{r__replace '/' '_' contentType}}
-    {{~#unless @last}} | {{/unless~}}
-    {{~/each~}}
-    {{~#unless @last}} | {{/unless~}}
-    {{~/each~}}
-  >
+  <{{> ResponseUnionInterface}}>
   {{~/unless~}}
   ("{{{r__replace (regexp "{(.*?)}" flag="g") ":$1" pathname}}}")
     .option('module', {
