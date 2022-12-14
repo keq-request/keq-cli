@@ -10,11 +10,19 @@ import { OpenAPIV3 } from 'openapi-types'
 
 export async function compile(moduleName: string, filepath: string, options: Options): Promise<void> {
   if (validUrl.isUri(filepath)) {
-    const res = await request
-      .get(filepath)
-      .option('resolveWithFullResponse')
+    let res: Response
+    let content: string
 
-    let content = await res.text()
+    try {
+      res = await request
+        .get(filepath)
+        .option('resolveWithFullResponse')
+      content = await res.text()
+    } catch (e: any) {
+      throw new Error(String(e['message']))
+    }
+
+
     try {
       content = JSON.parse(content)
     } catch (e) {
