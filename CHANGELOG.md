@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://www.github.com/keq-request/keq-cli/compare/v3.0.15...v3.1.0) (2022-12-14)
+
+
+### Features
+
+* beautify logging and avoid individual modules blocking other modules from compiling ([3e883b9](https://www.github.com/keq-request/keq-cli/commit/3e883b9d88fc9976cfe2de7d8115da62e07b7e7c))
+
+
+### Bug Fixes
+
+* import is lost when $ref is in additionalProperties ([31aedb6](https://www.github.com/keq-request/keq-cli/commit/31aedb6ef1d6fba83618f7d8d49d037407d878d7))
+* the compiled index file wrong, when operationId is "index" ([e264f92](https://www.github.com/keq-request/keq-cli/commit/e264f929d6f877cd18fe339d48f209eec1faad8a))
+
 ### [3.0.15](https://www.github.com/keq-request/keq-cli/compare/v3.0.14...v3.0.15) (2022-10-14)
 
 
