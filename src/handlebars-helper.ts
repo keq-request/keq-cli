@@ -24,25 +24,34 @@ Handlebars.registerPartial('t_interface', readTemplate('interface'))
 HandlebarsRamdaHelpers.register(Handlebars)
 
 function pickRef(schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject): string[] {
+  const refs: string[] = []
   if ('oneOf' in schema && schema.oneOf) {
-    return R.unnest(R.map(pickRef, schema.oneOf))
-  } else if ('anyOf' in schema && schema.anyOf) {
-    return R.unnest(R.map(pickRef, schema.anyOf))
-  } else if ('allOf' in schema && schema.allOf) {
-    return R.unnest(R.map(pickRef, schema.allOf))
-  } else if ('$ref' in schema) {
-    return [schema.$ref]
-  } else if (schema.properties) {
-    return R.unnest(Object.values(schema.properties).map(pickRef))
-  } else if (schema.type === 'array') {
+    refs.push(...R.unnest(R.map(pickRef, schema.oneOf)))
+  }
+  if ('anyOf' in schema && schema.anyOf) {
+    refs.push(...R.unnest(R.map(pickRef, schema.anyOf)))
+  }
+  if ('allOf' in schema && schema.allOf) {
+    refs.push(...R.unnest(R.map(pickRef, schema.allOf)))
+  }
+  if ('$ref' in schema) {
+    refs.push(schema.$ref)
+  }
+  if ('properties' in schema && schema.properties) {
+    refs.push(...R.unnest(Object.values(schema.properties).map(pickRef)))
+  }
+  if ('additionalProperties' in schema && typeof schema.additionalProperties === 'object') {
+    refs.push(...pickRef(schema.additionalProperties))
+  }
+  if ('type' in schema && schema.type === 'array') {
     if (Array.isArray(schema.items)) {
-      return R.unnest(schema.items.map(pickRef))
+      refs.push(...R.unnest(schema.items.map(pickRef)))
     } else {
-      return pickRef(schema.items)
+      refs.push(...pickRef(schema.items))
     }
   }
 
-  return []
+  return R.uniq(refs)
 }
 
 function getRef<T>(ref: OpenAPIV3.ReferenceObject, api: OpenAPIV3.Document): T | undefined {
