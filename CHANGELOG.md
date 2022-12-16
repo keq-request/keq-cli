@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.1](https://www.github.com/keq-request/keq-cli/compare/v3.1.0...v3.1.1) (2022-12-16)
+
+
+### Bug Fixes
+
+* compile wrong when items is undefined ([6a4897d](https://www.github.com/keq-request/keq-cli/commit/6a4897d1541d0f61377a9a96ac3963779bbc7256))
+
 ## [3.1.0](https://www.github.com/keq-request/keq-cli/compare/v3.0.15...v3.1.0) (2022-12-14)
 
 
