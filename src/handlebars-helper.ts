@@ -46,7 +46,7 @@ function pickRef(schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject): st
   if ('type' in schema && schema.type === 'array') {
     if (Array.isArray(schema.items)) {
       refs.push(...R.unnest(schema.items.map(pickRef)))
-    } else {
+    } else if (schema.items) {
       refs.push(...pickRef(schema.items))
     }
   }
