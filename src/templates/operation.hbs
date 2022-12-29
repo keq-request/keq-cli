@@ -89,10 +89,10 @@ export function {{operation-id pathname method operation}}(arg?: QueryArg & Para
   {{~#unless (r__isEmpty (json-path "$.responses[*].content[*]" operation))~}}
   <{{> ResponseUnionInterface}}>
   {{~/unless~}}
-  ("{{{r__replace (regexp "{(.*?)}" flag="g") ":$1" pathname}}}")
+  ("{{{r__replace (regexp "{(.*?)}" flags="g") ":$1" pathname}}}")
     .option('module', {
       name: "{{{moduleName}}}",
-      pathname: "{{{r__replace (regexp "{(.*?)}" flag="g") ":$1" pathname}}}",
+      pathname: "{{{r__replace (regexp "{(.*?)}" flags="g") ":$1" pathname}}}",
     })
 
   {{#if operation.parameters}}
