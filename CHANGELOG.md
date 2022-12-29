@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.2](https://www.github.com/keq-request/keq-cli/compare/v3.1.1...v3.1.2) (2022-12-29)
+
+
+### Bug Fixes
+
+* generate wrong operation when has multiple route params ([fc18ba0](https://www.github.com/keq-request/keq-cli/commit/fc18ba0ed070c2248cf2fa984a376a172ec47647))
+
 ### [3.1.1](https://www.github.com/keq-request/keq-cli/compare/v3.1.0...v3.1.1) (2022-12-16)
 
 
