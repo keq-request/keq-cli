@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.3](https://www.github.com/keq-request/keq-cli/compare/v3.1.2...v3.1.3) (2023-01-03)
+
+
+### Bug Fixes
+
+* support integer type ([c325428](https://www.github.com/keq-request/keq-cli/commit/c325428b05d6ff3456ad1a669cf2dcb2b9ce6c74))
+
 ### [3.1.2](https://www.github.com/keq-request/keq-cli/compare/v3.1.1...v3.1.2) (2022-12-29)
 
 
