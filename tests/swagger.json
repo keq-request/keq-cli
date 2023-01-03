@@ -50,6 +50,10 @@
           "booleanProp": {
             "type": "boolean"
           },
+          "integerProp": {
+            "type": "integer",
+            "format": "int64"
+          },
           "tupleProp": {
             "type": "array",
             "items": [

@@ -1,5 +1,8 @@
-{{#if (or description deprecated interface export)}}
+{{#if (or description deprecated interface export format)}}
 /**
+{{#if format}}
+ * @type {{format}}
+{{/if}}
 {{#if description}}
 {{#each (r__split (newline) description)}}
  * {{this}}
