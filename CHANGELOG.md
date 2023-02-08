@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.4](https://www.github.com/keq-request/keq-cli/compare/v3.1.3...v3.1.4) (2023-02-08)
+
+
+### Bug Fixes
+
+* avoid operation naming duplicates with javascript keywords ([c9ce69a](https://www.github.com/keq-request/keq-cli/commit/c9ce69a2cc1e937f8bf2fda676f77e2cbba6c3e7))
+* the operation do not import schema of parameters ([7a4d265](https://www.github.com/keq-request/keq-cli/commit/7a4d265761b27ad638d39c71d964bc8882ca7495))
+
 ### [3.1.3](https://www.github.com/keq-request/keq-cli/compare/v3.1.2...v3.1.3) (2023-01-03)
 
 
