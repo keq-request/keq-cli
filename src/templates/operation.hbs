@@ -5,9 +5,12 @@ import { request } from '{{{options.request}}}'
     (r__flatten
       (r__map
         (pick-ref)
-        (r__concat
-          (json-path "$.responses[*].content[*].schema" operation)
-          (json-path "$.requestBody.content[*].schema" operation)
+        (r__unnest
+          (r__Array
+            (json-path "$.responses[*].content[*].schema" operation)
+            (json-path "$.requestBody.content[*].schema" operation)
+            (json-path "$.parameters[*].schema" operation)
+          )
         )
       )
     )
