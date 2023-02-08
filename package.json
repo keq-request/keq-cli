@@ -6,11 +6,11 @@
   "bin": "lib/src/cli.js",
   "description": "Transform Swagger 3.0 to the function that send request by keq",
   "scripts": {
-    "test": "npm run clean && npm run build:test && nyc ava",
+    "test": "npm run clean && npm run build:test && c8 ava",
     "test:debug": "ava --verbose",
     "test:update": "ava -u",
-    "report": "npm run build:test && nyc --reporter=html --reporter=text-summary --skip-full ava",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "report": "npm run build:test && c8 --reporter=html --reporter=text-summary --skip-full ava",
+    "coveralls": "c8 report --reporter=text-lcov | coveralls",
     "ci": "git-cz",
     "ca": "git add -A && git-cz -av",
     "release": "standard-version",
@@ -31,8 +31,8 @@
     "prepare": "is-ci || husky install"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.0.2",
-    "@commitlint/config-conventional": "^17.0.2",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
     "ava": "^4.3.0",
@@ -45,13 +45,13 @@
     "is-ci": "^3.0.0",
     "lint-staged": "^11.0.0",
     "mili": "^4.7.5",
-    "nyc": "^15.1.0",
     "sinon": "^14.0.0",
     "standard-version": "^9.3.0",
     "ts-node": "^10.8.1",
     "ttypescript": "^1.5.13",
     "typescript": "^4.7.4",
-    "typescript-transform-paths": "^3.3.1"
+    "typescript-transform-paths": "^3.3.1",
+    "c8": "^7.12.0"
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.0",
