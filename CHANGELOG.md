@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.5](https://www.github.com/keq-request/keq-cli/compare/v3.1.4...v3.1.5) (2023-02-08)
+
+
+### Bug Fixes
+
+* operation name unescaped all special characters ([a9a29c0](https://www.github.com/keq-request/keq-cli/commit/a9a29c0e364b8dcbdf71c4be362d27369c2896b8))
+
 ### [3.1.4](https://www.github.com/keq-request/keq-cli/compare/v3.1.3...v3.1.4) (2023-02-08)
 
 
