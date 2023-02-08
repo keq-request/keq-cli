@@ -18,8 +18,8 @@ export function getSafeOperationName(pathname: string, method: string, operation
   }
 
   return `${method}_${pathname}`
-    .replace('/', '_')
-    .replace('-', '_')
-    .replace(':', '$$')
+    .replace(/\//g, '_')
+    .replace(/-/g, '_')
+    .replace(/:/g, '$$')
     .replace(/{(.+)}/, '$$$1')
 }
