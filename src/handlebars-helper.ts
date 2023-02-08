@@ -4,10 +4,10 @@ import * as R from 'ramda'
 import * as changeCase from 'change-case'
 import * as Handlebars from 'handlebars'
 import { JSONPath } from 'jsonpath-plus'
-import { readTemplate } from './read-template'
+import { readTemplate } from './utils/read-template'
 import { OpenAPIV3 } from 'openapi-types'
-import { getOperationId } from './get-operation-id'
 import * as HandlebarsRamdaHelpers from 'handlebars-ramda-helpers'
+import { getSafeOperationName } from './utils/get-safe-operation-name'
 
 
 Handlebars.registerPartial('t_shape', readTemplate('shape'))
@@ -83,7 +83,7 @@ function parseSchema(schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject,
 
 Handlebars.registerHelper('change-case', (fileNamingStyle: string, filename: string) => changeCase[fileNamingStyle](filename))
 Handlebars.registerHelper('parse-schema', (schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject, options: Handlebars.HelperOptions) => parseSchema(schema, options.data.root.api))
-Handlebars.registerHelper('operation-id', getOperationId)
+Handlebars.registerHelper('get-safe-operation-name', getSafeOperationName)
 
 
 function wrap(fn) {

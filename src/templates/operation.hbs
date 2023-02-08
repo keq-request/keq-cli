@@ -76,7 +76,7 @@ interface HeaderArg {
 
 
 {{> t_comments operation}}
-export function {{operation-id pathname method operation}}(arg?: QueryArg & ParamArg & HeaderArg
+export function {{get-safe-operation-name pathname method operation}}(arg?: QueryArg & ParamArg & HeaderArg
 {{~#unless (r__isNil operation.requestBody.content)}}
  & (
 {{~#each (r__map (r__prop "schema") (r__values operation.requestBody.content))}}

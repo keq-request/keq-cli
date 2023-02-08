@@ -280,6 +280,11 @@
           }
         }
       }
+    },
+    "/keyword": {
+      "delete": {
+        "operationId": "delete"
+      }
     }
   }
 }

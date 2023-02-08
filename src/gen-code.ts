@@ -10,8 +10,8 @@ import Handlebars from './handlebars-helper'
 import { Options } from './interface/options'
 import { File } from './interface/file'
 import { OpenAPIV3 } from 'openapi-types'
-import { readTemplate } from './read-template'
-import { getOperationId } from './get-operation-id'
+import { readTemplate } from './utils/read-template'
+import { getSafeOperationName } from './utils/get-safe-operation-name'
 
 
 const readAndCompileTemplate = (filename: string): HandlebarsTemplateDelegate => Handlebars.compile(readTemplate(filename))
@@ -96,7 +96,7 @@ export async function compile(moduleName: string, json: string | OpenAPIV3.Docum
             },
           })
 
-          const filename = formatFilename(getOperationId(pathname, method, operation))
+          const filename = formatFilename(getSafeOperationName(pathname, method, operation))
           const filepath = path.join(output, `${filename}.ts`)
 
           files.push({
