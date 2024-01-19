@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/keq-request/keq-cli/compare/v3.1.5...v4.0.0) (2024-01-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* Drop support node@16
+
+### Features
+
+* update dependencies,docs and build tools ([4ee616b](https://github.com/keq-request/keq-cli/commit/4ee616bc5710448c7268506e89019b645a622130))
+
+
+### Bug Fixes
+
+* operation cannot be generated correctly when allOf/oneOf/anyOf exits in the request body ([c2ddb7f](https://github.com/keq-request/keq-cli/commit/c2ddb7fee555f30cb1e60c4acc7a05bd997ac14d))
+
 ### [3.1.5](https://www.github.com/keq-request/keq-cli/compare/v3.1.4...v3.1.5) (2023-02-08)
 
 
