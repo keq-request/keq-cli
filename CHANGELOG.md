@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.6](https://www.github.com/keq-request/keq-cli/compare/v3.1.5...v3.1.6) (2024-01-19)
+
+
+### Bug Fixes
+
+* operation cannot be generated correctly when allOf/oneOf/anyOf exits in the request body ([c2ddb7f](https://www.github.com/keq-request/keq-cli/commit/c2ddb7fee555f30cb1e60c4acc7a05bd997ac14d))
+
 ### [3.1.5](https://www.github.com/keq-request/keq-cli/compare/v3.1.4...v3.1.5) (2023-02-08)
 
 
