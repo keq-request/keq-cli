@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
+import Ajv from 'ajv'
+import * as chalk from 'chalk'
 import { Command, Option } from 'commander'
-import { build, BuildConfig } from './build'
-import { compile } from './compile'
 import { cosmiconfig } from 'cosmiconfig'
 import { CosmiconfigResult } from 'cosmiconfig/dist/types'
-import Ajv from 'ajv'
+import { BuildConfig, build } from './build'
+import { compile } from './compile'
 import * as configSchema from './schema/config.json'
-import * as chalk from 'chalk'
 
 
 const program = new Command()

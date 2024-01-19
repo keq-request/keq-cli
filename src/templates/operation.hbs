@@ -116,14 +116,48 @@ export function {{get-safe-operation-name pathname method operation}}(arg?: Quer
   {{/each~}}
   {{/if}}
 
-  {{#each (r__values operation.requestBody.content)}}
-  {{~#if this.schema}}
-  {{#with (parse-schema this.schema)}}
-  {{#each properties}}
+  {{~#each operation.requestBody.content}}
+  {{~#if (r__and (r__equals @key "application/json") this.schema)}}
+
+    {{~#*inline "SchemaSend"}}
+      {{#each properties}}
   if (arg && "{{@key}}" in arg) req.send({ "{{@key}}": arg["{{@key}}"] })
-  {{/each~}}
-  {{~/with~}}
-  {{~/if~}}
+      {{/each}}
+    {{/inline}}
+
+
+    {{~#*inline "send"}}
+      {{~#if (is-ref this)}}
+        {{~#with (get-schema-by-ref this)}}
+          {{~> send this}}
+        {{~/with}}
+      {{~else if this.allOf}}
+        {{#each this.allOf}}
+          {{~#with (get-schema-by-ref this)}}
+            {{~> send this}}
+          {{~/with}}
+        {{/each}}
+      {{~else if this.oneOf}}
+        {{#each this.oneOf}}
+          {{~#with (get-schema-by-ref this)}}
+            {{~> send this}}
+          {{~/with}}
+        {{/each}}
+      {{~else if this.anyOf}}
+        {{#each this.anyOf}}
+          {{~#with (get-schema-by-ref this)}}
+            {{~> send this}}
+          {{~/with}}
+        {{/each}}
+      {{~else}}
+        {{~> SchemaSend this}}
+      {{~/if}}
+    {{/inline}}
+
+    {{~> send this.schema}}
+
+  {{~/if}}
   {{~/each}}
+
   return req
 }

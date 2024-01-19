@@ -1,8 +1,8 @@
-import * as R from 'ramda'
 import * as chalk from 'chalk'
+import * as R from 'ramda'
 import { compile } from './compile'
-import { Options, NamingStyle } from './interface/options'
 import { Exception } from './exception'
+import { NamingStyle, Options } from './interface/options'
 
 
 export interface BuildConfig {
@@ -49,6 +49,7 @@ export async function build(config: BuildConfig): Promise<void> {
       if (e instanceof Exception) {
         throw e
       } else if (e instanceof Error) {
+        console.log(e)
         throw new Exception(moduleName, e.message)
       } else if (typeof e === 'string') {
         throw new Exception(moduleName, e)
