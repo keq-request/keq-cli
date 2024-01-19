@@ -1,13 +1,17 @@
 #!/usr/bin/env node
 
 import Ajv from 'ajv'
-import * as chalk from 'chalk'
+import chalk from 'chalk'
 import { Command, Option } from 'commander'
 import { cosmiconfig } from 'cosmiconfig'
 import { CosmiconfigResult } from 'cosmiconfig/dist/types'
+import fs from 'fs-extra'
+import path from 'path'
 import { BuildConfig, build } from './build'
 import { compile } from './compile'
-import * as configSchema from './schema/config.json'
+
+
+const configSchema = fs.readJSONSync(path.resolve(__dirname, 'schema/config.json'), 'utf-8')
 
 
 const program = new Command()
@@ -19,7 +23,7 @@ const validate = ajv.compile(configSchema)
 program
   .command('build')
   .option('-c --config', 'The build config file')
-  .action(async options => {
+  .action(async (options) => {
     let result: CosmiconfigResult
     if (options.config) {
       result = await explore.load(options.config)
@@ -43,15 +47,16 @@ program
   .description('Build the swagger file')
   .requiredOption('-o, --outdir <outdir>', 'The output directory')
   .requiredOption('-m --module-name <module_name>', 'The module name')
-  .addOption(new Option('--file-naming-style <fileNamingStyle>').choices(['camelCase' , 'capitalCase' , 'constantCase' , 'dotCase' , 'headerCase' , 'noCase' , 'paramCase' , 'pascalCase' , 'pathCase' , 'sentenceCase' , 'snakeCase']).default('snakeCase'))
+  .addOption(new Option('--file-naming-style <fileNamingStyle>').choices(['camelCase', 'capitalCase', 'constantCase', 'dotCase', 'headerCase', 'noCase', 'paramCase', 'pascalCase', 'pathCase', 'sentenceCase', 'snakeCase'])
+    .default('snakeCase'))
   .option('--request <request>', 'The request package used in compiled result')
   .option('--no-strict', 'disable strict mode', true)
-  .action(async(filepath, options) => {
+  .action(async (filepath, options) => {
     await compile(options.moduleName, filepath, options)
   })
 
 async function main(): Promise<void> {
-  program.on('command:*', function(operands) {
+  program.on('command:*', function (operands) {
     throw new Error(`Unknown command '${String(operands[0])}'`)
   })
 

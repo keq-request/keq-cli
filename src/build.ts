@@ -1,4 +1,4 @@
-import * as chalk from 'chalk'
+import chalk from 'chalk'
 import * as R from 'ramda'
 import { compile } from './compile'
 import { Exception } from './exception'
@@ -22,7 +22,7 @@ export interface BuildConfig {
 }
 
 export async function build(config: BuildConfig): Promise<void> {
-  const promises = Object.keys(config.modules).map(async moduleName => {
+  const promises = Object.keys(config.modules).map(async (moduleName) => {
     try {
       let env: Record<string, string> = {}
 
