@@ -5,7 +5,7 @@
   "types": "dist/esm/src/index.d.ts",
   "bin": "dist/umd/src/cli.js",
   "description": "Transform Swagger 3.0 to the function that send request by keq",
-  "version": "3.1.5",
+  "version": "4.0.0",
   "directories": {
     "lib": "lib",
     "test": "test"
