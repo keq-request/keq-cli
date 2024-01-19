@@ -1,9 +1,9 @@
-import * as SwaggerParser from '@apidevtools/swagger-parser'
-import * as chalk from 'chalk'
+import SwaggerParser from '@apidevtools/swagger-parser'
+import chalk from 'chalk'
 import * as changeCase from 'change-case'
 import * as fs from 'fs-extra'
 import { OpenAPIV3 } from 'openapi-types'
-import * as pMap from 'p-map'
+import pMap from 'p-map'
 import * as path from 'path'
 import * as R from 'ramda'
 import * as semver from 'semver'
@@ -12,12 +12,11 @@ import { Options } from './interface/options'
 import { getSafeOperationName } from './utils/get-safe-operation-name'
 import { readTemplate } from './utils/read-template'
 
-// import Handlebars from './handlebars-helper.js'
-import * as Handlebars from 'handlebars'
+import Handlebars from 'handlebars'
 import './handlebar/register-helper.js'
 import './handlebar/register-partial.js'
 
-const readAndCompileTemplate = (filename: string): HandlebarsTemplateDelegate => Handlebars.compile(readTemplate(filename))
+const readAndCompileTemplate = (filename: string): ReturnType<typeof Handlebars.compile> => Handlebars.compile(readTemplate(filename))
 const templates = {
   t_schema: readAndCompileTemplate('schema'),
   t_schema_exports: readAndCompileTemplate('schema-exports'),
@@ -82,10 +81,10 @@ export async function compile(moduleName: string, json: string | OpenAPIV3.Docum
   }
 
   if (api.paths && !R.isEmpty(api.paths)) {
-    for (const [pathname, pathItem] of R.toPairs(api.paths)) {
+    for (const [pathname, pathItem] of Object.entries(api.paths)) {
       if (!pathItem) continue
 
-      for (const [method, operation] of R.toPairs(pathItem)) {
+      for (const [method, operation] of Object.entries(pathItem)) {
         if (typeof operation === 'object' && !Array.isArray(operation)) {
           const fileContent = templates.t_operation({
             api,
@@ -136,7 +135,7 @@ export async function genCode(moduleName: string, json: string | OpenAPIV3.Docum
 
   await pMap(
     files,
-    async file => {
+    async (file) => {
       await fs.ensureFile(file.path)
       await fs.writeFile(file.path, file.content)
     },

@@ -1,5 +1,5 @@
 import { CustomError } from 'ts-custom-error'
-import * as wrap from 'word-wrap'
+import wrap from 'word-wrap'
 
 
 export class Exception extends CustomError {

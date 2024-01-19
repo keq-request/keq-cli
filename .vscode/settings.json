@@ -1,11 +1,5 @@
 {
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "eslint.validate": [
-    "typescript",
-    "typescriptreact"
-  ],
-  "cSpell.words": [
-    "apidevtools",
-    "APIV"
-  ]
+  "[markdown]": {
+    "editor.formatOnSave": false
+  }
 }

@@ -1,8 +1,0 @@
-outdir: ./output
-modules:
-  userService: ./test.json
-url:
-  prod:
-    userService: http://user.service.com
-  dev:
-    userService: http://127.0.0.1/

@@ -6,12 +6,13 @@
 <h2 align="center" style="text-align: center">KEQ-CLI</h2>
 <!-- title -->
 
-[![version](https://img.shields.io/npm/v/keq-cli.svg?style=flat-square)](https://www.npmjs.com/package/keq-cli)
-[![downloads](https://img.shields.io/npm/dm/keq-cli.svg?style=flat-square)](https://www.npmjs.com/package/keq-cli)
-[![license](https://img.shields.io/npm/l/keq-cli.svg?style=flat-square)](https://www.npmjs.com/package/keq-cli)
-[![dependencies](https://img.shields.io/librariesio/github/keq-request/keq-cli.svg?style=flat-square)](https://www.npmjs.com/package/keq-cli)
-[![coveralls](https://img.shields.io/coveralls/github/keq-request/keq-cli.svg?style=flat-square)](https://coveralls.io/github/keq-request/keq-cli)
+[npm]: https://www.npmjs.com/package/keq-cli
 
+[![version](https://img.shields.io/npm/v/keq-cli.svg?logo=npm&style=for-the-badge)][npm]
+[![downloads](https://img.shields.io/npm/dm/keq-cli.svg?logo=npm&style=for-the-badge)][npm]
+[![dependencies](https://img.shields.io/librariesio/release/npm/keq-cli?logo=npm&style=for-the-badge)][npm]
+[![license](https://img.shields.io/npm/l/keq-cli.svg?logo=github&style=for-the-badge)][npm]
+[![Codecov](https://img.shields.io/codecov/c/gh/keq-request/keq-cli?logo=codecov&token=PLF0DT6869&style=for-the-badge)](https://codecov.io/gh/keq-request/keq-cli)
 
 
 <!-- description -->
@@ -106,16 +107,3 @@ The json configuration file Example:
   }
 }
 ```
-
-## Sponsor
-
-Support code development on patron.
-
-[![patron](https://c5.patreon.com/external/logo/become_a_patron_button@2x.png)](https://www.patreon.com/bePatron?u=22478507)
-<!-- addition -->
-
-
-## Contributing & Development
-
-If there is any doubt, it is very welcome to discuss the issue together.
-Please read [Contributor Covenant Code of Conduct](.github/CODE_OF_CONDUCT.md) and [CONTRIBUTING](.github/CONTRIBUTING.md).
