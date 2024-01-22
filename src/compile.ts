@@ -1,11 +1,11 @@
 import * as fs from 'fs-extra'
 import * as yaml from 'js-yaml'
-import * as path from 'path'
-import { Options } from './interface/options'
-import * as validUrl from 'valid-url'
 import { request } from 'keq'
-import { genCode } from './gen-code'
 import { OpenAPIV3 } from 'openapi-types'
+import * as path from 'path'
+import * as validUrl from 'valid-url'
+import { genCode } from './gen-code'
+import { Options } from './interface/options'
 
 
 export async function compile(moduleName: string, filepath: string, options: Options): Promise<void> {
@@ -19,7 +19,11 @@ export async function compile(moduleName: string, filepath: string, options: Opt
         .option('resolveWithFullResponse')
       content = await res.text()
     } catch (e: any) {
-      throw new Error(String(e['message']))
+      if (e instanceof Error) {
+        e.message = `Unable get the swagger file from ${filepath}. ${e.message}`
+      }
+
+      throw e
     }
 
 
