@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.1](https://github.com/keq-request/keq-cli/compare/v4.0.0...v4.0.1) (2024-01-22)
+
+
+### Bug Fixes
+
+* wrong peerDependencies ([623da11](https://github.com/keq-request/keq-cli/commit/623da11d8f5081ba4e45ac7f8a3df2106890c307))
+
+
+### Performance Improvements
+
+* human error message ([16874a3](https://github.com/keq-request/keq-cli/commit/16874a34d56bba4f747b20aba32439cc0ae02628))
+
 ## [4.0.0](https://github.com/keq-request/keq-cli/compare/v3.1.5...v4.0.0) (2024-01-19)
 
 
