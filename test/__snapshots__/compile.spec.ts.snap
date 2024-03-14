@@ -173,6 +173,12 @@ export * from "./all_of_schema"
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
 
+
+interface ResponseMap {
+  200: unknown
+}
+
+
 interface QueryArg {
     requiredQueryProp: number
     optionalQueryProp?: number
@@ -187,8 +193,9 @@ interface HeaderArg {
 }
 
 
-export function get(arg?: QueryArg & ParamArg & HeaderArg): Keq<any> {
-  const req = request.get("/:id")
+export function get<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg): Keq<ResponseMap[STATUS]> {
+  const req = request.get<ResponseMap[STATUS]>
+  ("/:id")
     .option('module', {
       name: "test",
       pathname: "/:id",
@@ -212,7 +219,11 @@ export function get(arg?: QueryArg & ParamArg & HeaderArg): Keq<any> {
 import { request } from 'keq'
 import { RootSchema } from "./components/schemas/root_schema"
 
-type Response_200_application_json = RootSchema
+
+interface ResponseMap {
+  200: RootSchema
+}
+
 
 interface QueryArg {
 }
@@ -225,8 +236,9 @@ interface HeaderArg {
 }
 
 
-export function post__$id(arg?: QueryArg & ParamArg & HeaderArg & (RootSchema)): Keq<Response_200_application_json> {
-  const req = request.post<Response_200_application_json>("/:id")
+export function post__$id<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg & (RootSchema)): Keq<ResponseMap[STATUS]> {
+  const req = request.post<ResponseMap[STATUS]>
+  ("/:id")
     .option('module', {
       name: "test",
       pathname: "/:id",
@@ -260,6 +272,11 @@ export function post__$id(arg?: QueryArg & ParamArg & HeaderArg & (RootSchema)):
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
 
+
+interface ResponseMap {
+}
+
+
 interface QueryArg {
 }
 
@@ -270,8 +287,9 @@ interface HeaderArg {
 }
 
 
-export function get__simple(arg?: QueryArg & ParamArg & HeaderArg): Keq<any> {
-  const req = request.get("/simple")
+export function get__simple<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg): Keq<ResponseMap[STATUS]> {
+  const req = request.get<ResponseMap[STATUS]>
+  ("/simple")
     .option('module', {
       name: "test",
       pathname: "/simple",
@@ -288,8 +306,12 @@ export function get__simple(arg?: QueryArg & ParamArg & HeaderArg): Keq<any> {
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
 
-interface Response_200_all {
+
+interface ResponseMap {
+  200: {
 }
+}
+
 
 interface QueryArg {
 }
@@ -301,8 +323,9 @@ interface HeaderArg {
 }
 
 
-export function post__simple(arg?: QueryArg & ParamArg & HeaderArg): Keq<Response_200_all> {
-  const req = request.post<Response_200_all>("/simple")
+export function post__simple<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg): Keq<ResponseMap[STATUS]> {
+  const req = request.post<ResponseMap[STATUS]>
+  ("/simple")
     .option('module', {
       name: "test",
       pathname: "/simple",
@@ -319,6 +342,11 @@ export function post__simple(arg?: QueryArg & ParamArg & HeaderArg): Keq<Respons
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
 
+
+interface ResponseMap {
+}
+
+
 interface QueryArg {
 }
 
@@ -329,8 +357,9 @@ interface HeaderArg {
 }
 
 
-export function delete__keyword(arg?: QueryArg & ParamArg & HeaderArg): Keq<any> {
-  const req = request.delete("/keyword")
+export function delete__keyword<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg): Keq<ResponseMap[STATUS]> {
+  const req = request.delete<ResponseMap[STATUS]>
+  ("/keyword")
     .option('module', {
       name: "test",
       pathname: "/keyword",

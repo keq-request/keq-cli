@@ -35,7 +35,8 @@
     "prepublishOnly": "npm run build",
     "release": "standard-version",
     "release:alpha": "standard-version --prerelease alpha",
-    "test": "jest"
+    "test": "jest",
+    "test:update": "jest --updateSnapshot"
   },
   "devDependencies": {
     "@buka/eslint-config": "^1.6.0",

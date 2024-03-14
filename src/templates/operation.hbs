@@ -19,35 +19,16 @@ import { request } from '{{{options.request}}}'
 import { {{ref-name this}} } from "./components/schemas/{{change-case @root.options.fileNamingStyle (ref-name this)}}"
 {{/each}}
 
-{{~#*inline "ResponseInterfaceName"~}}
-Response_{{code}}_
-{{~#if (r__equals contentType '*/*')~}}
-all
-{{~else~}}
-{{~r__replace '/' '_' contentType~}}
-{{/if}}
-{{~/inline~}}
 
-{{~#*inline "ResponseUnionInterface"~}}
-  {{~#each operation.responses as |responseBody code|~}}
-    {{~#each responseBody.content as |content contentType|~}}
-      {{~> ResponseInterfaceName code=code contentType=contentType~}}
-      {{~#unless @last}} | {{/unless~}}
-    {{~else~}}
-      any
-    {{~/each~}}
-    {{~#unless @last}} | {{/unless~}}
-  {{~else~}}
-    any
-  {{~/each~}}
-{{~/inline~}}
-
-{{#each operation.responses as |responseBody code|~}}
-{{#each responseBody.content as |content contentType|~}}
-{{#r__define "RESPONSE_INTERFACE_NAME"}}{{> ResponseInterfaceName code=code contentType=contentType}}{{/r__define}}
-{{> t_interface name=RESPONSE_INTERFACE_NAME schema=content.schema}}
-{{/each~}}
-{{/each~}}
+interface ResponseMap {
+  {{#each operation.responses as |responseBody code|}}
+  {{code}}: {{#each responseBody.content as |content contentType|~}}
+      {{> t_shape content.schema}}{{#unless @last}} | {{/unless}}
+    {{else~}}
+      unknown
+    {{/each}}
+  {{/each}}
+}
 
 {{#*inline "parameterProperty"}}
   {{name}}{{#unless required}}?{{/unless}}: {{> t_shape schema}}
@@ -79,7 +60,7 @@ interface HeaderArg {
 
 
 {{> t_comments operation}}
-export function {{get-safe-operation-name pathname method operation}}(arg?: QueryArg & ParamArg & HeaderArg
+export function {{get-safe-operation-name pathname method operation}}<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg
 {{~#unless (r__isNil operation.requestBody.content)}}
  & (
 {{~#each (r__map (r__prop "schema") (r__values operation.requestBody.content))}}
@@ -87,11 +68,8 @@ export function {{get-safe-operation-name pathname method operation}}(arg?: Quer
 {{~/each~}}
 )
 {{~/unless~}}
-): Keq<{{> ResponseUnionInterface}}> {
-  const req = request.{{method}}
-  {{~#unless (r__isEmpty (json-path "$.responses[*].content[*]" operation))~}}
-  <{{> ResponseUnionInterface}}>
-  {{~/unless~}}
+): Keq<ResponseMap[STATUS]> {
+  const req = request.{{method}}<ResponseMap[STATUS]>
   ("{{{r__replace (regexp "{(.*?)}" flags="g") ":$1" pathname}}}")
     .option('module', {
       name: "{{{moduleName}}}",
