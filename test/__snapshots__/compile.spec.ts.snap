@@ -13,46 +13,46 @@ import { ObjectWithAdditionalPropertiesSchema } from "./object_with_additional_p
  * @export
  */
 export interface RootSchema {
-  unknownProp?: any
-  constProp: "constValue"
-  enumProp?: "str" | 1 | {
+  "unknownProp"?: any
+  "constProp": "constValue"
+  "enumProp"?: "str" | 1 | {
     "key": true
   }
   /**
    * @deprecated
    */
-  deprecatedStringProp?: string
+  "deprecatedStringProp"?: string
   /**
    * Deprecated Number Prop
    *
    * @deprecated
    */
-  deprecatedNumberProp?: string
-  emptyObjectProp?: {
+  "deprecatedNumberProp"?: string
+  "emptyObjectProp"?: {
   }
   /**
    * This is String Prop
    */
-  stringProp?: string
+  "stringProp"?: string
   /**
    * Multiple line description
    * This is Number Prop
    */
-  numberProp?: number
-  booleanProp?: boolean
+  "numberProp"?: number
+  "booleanProp"?: boolean
   /**
    * @type int64
    */
-  integerProp?: number
-  tupleProp?: [string, number, boolean]
-  stringPropWithMaxLength?: string
-  arrayOfStringsProp?: (string)[]
-  arrayOfNullableRefProp?: (ObjectWithSpecifiedTypeAdditionalPropertiesSchema | null)[]
-  refProp?: ArrayOfStringsSchema
-  objectProp?: {
-    stringPropRequired: string
-    stringPropNullable?: string | null
-    refPropNullable?: ObjectWithAdditionalPropertiesSchema | null
+  "integerProp"?: number
+  "tupleProp"?: [string, number, boolean]
+  "stringPropWithMaxLength"?: string
+  "arrayOfStringsProp"?: (string)[]
+  "arrayOfNullableRefProp"?: (ObjectWithSpecifiedTypeAdditionalPropertiesSchema | null)[]
+  "refProp"?: ArrayOfStringsSchema
+  "objectProp"?: {
+    "stringPropRequired": string
+    "stringPropNullable"?: string | null
+    "refPropNullable"?: ObjectWithAdditionalPropertiesSchema | null
   }
 }
 ",
@@ -115,7 +115,7 @@ export type RefSchema = ArrayOfStringsSchema
  * @export
  */
 export type NullableObjectSchema = {
-  stringProp?: string
+  "stringProp"?: string
 } | null
 ",
     "name": "nullable_object_schema",
@@ -147,9 +147,9 @@ export type AnyOfSchema = string | number | boolean
  * @export
  */
 export type AllOfSchema = {
-  stringProp?: string
+  "stringProp"?: string
 } & {
-  numberProp?: number
+  "numberProp"?: number
 }
 ",
     "name": "all_of_schema",
