@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.2](https://github.com/keq-request/keq-cli/compare/v4.0.1...v4.0.2) (2024-03-14)
+
+
+### Bug Fixes
+
+* hyphens in object keys will cause the generated interface exception ([e0e718e](https://github.com/keq-request/keq-cli/commit/e0e718ea9575a468e262ca8752003487a7bd9202))
+
 ## [4.0.1](https://github.com/keq-request/keq-cli/compare/v4.0.0...v4.0.1) (2024-01-22)
 
 
