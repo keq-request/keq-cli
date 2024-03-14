@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/keq-request/keq-cli/compare/v4.0.2...v4.1.0) (2024-03-14)
+
+
+### Features
+
+* support multiple status schema ([94c06e4](https://github.com/keq-request/keq-cli/commit/94c06e4340078830aac743cabdec3c462600b99b))
+
 ## [4.0.2](https://github.com/keq-request/keq-cli/compare/v4.0.1...v4.0.2) (2024-03-14)
 
 
