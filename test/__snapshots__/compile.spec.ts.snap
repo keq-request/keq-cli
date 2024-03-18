@@ -175,21 +175,21 @@ import { request } from 'keq'
 
 
 interface ResponseMap {
-  200: unknown
+  "200": unknown
 }
 
 
 interface QueryArg {
-    requiredQueryProp: number
-    optionalQueryProp?: number
+    "requiredQueryProp": number
+    "optionalQueryProp"?: number
 }
 
 interface ParamArg {
-    id: string
+    "id": string
 }
 
 interface HeaderArg {
-    headerProp: string
+    "headerProp": string
 }
 
 
@@ -221,7 +221,7 @@ import { RootSchema } from "./components/schemas/root_schema"
 
 
 interface ResponseMap {
-  200: RootSchema
+  "200": RootSchema
 }
 
 
@@ -229,7 +229,7 @@ interface QueryArg {
 }
 
 interface ParamArg {
-    id: string
+    "id": string
 }
 
 interface HeaderArg {
@@ -308,7 +308,7 @@ import { request } from 'keq'
 
 
 interface ResponseMap {
-  200: {
+  "200": {
 }
 }
 

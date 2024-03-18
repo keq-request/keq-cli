@@ -22,7 +22,7 @@ import { {{ref-name this}} } from "./components/schemas/{{change-case @root.opti
 
 interface ResponseMap {
   {{#each operation.responses as |responseBody code|}}
-  {{code}}: {{#each responseBody.content as |content contentType|~}}
+  "{{code}}": {{#each responseBody.content as |content contentType|~}}
       {{> t_shape content.schema}}{{#unless @last}} | {{/unless}}
     {{else~}}
       unknown
@@ -31,7 +31,7 @@ interface ResponseMap {
 }
 
 {{#*inline "parameterProperty"}}
-  {{name}}{{#unless required}}?{{/unless}}: {{> t_shape schema}}
+  "{{name}}"{{#unless required}}?{{/unless}}: {{> t_shape schema}}
 {{/inline}}
 
 interface QueryArg {
