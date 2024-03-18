@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.1](https://github.com/keq-request/keq-cli/compare/v4.1.0...v4.1.1) (2024-03-18)
+
+
+### Bug Fixes
+
+* middle line in the header will cause errors in the generated code ([acb0426](https://github.com/keq-request/keq-cli/commit/acb04265076e758534ccf0111f3c322d451fa61a))
+
 ## [4.1.0](https://github.com/keq-request/keq-cli/compare/v4.0.2...v4.1.0) (2024-03-14)
 
 
