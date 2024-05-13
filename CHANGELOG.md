@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.2](https://github.com/keq-request/keq-cli/compare/v4.1.1...v4.1.2) (2024-05-13)
+
+
+### Performance Improvements
+
+* beautify operation code ([7441b41](https://github.com/keq-request/keq-cli/commit/7441b413cec6ff7668b4d499155ba7b74c67963b))
+
 ## [4.1.1](https://github.com/keq-request/keq-cli/compare/v4.1.0...v4.1.1) (2024-03-18)
 
 
