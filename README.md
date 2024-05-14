@@ -23,14 +23,13 @@ Transform Swagger 3.0 to the function that send request by [keq](https://github.
 
 ## Usage
 
-<!-- usage -->
-
 ### Prepare
 
 You need prepare a [Swagger 3.0 file](./tests/swagger.json) first.
 
 ### Compile
 
+`keq-cli compile` is use to compile a local swagger file.
 
 ```bash
 npx keq-cli compile  -o ./output -m userService ./swagger.json
@@ -54,23 +53,26 @@ import { setHeader } from 'keq-header'
 import proxy from 'keq-proxy'
 import updateUser from './outdir/userService/update_user'
 
+// Set Request Origin
+request.bseOrigin('http://127.0.0.1:8080')
 
 request
+  .useRouter()
   // set your middleware for module
-  .use(mount.module('userService'), setHeader('x-custom-header', 'custom_value'))
-  // set modlue request url
-  .use(proxy.module('userService', 'http://example.com/api'))
+  .module('userService', setHeader('x-custom-header', 'custom_value'))
+  // set modlue request base url for module
+  .module('userService', setBaseUrl('http://example.com/api'))
 
 
 
 async function action() {
-  await updateUser({ id: 1, name: 'Marry' })
+  await updateUser({
+    id: 1,
+    name: 'Marry',
+  })
 }
 ```
 
-<!-- usage -->
-
-<!-- addition -->
 ## Configuration file
 
 
