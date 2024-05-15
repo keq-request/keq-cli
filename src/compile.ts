@@ -6,6 +6,7 @@ import * as path from 'path'
 import * as validUrl from 'valid-url'
 import { genCode } from './gen-code'
 import { Options } from './interface/options'
+import swaggerConverter from 'swagger2openapi'
 
 
 export async function compile(moduleName: string, filepath: string, options: Options): Promise<void> {
@@ -27,13 +28,31 @@ export async function compile(moduleName: string, filepath: string, options: Opt
     }
 
 
+    let swagger
     try {
-      content = JSON.parse(content)
+      swagger = JSON.parse(content)
     } catch (e) {
       throw new Error(`The swagger file get from url isn't json: ${filepath}`)
     }
 
-    await genCode(moduleName, content, options)
+    if (typeof swagger === 'object' && swagger['swagger'] === '2.0') {
+      try {
+        swagger = await new Promise<any>((resolve, reject) => {
+          swaggerConverter.convertObj(
+            swagger,
+            { patch: true, warnOnly: true, direct: true },
+            (err, options) => {
+              if (err) reject(err)
+              else resolve(options.openapi)
+            }
+        )})
+      } catch (err) {
+        console.error(err)
+        throw new Error(`The swagger file cannot be converted to OpenAPI 3.0: ${filepath}`)
+      }
+    }
+
+    await genCode(moduleName, swagger, options)
   } else {
     const fileExt = path.extname(filepath)
     const content = await fs.readFile(filepath, 'utf8')
