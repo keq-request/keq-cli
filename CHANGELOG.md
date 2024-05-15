@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.0](https://github.com/keq-request/keq-cli/compare/v4.1.3...v4.2.0) (2024-05-15)
+
+
+### Features
+
+* auto covert swagger@2 to swagger@3 ([391d13d](https://github.com/keq-request/keq-cli/commit/391d13d0e3e11f4d58665c98c403139dfdea367d))
+
 ## [4.1.3](https://github.com/keq-request/keq-cli/compare/v4.1.2...v4.1.3) (2024-05-14)
 
 
