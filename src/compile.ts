@@ -40,12 +40,13 @@ export async function compile(moduleName: string, filepath: string, options: Opt
         swagger = await new Promise<any>((resolve, reject) => {
           swaggerConverter.convertObj(
             swagger,
-            { patch: true, warnOnly: true, direct: true },
+            { patch: true, warnOnly: true },
             (err, options) => {
               if (err) reject(err)
               else resolve(options.openapi)
             }
-        )})
+          )
+        })
       } catch (err) {
         console.error(err)
         throw new Error(`The swagger file cannot be converted to OpenAPI 3.0: ${filepath}`)
