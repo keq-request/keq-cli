@@ -194,8 +194,7 @@ interface HeaderArg {
 
 
 export function get<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg): Keq<ResponseMap[STATUS]> {
-  const req = request.get<ResponseMap[STATUS]>
-  ("/:id")
+  const req = request.get<ResponseMap[STATUS]>("/:id")
     .option('module', {
       name: "test",
       pathname: "/:id",
@@ -237,8 +236,7 @@ interface HeaderArg {
 
 
 export function post__$id<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg & (RootSchema)): Keq<ResponseMap[STATUS]> {
-  const req = request.post<ResponseMap[STATUS]>
-  ("/:id")
+  const req = request.post<ResponseMap[STATUS]>("/:id")
     .option('module', {
       name: "test",
       pathname: "/:id",
@@ -288,8 +286,7 @@ interface HeaderArg {
 
 
 export function get__simple<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg): Keq<ResponseMap[STATUS]> {
-  const req = request.get<ResponseMap[STATUS]>
-  ("/simple")
+  const req = request.get<ResponseMap[STATUS]>("/simple")
     .option('module', {
       name: "test",
       pathname: "/simple",
@@ -324,8 +321,7 @@ interface HeaderArg {
 
 
 export function post__simple<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg): Keq<ResponseMap[STATUS]> {
-  const req = request.post<ResponseMap[STATUS]>
-  ("/simple")
+  const req = request.post<ResponseMap[STATUS]>("/simple")
     .option('module', {
       name: "test",
       pathname: "/simple",
@@ -358,8 +354,7 @@ interface HeaderArg {
 
 
 export function delete__keyword<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg): Keq<ResponseMap[STATUS]> {
-  const req = request.delete<ResponseMap[STATUS]>
-  ("/keyword")
+  const req = request.delete<ResponseMap[STATUS]>("/keyword")
     .option('module', {
       name: "test",
       pathname: "/keyword",
