@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.1](https://github.com/keq-request/keq-cli/compare/v4.2.0...v4.2.1) (2024-05-16)
+
+
+### Bug Fixes
+
+* swagger@2 maybe outpu nothing ([10fc715](https://github.com/keq-request/keq-cli/commit/10fc715d354f78e9cb7b3a6db19cc8030376d779))
+
 ## [4.2.0](https://github.com/keq-request/keq-cli/compare/v4.1.3...v4.2.0) (2024-05-15)
 
 
