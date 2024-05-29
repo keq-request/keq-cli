@@ -7,6 +7,7 @@ import * as validUrl from 'valid-url'
 import { genCode } from './gen-code'
 import { Options } from './interface/options'
 import swaggerConverter from 'swagger2openapi'
+import { fixSwagger } from 'swagger-fix'
 
 
 export async function compile(moduleName: string, filepath: string, options: Options): Promise<void> {
@@ -34,7 +35,7 @@ export async function compile(moduleName: string, filepath: string, options: Opt
     } catch (e) {
       throw new Error(`The swagger file get from url isn't json: ${filepath}`)
     }
-
+    swagger = fixSwagger(swagger)
     if (typeof swagger === 'object' && swagger['swagger'] === '2.0') {
       try {
         swagger = await new Promise<any>((resolve, reject) => {
