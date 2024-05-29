@@ -80,6 +80,7 @@
     "p-map": "^4.0.0",
     "ramda": "^0.29.1",
     "semver": "^7.3.5",
+    "swagger-fix": "^1.0.0",
     "swagger2openapi": "^7.0.8",
     "ts-custom-error": "^3.3.1",
     "valid-url": "^1.0.9",
