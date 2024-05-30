@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.4.0](https://github.com/keq-request/keq-cli/compare/v4.3.1...v4.4.0) (2024-05-30)
+
+
+### Features
+
+* support custom operationId ([ec2bfe5](https://github.com/keq-request/keq-cli/commit/ec2bfe5283a7af8d9acc557ad2e1661b30c392f2))
+
 ## [4.3.1](https://github.com/keq-request/keq-cli/compare/v4.3.0...v4.3.1) (2024-05-29)
 
 
