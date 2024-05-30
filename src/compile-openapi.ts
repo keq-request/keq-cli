@@ -1,20 +1,18 @@
-import SwaggerParser from '@apidevtools/swagger-parser'
 import chalk from 'chalk'
 import * as changeCase from 'change-case'
 import * as fs from 'fs-extra'
-import { OpenAPIV3 } from 'openapi-types'
 import pMap from 'p-map'
 import * as path from 'path'
 import * as R from 'ramda'
-import * as semver from 'semver'
-import { File } from './interface/file'
-import { Options } from './interface/options'
 import { getSafeOperationName } from './utils/get-safe-operation-name'
 import { readTemplate } from './utils/read-template'
 
 import Handlebars from 'handlebars'
 import './handlebar/register-helper.js'
 import './handlebar/register-partial.js'
+import { CompileResult } from './types/compile-result.js'
+import { CompileOpenapiOptions } from './types/compile-openapi-options.js'
+
 
 const readAndCompileTemplate = (filename: string): ReturnType<typeof Handlebars.compile> => Handlebars.compile(readTemplate(filename))
 const templates = {
@@ -25,18 +23,8 @@ const templates = {
 }
 
 
-export async function compile(moduleName: string, json: string | OpenAPIV3.Document, options?: Partial<Options>): Promise<File[]> {
-  const swaggerParser = new SwaggerParser()
-  let api: OpenAPIV3.Document
-  try {
-    await swaggerParser.bundle(json)
-
-    if (!('openapi' in swaggerParser.api && semver.satisfies(swaggerParser.api.openapi, '^3'))) throw new Error('Only supports OpenAPI3')
-    api = swaggerParser.api as OpenAPIV3.Document
-  } catch (e) {
-    console.warn(chalk.yellow('Swagger file does not conform to the swagger@3.0 standard specifications or have grammatical errors, which may cause unexpected errors'))
-    api = json as any
-  }
+export async function compile(options: CompileOpenapiOptions): Promise<CompileResult[]> {
+  const { moduleName, document } = options
 
   const fileNamingStyle = options?.fileNamingStyle || 'snakeCase'
   const formatFilename = changeCase[fileNamingStyle]
@@ -44,11 +32,11 @@ export async function compile(moduleName: string, json: string | OpenAPIV3.Docum
   const output = path.join(outdir, formatFilename(moduleName))
   const requestInstance = options?.request ? path.relative(output, options.request) : 'keq'
 
-  const files: File[] = []
-  if (api.components?.schemas && !R.isEmpty(api.components.schemas)) {
-    for (const [name, schema] of R.toPairs(api.components.schemas)) {
+  const results: CompileResult[] = []
+  if (document.components?.schemas && !R.isEmpty(document.components.schemas)) {
+    for (const [name, schema] of R.toPairs(document.components.schemas)) {
       const fileContent = templates.t_schema({
-        api,
+        api: document,
         name,
         schema,
         options: {
@@ -58,7 +46,7 @@ export async function compile(moduleName: string, json: string | OpenAPIV3.Docum
       const filename = formatFilename(name)
       const filepath = path.join(output, 'components', 'schemas', `${filename}.ts`)
 
-      files.push({
+      results.push({
         name: filename,
         path: filepath,
         content: fileContent,
@@ -67,41 +55,56 @@ export async function compile(moduleName: string, json: string | OpenAPIV3.Docum
 
     const schemaExportsFilepath = path.join(output, 'components', 'schemas', 'index.ts')
     const schemaExportsFileContent = templates.t_schema_exports({
-      api,
+      api: document,
       options: {
         fileNamingStyle,
       },
     })
 
-    files.push({
+    results.push({
       name: 'index.ts',
       path: schemaExportsFilepath,
       content: schemaExportsFileContent,
     })
   }
 
-  if (api.paths && !R.isEmpty(api.paths)) {
-    for (const [pathname, pathItem] of Object.entries(api.paths)) {
+  if (document.paths && !R.isEmpty(document.paths)) {
+    for (const [pathname, pathItem] of Object.entries(document.paths)) {
       if (!pathItem) continue
 
       for (const [method, operation] of Object.entries(pathItem)) {
         if (typeof operation === 'object' && !Array.isArray(operation)) {
+          let operationId = operation.operationId
+
+          if (options.operationId) {
+            operationId = options.operationId({
+              pathname,
+              method,
+              operation,
+
+              document,
+              moduleName,
+              fileNamingStyle,
+
+            })
+          }
+
           const fileContent = templates.t_operation({
-            api,
+            api: document,
             moduleName,
             pathname,
             method,
-            operation,
+            operation: { ...operation, operationId },
             options: {
               fileNamingStyle,
               request: requestInstance,
             },
           })
 
-          const filename = formatFilename(getSafeOperationName(pathname, method, operation))
+          const filename = formatFilename(getSafeOperationName(pathname, method, { ...operation, operationId }))
           const filepath = path.join(output, `${filename}.ts`)
 
-          files.push({
+          results.push({
             name: filename,
             path: filepath,
             content: fileContent,
@@ -114,30 +117,30 @@ export async function compile(moduleName: string, json: string | OpenAPIV3.Docum
 
     const operationExportsFilepath = path.join(output, 'index.ts')
     const operationExportsFileContent = templates.t_operation_exports({
-      api,
+      api: document,
       options: {
         fileNamingStyle,
       },
     })
 
-    files.push({
+    results.push({
       name: 'index.ts',
       path: operationExportsFilepath,
       content: operationExportsFileContent,
     })
   }
 
-  return files
+  return results
 }
 
-export async function genCode(moduleName: string, json: string | OpenAPIV3.Document, options: Options): Promise<void> {
-  const files = await compile(moduleName, json, options)
+export async function CompileOpenapi(option: CompileOpenapiOptions): Promise<void> {
+  const results = await compile(option)
 
   await pMap(
-    files,
-    async (file) => {
-      await fs.ensureFile(file.path)
-      await fs.writeFile(file.path, file.content)
+    results,
+    async (result) => {
+      await fs.ensureFile(result.path)
+      await fs.writeFile(result.path, result.content)
     },
     { concurrency: 10 },
   )

@@ -1,49 +1,25 @@
 import chalk from 'chalk'
-import * as R from 'ramda'
 import { compile } from './compile'
 import { Exception } from './exception'
-import { NamingStyle, Options } from './interface/options'
+import { BuildOptions } from './types/build-options.js'
+import { CompileOptions } from './types/compile-options.js'
+import { FileNamingStyle } from './types/file-naming-style.js'
 
 
-export interface BuildConfig {
-  outdir: string
-  fileNamingStyle?: NamingStyle
-  strict: boolean
-  request?: string
-  envName?: string
-  modules: {
-    [moduleName: string]: string
-  }
-  env?: {
-    [env: string]: {
-      [modelName: string]: string
-    }
-  }
-}
-
-export async function build(config: BuildConfig): Promise<void> {
-  const promises = Object.keys(config.modules).map(async (moduleName) => {
+export async function build(options: BuildOptions): Promise<void> {
+  const promises = Object.keys(options.modules).map(async (moduleName) => {
     try {
-      let env: Record<string, string> = {}
-
-      if (config.env) {
-        const pairs = R.toPairs(config.env).map(([envName, envValue]): [string, string] => ([
-          envName,
-          envValue[moduleName],
-        ]))
-
-        env = R.fromPairs(pairs)
+      const compileOptions: CompileOptions = {
+        outdir: options.outdir,
+        strict: options.strict,
+        request: options.request,
+        fileNamingStyle: options.fileNamingStyle || FileNamingStyle.snakeCase,
+        operationId: options.operationId,
+        moduleName,
+        filepath: options.modules[moduleName],
       }
 
-      const options: Options = {
-        outdir: config.outdir,
-        strict: config.strict,
-        envName: config.envName,
-        request: config.request,
-        fileNamingStyle: config.fileNamingStyle || 'snakeCase',
-        env,
-      }
-      await compile(moduleName, config.modules[moduleName], options)
+      await compile(compileOptions)
       return moduleName
     } catch (e) {
       if (e instanceof Exception) {

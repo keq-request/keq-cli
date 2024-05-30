@@ -7,8 +7,9 @@ import { cosmiconfig } from 'cosmiconfig'
 import { CosmiconfigResult } from 'cosmiconfig/dist/types'
 import fs from 'fs-extra'
 import path from 'path'
-import { BuildConfig, build } from './build'
+import { build } from './build'
 import { compile } from './compile'
+import { BuildOptions } from './types/build-options.js'
 
 
 const configSchema = fs.readJSONSync(path.resolve(__dirname, 'schema/config.json'), 'utf-8')
@@ -31,8 +32,6 @@ program
       result = await explore.search()
     }
 
-    console.log('🚀 ~ .action ~ result:', result)
-
     if (!result || ('isEmpty' in result && result.isEmpty)) {
       throw new Error('Cannot find config file.')
     }
@@ -40,7 +39,7 @@ program
     const valid = validate(result.config)
     if (!valid) throw new Error(chalk.red(`Invalid Config: ${ajv.errorsText(validate.errors, { dataVar: 'config' })}`))
 
-    const config: BuildConfig = result.config
+    const config: BuildOptions = result.config
     await build(config)
   })
 
@@ -54,7 +53,11 @@ program
   .option('--request <request>', 'The request package used in compiled result')
   .option('--no-strict', 'disable strict mode', true)
   .action(async (filepath, options) => {
-    await compile(options.moduleName, filepath, options)
+    await compile({
+      moduleName: options.moduleName,
+      filepath,
+      ...options,
+    })
   })
 
 async function main(): Promise<void> {

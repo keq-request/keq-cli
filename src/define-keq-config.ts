@@ -1,6 +1,6 @@
-import { Options } from './interface/options.js'
+import { BuildOptions } from './types/build-options.js'
 
 
-export function defineKeqConfig(config: Options): Options {
+export function defineKeqConfig(config: BuildOptions): BuildOptions {
   return config
 }

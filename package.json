@@ -67,6 +67,7 @@
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.0",
+    "@sinclair/typebox": "^0.32.31",
     "ajv": "^8.14.0",
     "chalk": "4.1.2",
     "change-case": "4.1.2",
@@ -81,7 +82,7 @@
     "p-map": "^4.0.0",
     "ramda": "^0.30.0",
     "semver": "^7.6.2",
-    "swagger-fix": "^1.0.1",
+    "swagger-fix": "^1.0.3",
     "swagger2openapi": "^7.0.8",
     "ts-custom-error": "^3.3.1",
     "valid-url": "^1.0.9",
