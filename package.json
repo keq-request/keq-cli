@@ -6,6 +6,7 @@
   "bin": "dist/umd/src/cli.js",
   "description": "Transform Swagger 3.0 to the function that send request by keq",
   "version": "4.3.1",
+  "packageManager": "pnpm@9.1.4",
   "directories": {
     "lib": "lib",
     "test": "test"
