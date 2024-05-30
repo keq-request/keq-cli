@@ -31,6 +31,8 @@ program
       result = await explore.search()
     }
 
+    console.log('🚀 ~ .action ~ result:', result)
+
     if (!result || ('isEmpty' in result && result.isEmpty)) {
       throw new Error('Cannot find config file.')
     }
