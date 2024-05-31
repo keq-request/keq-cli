@@ -72,24 +72,22 @@ async function validate(swagger: OpenAPIV3.Document): Promise<OpenAPIV3.Document
 }
 
 export async function fetchOpenapiFile(filepath: string): Promise<OpenAPIV3.Document> {
+  let swagger: OpenAPIV3.Document
   if (validUrl.isUri(filepath)) {
-    return fetchFromUrl(filepath)
+    swagger = await fetchFromUrl(filepath)
+  } else {
+    const fileExt = path.extname(filepath)
+    const content = await fs.readFile(filepath, 'utf8')
+
+    if (['.yml', '.yaml'].includes(fileExt)) {
+      swagger = yaml.load(content) as OpenAPIV3.Document
+    } else if (fileExt === '.json') {
+      swagger = JSON.parse(content)as OpenAPIV3.Document
+    } else {
+      throw new Error(`File ${fileExt} not support.`)
+    }
   }
-
-  const fileExt = path.extname(filepath)
-  const content = await fs.readFile(filepath, 'utf8')
-
-  if (['.yml', '.yaml'].includes(fileExt)) {
-    let swagger = yaml.load(content) as OpenAPIV3.Document
-    swagger = fixSwagger(swagger)
-    swagger = await toSwagger3(swagger)
-    return validate(swagger)
-  } else if (fileExt === '.json') {
-    let swagger = JSON.parse(content)as OpenAPIV3.Document
-    swagger = fixSwagger(swagger)
-    swagger = await toSwagger3(swagger)
-    return validate(swagger)
-  }
-
-  throw new Error(`File ${fileExt} not support.`)
+  swagger = fixSwagger(swagger)
+  swagger = await toSwagger3(swagger)
+  return validate(swagger)
 }
