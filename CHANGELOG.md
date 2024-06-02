@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.0](https://github.com/keq-request/keq-cli/compare/v4.4.1...v4.5.0) (2024-06-02)
+
+
+### Features
+
+* support code hints for keq ([39f5810](https://github.com/keq-request/keq-cli/commit/39f5810239395f3f70a7456bd49dea930ba44ddc))
+
+
+### Performance Improvements
+
+* generate the ts definition file of the interface independently ([6c8b970](https://github.com/keq-request/keq-cli/commit/6c8b9708427edda5fa5f668f31e54c34cd9ef24b))
+
 ## [4.4.1](https://github.com/keq-request/keq-cli/compare/v4.4.0...v4.4.1) (2024-05-31)
 
 
