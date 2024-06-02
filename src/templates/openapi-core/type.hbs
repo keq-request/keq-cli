@@ -1,3 +1,4 @@
+import type { KeqOperation } from '{{keq}}'
 {{#each
   (r__uniq
     (r__flatten
@@ -30,7 +31,7 @@ export interface ResponseMap {
   "{{name}}"{{#unless required}}?{{/unless}}: {{> t_json_schema_shape schema}}
 {{/inline}}
 
-export interface QueryParameters {
+export type QueryParameters = {
   {{#if operation.parameters}}
   {{#each (r__filter (r__propEq "in" "query") operation.parameters)}}
   {{> parameterProperty}}
@@ -38,7 +39,7 @@ export interface QueryParameters {
   {{/if}}
 }
 
-export interface RouteParameters {
+export type RouteParameters = {
   {{#if operation.parameters}}
   {{#each (r__filter (r__propEq "in" "path") operation.parameters)}}
   {{> parameterProperty}}
@@ -46,7 +47,7 @@ export interface RouteParameters {
   {{/if}}
 }
 
-export interface HeaderParameters {
+export type HeaderParameters = {
   {{#if operation.parameters}}
   {{#each (r__filter (r__propEq "in" "header") operation.parameters)}}
   {{> parameterProperty}}
@@ -54,12 +55,23 @@ export interface HeaderParameters {
   {{/if}}
 }
 
-
-export type RequestParameters = QueryParameters & RouteParameters & HeaderParameters
-{{~#unless (r__isNil operation.requestBody.content)}}
- & (
+export type BodyParameters = {{~#unless (r__isNil operation.requestBody.content)~}}
+(
 {{~#each (r__map (r__prop "schema") (r__values operation.requestBody.content))}}
 {{> t_json_schema_shape this}}{{#unless @last}} | {{/unless}}
 {{~/each~}}
 )
-{{~/unless~}}
+{{else}}
+{}
+{{~/unless}}
+
+export type RequestParameters = QueryParameters & RouteParameters & HeaderParameters & BodyParameters
+
+
+export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperation {
+  requestParams: RouteParameters
+  requestQuery: QueryParameters
+  requestHeaders: HeaderParameters
+  requestBody: BodyParameters
+  responseBody: ResponseMap[STATUS]
+}
