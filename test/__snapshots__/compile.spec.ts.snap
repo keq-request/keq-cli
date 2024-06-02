@@ -3,9 +3,9 @@
 exports[`compile swagger 1`] = `
 [
   {
-    "content": "import { ObjectWithSpecifiedTypeAdditionalPropertiesSchema } from "./object_with_specified_type_additional_properties_schema"
-import { ArrayOfStringsSchema } from "./array_of_strings_schema"
-import { ObjectWithAdditionalPropertiesSchema } from "./object_with_additional_properties_schema"
+    "content": "import type { ArrayOfStringsSchema } from "./array_of_strings_schema.js"
+import type { ObjectWithSpecifiedTypeAdditionalPropertiesSchema } from "./object_with_specified_type_additional_properties_schema.js"
+import type { ObjectWithAdditionalPropertiesSchema } from "./object_with_additional_properties_schema.js"
 
 
 /**
@@ -97,10 +97,7 @@ export interface ObjectWithSpecifiedTypeAdditionalPropertiesSchema {
     "path": "outdir/test/components/schemas/object_with_specified_type_additional_properties_schema.ts",
   },
   {
-    "content": "import { ArrayOfStringsSchema } from "./array_of_strings_schema"
-
-
-/**
+    "content": "/**
  * @interface RefSchema
  * @export
  */
@@ -156,44 +153,64 @@ export type AllOfSchema = {
     "path": "outdir/test/components/schemas/all_of_schema.ts",
   },
   {
-    "content": "export * from "./root_schema"
-export * from "./array_of_strings_schema"
-export * from "./object_with_additional_properties_schema"
-export * from "./object_with_specified_type_additional_properties_schema"
-export * from "./ref_schema"
-export * from "./nullable_object_schema"
-export * from "./one_of_schema"
-export * from "./any_of_schema"
-export * from "./all_of_schema"
+    "content": "export * from "./root_schema.js"
+export * from "./array_of_strings_schema.js"
+export * from "./object_with_additional_properties_schema.js"
+export * from "./object_with_specified_type_additional_properties_schema.js"
+export * from "./ref_schema.js"
+export * from "./nullable_object_schema.js"
+export * from "./one_of_schema.js"
+export * from "./any_of_schema.js"
+export * from "./all_of_schema.js"
 ",
     "name": "index.ts",
     "path": "outdir/test/components/schemas/index.ts",
   },
   {
-    "content": "import { Keq } from 'keq'
-import { request } from 'keq'
+    "content": "import type { KeqOperation } from 'keq'
 
 
-interface ResponseMap {
+export interface ResponseMap {
   "200": unknown
 }
 
 
-interface QueryArg {
+export type QueryParameters = {
     "requiredQueryProp": number
     "optionalQueryProp"?: number
 }
 
-interface ParamArg {
+export type RouteParameters = {
     "id": string
 }
 
-interface HeaderArg {
+export type HeaderParameters = {
     "headerProp": string
 }
 
+export type BodyParameters ={}
+export type RequestParameters = QueryParameters & RouteParameters & HeaderParameters & BodyParameters
 
-export function get<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg): Keq<ResponseMap[STATUS]> {
+
+export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperation {
+  requestParams: RouteParameters
+  requestQuery: QueryParameters
+  requestHeaders: HeaderParameters
+  requestBody: BodyParameters
+  responseBody: ResponseMap[STATUS]
+}
+",
+    "name": "get",
+    "path": "outdir/test/types/get.ts",
+  },
+  {
+    "content": "import { Keq } from 'keq'
+import { request } from 'keq'
+import type { RequestParameters, ResponseMap, Operation } from "./types/get.js"
+
+
+
+export function get<STATUS extends keyof ResponseMap>(arg?: RequestParameters): Keq<ResponseMap[STATUS], Operation<STATUS>> {
   const req = request.get<ResponseMap[STATUS]>("/:id")
     .option('module', {
       name: "test",
@@ -214,28 +231,49 @@ export function get<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg 
     "path": "outdir/test/get.ts",
   },
   {
-    "content": "import { Keq } from 'keq'
-import { request } from 'keq'
-import { RootSchema } from "./components/schemas/root_schema"
+    "content": "import type { KeqOperation } from 'keq'
+import type { RootSchema } from "../components/schemas/root_schema.js"
 
 
-interface ResponseMap {
+export interface ResponseMap {
   "200": RootSchema
 }
 
 
-interface QueryArg {
+export type QueryParameters = {
 }
 
-interface ParamArg {
+export type RouteParameters = {
     "id": string
 }
 
-interface HeaderArg {
+export type HeaderParameters = {
 }
 
+export type BodyParameters =(RootSchema)
 
-export function post__$id<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg & (RootSchema)): Keq<ResponseMap[STATUS]> {
+export type RequestParameters = QueryParameters & RouteParameters & HeaderParameters & BodyParameters
+
+
+export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperation {
+  requestParams: RouteParameters
+  requestQuery: QueryParameters
+  requestHeaders: HeaderParameters
+  requestBody: BodyParameters
+  responseBody: ResponseMap[STATUS]
+}
+",
+    "name": "post_id",
+    "path": "outdir/test/types/post_id.ts",
+  },
+  {
+    "content": "import { Keq } from 'keq'
+import { request } from 'keq'
+import type { RequestParameters, ResponseMap, Operation } from "./types/post_id.js"
+
+
+
+export function post__$id<STATUS extends keyof ResponseMap>(arg?: RequestParameters): Keq<ResponseMap[STATUS], Operation<STATUS>> {
   const req = request.post<ResponseMap[STATUS]>("/:id")
     .option('module', {
       name: "test",
@@ -267,25 +305,45 @@ export function post__$id<STATUS extends keyof ResponseMap>(arg?: QueryArg & Par
     "path": "outdir/test/post_id.ts",
   },
   {
+    "content": "import type { KeqOperation } from 'keq'
+
+
+export interface ResponseMap {
+}
+
+
+export type QueryParameters = {
+}
+
+export type RouteParameters = {
+}
+
+export type HeaderParameters = {
+}
+
+export type BodyParameters ={}
+export type RequestParameters = QueryParameters & RouteParameters & HeaderParameters & BodyParameters
+
+
+export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperation {
+  requestParams: RouteParameters
+  requestQuery: QueryParameters
+  requestHeaders: HeaderParameters
+  requestBody: BodyParameters
+  responseBody: ResponseMap[STATUS]
+}
+",
+    "name": "get_simple",
+    "path": "outdir/test/types/get_simple.ts",
+  },
+  {
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
+import type { RequestParameters, ResponseMap, Operation } from "./types/get_simple.js"
 
 
-interface ResponseMap {
-}
 
-
-interface QueryArg {
-}
-
-interface ParamArg {
-}
-
-interface HeaderArg {
-}
-
-
-export function get__simple<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg): Keq<ResponseMap[STATUS]> {
+export function get__simple<STATUS extends keyof ResponseMap>(arg?: RequestParameters): Keq<ResponseMap[STATUS], Operation<STATUS>> {
   const req = request.get<ResponseMap[STATUS]>("/simple")
     .option('module', {
       name: "test",
@@ -300,27 +358,47 @@ export function get__simple<STATUS extends keyof ResponseMap>(arg?: QueryArg & P
     "path": "outdir/test/get_simple.ts",
   },
   {
-    "content": "import { Keq } from 'keq'
-import { request } from 'keq'
+    "content": "import type { KeqOperation } from 'keq'
 
 
-interface ResponseMap {
+export interface ResponseMap {
   "200": {
 }
 }
 
 
-interface QueryArg {
+export type QueryParameters = {
 }
 
-interface ParamArg {
+export type RouteParameters = {
 }
 
-interface HeaderArg {
+export type HeaderParameters = {
 }
 
+export type BodyParameters ={}
+export type RequestParameters = QueryParameters & RouteParameters & HeaderParameters & BodyParameters
 
-export function post__simple<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg): Keq<ResponseMap[STATUS]> {
+
+export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperation {
+  requestParams: RouteParameters
+  requestQuery: QueryParameters
+  requestHeaders: HeaderParameters
+  requestBody: BodyParameters
+  responseBody: ResponseMap[STATUS]
+}
+",
+    "name": "post_simple",
+    "path": "outdir/test/types/post_simple.ts",
+  },
+  {
+    "content": "import { Keq } from 'keq'
+import { request } from 'keq'
+import type { RequestParameters, ResponseMap, Operation } from "./types/post_simple.js"
+
+
+
+export function post__simple<STATUS extends keyof ResponseMap>(arg?: RequestParameters): Keq<ResponseMap[STATUS], Operation<STATUS>> {
   const req = request.post<ResponseMap[STATUS]>("/simple")
     .option('module', {
       name: "test",
@@ -335,25 +413,45 @@ export function post__simple<STATUS extends keyof ResponseMap>(arg?: QueryArg & 
     "path": "outdir/test/post_simple.ts",
   },
   {
+    "content": "import type { KeqOperation } from 'keq'
+
+
+export interface ResponseMap {
+}
+
+
+export type QueryParameters = {
+}
+
+export type RouteParameters = {
+}
+
+export type HeaderParameters = {
+}
+
+export type BodyParameters ={}
+export type RequestParameters = QueryParameters & RouteParameters & HeaderParameters & BodyParameters
+
+
+export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperation {
+  requestParams: RouteParameters
+  requestQuery: QueryParameters
+  requestHeaders: HeaderParameters
+  requestBody: BodyParameters
+  responseBody: ResponseMap[STATUS]
+}
+",
+    "name": "delete_keyword",
+    "path": "outdir/test/types/delete_keyword.ts",
+  },
+  {
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
+import type { RequestParameters, ResponseMap, Operation } from "./types/delete_keyword.js"
 
 
-interface ResponseMap {
-}
 
-
-interface QueryArg {
-}
-
-interface ParamArg {
-}
-
-interface HeaderArg {
-}
-
-
-export function delete__keyword<STATUS extends keyof ResponseMap>(arg?: QueryArg & ParamArg & HeaderArg): Keq<ResponseMap[STATUS]> {
+export function delete__keyword<STATUS extends keyof ResponseMap>(arg?: RequestParameters): Keq<ResponseMap[STATUS], Operation<STATUS>> {
   const req = request.delete<ResponseMap[STATUS]>("/keyword")
     .option('module', {
       name: "test",
@@ -368,11 +466,11 @@ export function delete__keyword<STATUS extends keyof ResponseMap>(arg?: QueryArg
     "path": "outdir/test/delete_keyword.ts",
   },
   {
-    "content": "export * from "./get"
-export * from "./post_id"
-export * from "./get_simple"
-export * from "./post_simple"
-export * from "./delete_keyword"
+    "content": "export * from "./get.js"
+export * from "./post_id.js"
+export * from "./get_simple.js"
+export * from "./post_simple.js"
+export * from "./delete_keyword.js"
 ",
     "name": "index.ts",
     "path": "outdir/test/index.ts",
