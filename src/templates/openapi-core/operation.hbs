@@ -1,0 +1,77 @@
+import { Keq } from 'keq'
+import { request } from '{{keq}}'
+import type { RequestParameters, ResponseMap } from "./types/{{h__change-case @root.fileNamingStyle (h__get-safe-operation-name pathname method operation)}}.js"
+
+
+
+{{> t_comments operation}}
+export function {{h__get-safe-operation-name pathname method operation}}<STATUS extends keyof ResponseMap>(arg?: RequestParameters): Keq<ResponseMap[STATUS]> {
+  const req = request.{{method}}<ResponseMap[STATUS]>("{{{r__replace (h__regexp "{(.*?)}" flags="g") ":$1" pathname}}}")
+    .option('module', {
+      name: "{{{moduleName}}}",
+      pathname: "{{{r__replace (h__regexp "{(.*?)}" flags="g") ":$1" pathname}}}",
+    })
+
+  {{#if operation.parameters}}
+  {{#each (r__filter (r__propEq "in" "query") operation.parameters)}}
+  {{#if @first}}
+  const queryWrap = (value: any) => typeof value === 'boolean' ? String(value) : value
+
+  {{/if}}
+  if (arg && "{{name}}" in arg) req.query("{{name}}", queryWrap(arg["{{name}}"]))
+  {{/each~}}
+
+  {{#each (r__filter (r__propEq "in" "header") operation.parameters)}}
+  if (arg && "{{name}}" in arg) req.set("{{name}}", arg["{{name}}"])
+  {{/each~}}
+
+  {{#each (r__filter (r__propEq "in" "path") operation.parameters)}}
+  if (arg && "{{name}}" in arg) req.params("{{name}}", String(arg["{{name}}"]))
+  {{/each~}}
+  {{/if}}
+
+  {{~#each operation.requestBody.content}}
+  {{~#if (r__and (r__equals @key "application/json") this.schema)}}
+
+    {{~#*inline "SchemaSend"}}
+      {{#each properties}}
+  if (arg && "{{@key}}" in arg) req.send({ "{{@key}}": arg["{{@key}}"] })
+      {{/each}}
+    {{/inline}}
+
+
+    {{~#*inline "send"}}
+      {{~#if (h__is-ref this)}}
+        {{~#with (h__dereference this)}}
+          {{~> send this}}
+        {{~/with}}
+      {{~else if this.allOf}}
+        {{#each this.allOf}}
+          {{~#with (h__dereference this)}}
+            {{~> send this}}
+          {{~/with}}
+        {{/each}}
+      {{~else if this.oneOf}}
+        {{#each this.oneOf}}
+          {{~#with (h__dereference this)}}
+            {{~> send this}}
+          {{~/with}}
+        {{/each}}
+      {{~else if this.anyOf}}
+        {{#each this.anyOf}}
+          {{~#with (h__dereference this)}}
+            {{~> send this}}
+          {{~/with}}
+        {{/each}}
+      {{~else}}
+        {{~> SchemaSend this}}
+      {{~/if}}
+    {{/inline}}
+
+    {{~> send this.schema}}
+
+  {{~/if}}
+  {{~/each}}
+
+  return req
+}

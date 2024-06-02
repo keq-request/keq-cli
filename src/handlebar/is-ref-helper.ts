@@ -6,5 +6,5 @@ function isRef(schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject): sche
   return '$ref' in schema
 }
 
-Handlebars.registerHelper('is-ref', (schema: OpenAPIV3.ReferenceObject) => isRef(schema))
+Handlebars.registerHelper('h__is-ref', (schema: OpenAPIV3.ReferenceObject) => isRef(schema))
 

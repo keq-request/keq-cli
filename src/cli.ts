@@ -1,24 +1,16 @@
 #!/usr/bin/env node
-
-import Ajv from 'ajv'
 import chalk from 'chalk'
 import { Command, Option } from 'commander'
 import { cosmiconfig } from 'cosmiconfig'
 import { CosmiconfigResult } from 'cosmiconfig/dist/types'
-import fs from 'fs-extra'
-import path from 'path'
 import { build } from './build'
 import { compile } from './compile'
 import { BuildOptions } from './types/build-options.js'
-
-
-const configSchema = fs.readJSONSync(path.resolve(__dirname, 'schema/config.json'), 'utf-8')
+import { Value } from '@sinclair/typebox/value'
 
 
 const program = new Command()
 const explore = cosmiconfig('keq')
-const ajv = new Ajv({ useDefaults: true })
-const validate = ajv.compile(configSchema)
 
 
 program
@@ -36,8 +28,12 @@ program
       throw new Error('Cannot find config file.')
     }
 
-    const valid = validate(result.config)
-    if (!valid) throw new Error(chalk.red(`Invalid Config: ${ajv.errorsText(validate.errors, { dataVar: 'config' })}`))
+
+    if (!Value.Check(BuildOptions, result.config)) {
+      const errors = [...Value.Errors(BuildOptions, result.config)]
+      const message = errors.map(({ path, message }) => `${path}: ${message}`).join('\n')
+      throw new Error(chalk.red(`Invalid Config: ${message}`))
+    }
 
     const config: BuildOptions = result.config
     await build(config)

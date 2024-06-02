@@ -16,33 +16,36 @@ import { CompileOpenapiOptions } from './types/compile-openapi-options.js'
 
 const readAndCompileTemplate = (filename: string): ReturnType<typeof Handlebars.compile> => Handlebars.compile(readTemplate(filename))
 const templates = {
-  t_schema: readAndCompileTemplate('schema'),
-  t_schema_exports: readAndCompileTemplate('schema-exports'),
-  t_operation: readAndCompileTemplate('operation'),
-  t_operation_exports: readAndCompileTemplate('operation-exports'),
+  t_schema: readAndCompileTemplate('json-schema/file'),
+  t_schema_exports: readAndCompileTemplate('json-schema/exports'),
+
+  t_operation: readAndCompileTemplate('openapi-core/operation'),
+  t_operation_exports: readAndCompileTemplate('openapi-core/operation-exports'),
+  t_type: readAndCompileTemplate('openapi-core/type'),
 }
 
 
 export async function compile(options: CompileOpenapiOptions): Promise<CompileResult[]> {
-  const { moduleName, document } = options
-
+  const moduleName = options.moduleName
+  const document = options.document
   const fileNamingStyle = options?.fileNamingStyle || 'snakeCase'
   const formatFilename = changeCase[fileNamingStyle]
   const outdir = options?.outdir || `${process.cwd()}/api`
   const output = path.join(outdir, formatFilename(moduleName))
-  const requestInstance = options?.request ? path.relative(output, options.request) : 'keq'
+  const keq = options?.request ? path.relative(output, options.request) : 'keq'
 
   const results: CompileResult[] = []
   if (document.components?.schemas && !R.isEmpty(document.components.schemas)) {
-    for (const [name, schema] of R.toPairs(document.components.schemas)) {
-      const fileContent = templates.t_schema({
-        api: document,
+    for (const [name, jsonSchema] of R.toPairs(document.components.schemas)) {
+      const context = {
         name,
-        schema,
-        options: {
-          fileNamingStyle,
-        },
-      })
+        jsonSchema,
+        document,
+        fileNamingStyle,
+        keq,
+      }
+
+      const fileContent = templates.t_schema(context)
       const filename = formatFilename(name)
       const filepath = path.join(output, 'components', 'schemas', `${filename}.ts`)
 
@@ -55,10 +58,8 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
 
     const schemaExportsFilepath = path.join(output, 'components', 'schemas', 'index.ts')
     const schemaExportsFileContent = templates.t_schema_exports({
-      api: document,
-      options: {
-        fileNamingStyle,
-      },
+      jsonSchemas: document.components.schemas,
+      fileNamingStyle,
     })
 
     results.push({
@@ -74,41 +75,45 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
 
       for (const [method, operation] of Object.entries(pathItem)) {
         if (typeof operation === 'object' && !Array.isArray(operation)) {
-          let operationId = operation.operationId
+          const context = {
+            pathname,
+            method,
+            operation,
+
+            document,
+            moduleName,
+            fileNamingStyle,
+
+            keq,
+          }
 
           if (options.operationId) {
-            operationId = options.operationId({
-              pathname,
-              method,
-              operation,
+            context.operation.operationId = options.operationId(context)
+          }
 
-              document,
-              moduleName,
-              fileNamingStyle,
+          {
+            const fileContent = templates.t_type({ ...context })
+            const filename = formatFilename(getSafeOperationName(pathname, method, operation))
+            const filepath = path.join(output, 'types', `${filename}.ts`)
 
+            results.push({
+              name: filename,
+              path: filepath,
+              content: fileContent,
             })
           }
 
-          const fileContent = templates.t_operation({
-            api: document,
-            moduleName,
-            pathname,
-            method,
-            operation: { ...operation, operationId },
-            options: {
-              fileNamingStyle,
-              request: requestInstance,
-            },
-          })
+          {
+            const fileContent = templates.t_operation({ ...context })
+            const filename = formatFilename(getSafeOperationName(pathname, method, operation))
+            const filepath = path.join(output, `${filename}.ts`)
 
-          const filename = formatFilename(getSafeOperationName(pathname, method, { ...operation, operationId }))
-          const filepath = path.join(output, `${filename}.ts`)
-
-          results.push({
-            name: filename,
-            path: filepath,
-            content: fileContent,
-          })
+            results.push({
+              name: filename,
+              path: filepath,
+              content: fileContent,
+            })
+          }
         } else {
           console.warn(chalk.yellow(`Operation ${String(method)} on path ${String(pathname)} cannot compiled, skipping`))
         }
@@ -117,10 +122,9 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
 
     const operationExportsFilepath = path.join(output, 'index.ts')
     const operationExportsFileContent = templates.t_operation_exports({
-      api: document,
-      options: {
-        fileNamingStyle,
-      },
+      document,
+      fileNamingStyle,
+      keq,
     })
 
     results.push({

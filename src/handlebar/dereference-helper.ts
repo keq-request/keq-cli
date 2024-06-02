@@ -3,15 +3,15 @@ import * as Handlebars from 'handlebars'
 import { OpenAPIV3 } from 'openapi-types'
 
 
-Handlebars.registerHelper('get-schema-by-ref', (schema: OpenAPIV3.ReferenceObject, options: Handlebars.HelperOptions) => {
+Handlebars.registerHelper('h__dereference', (schema: OpenAPIV3.ReferenceObject, options: Handlebars.HelperOptions) => {
   const ref = schema
-  const api = options.data.root.api
+  const document = options.data.root.document
 
   let value
 
   for (const key of ref.$ref.split('/')) {
     if (key === '#') {
-      value = api
+      value = document
     } else {
       value = value[key]
     }

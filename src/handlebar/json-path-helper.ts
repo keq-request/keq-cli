@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import * as Handlebars from 'handlebars'
+import * as R from 'ramda'
 import { JSONPath } from 'jsonpath-plus'
-import { dropLastArguments } from './drop-last-arguments.js'
+import { dropLastArguments } from '../utils/drop-last-arguments.js'
 
 
-Handlebars.registerHelper('json-path', dropLastArguments((path, json) => JSONPath({ path, json })))
+Handlebars.registerHelper('h__json-path', dropLastArguments(R.curry((path, json) => JSONPath({ path, json }))))

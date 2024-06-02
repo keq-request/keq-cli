@@ -4,4 +4,4 @@ import * as changeCase from 'change-case'
 import * as Handlebars from 'handlebars'
 
 
-Handlebars.registerHelper('change-case', (fileNamingStyle: string, filename: string) => changeCase[fileNamingStyle](filename))
+Handlebars.registerHelper('h__change-case', (fileNamingStyle: string, filename: string) => changeCase[fileNamingStyle](filename))
