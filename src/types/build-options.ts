@@ -5,6 +5,8 @@ import { OperationContext } from './operation-context.js'
 
 export const BuildOptions = Type.Object({
   strict: Type.Optional(Type.Boolean({ default: false })),
+  esm: Type.Optional(Type.Boolean({ default: false })),
+
   outdir: Type.String({ default: `${process.cwd()}/api` }),
   fileNamingStyle: Type.Optional(Type.Enum(FileNamingStyle, { default: FileNamingStyle.snakeCase })),
   request: Type.Optional(Type.String()),

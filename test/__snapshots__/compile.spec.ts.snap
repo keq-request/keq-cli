@@ -3,9 +3,9 @@
 exports[`compile swagger 1`] = `
 [
   {
-    "content": "import type { ArrayOfStringsSchema } from "./array_of_strings_schema.js"
-import type { ObjectWithSpecifiedTypeAdditionalPropertiesSchema } from "./object_with_specified_type_additional_properties_schema.js"
-import type { ObjectWithAdditionalPropertiesSchema } from "./object_with_additional_properties_schema.js"
+    "content": "import type { ArrayOfStringsSchema } from "./array_of_strings_schema"
+import type { ObjectWithSpecifiedTypeAdditionalPropertiesSchema } from "./object_with_specified_type_additional_properties_schema"
+import type { ObjectWithAdditionalPropertiesSchema } from "./object_with_additional_properties_schema"
 
 
 /**
@@ -153,15 +153,15 @@ export type AllOfSchema = {
     "path": "outdir/test/components/schemas/all_of_schema.ts",
   },
   {
-    "content": "export * from "./root_schema.js"
-export * from "./array_of_strings_schema.js"
-export * from "./object_with_additional_properties_schema.js"
-export * from "./object_with_specified_type_additional_properties_schema.js"
-export * from "./ref_schema.js"
-export * from "./nullable_object_schema.js"
-export * from "./one_of_schema.js"
-export * from "./any_of_schema.js"
-export * from "./all_of_schema.js"
+    "content": "export * from "./root_schema"
+export * from "./array_of_strings_schema"
+export * from "./object_with_additional_properties_schema"
+export * from "./object_with_specified_type_additional_properties_schema"
+export * from "./ref_schema"
+export * from "./nullable_object_schema"
+export * from "./one_of_schema"
+export * from "./any_of_schema"
+export * from "./all_of_schema"
 ",
     "name": "index.ts",
     "path": "outdir/test/components/schemas/index.ts",
@@ -206,7 +206,7 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
   {
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
-import type { RequestParameters, ResponseMap, Operation } from "./types/get.js"
+import type { RequestParameters, ResponseMap, Operation } from "./types/get"
 
 
 
@@ -232,7 +232,7 @@ export function get<STATUS extends keyof ResponseMap>(arg?: RequestParameters): 
   },
   {
     "content": "import type { KeqOperation } from 'keq'
-import type { RootSchema } from "../components/schemas/root_schema.js"
+import type { RootSchema } from "../components/schemas/root_schema"
 
 
 export interface ResponseMap {
@@ -269,7 +269,7 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
   {
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
-import type { RequestParameters, ResponseMap, Operation } from "./types/post_id.js"
+import type { RequestParameters, ResponseMap, Operation } from "./types/post_id"
 
 
 
@@ -339,7 +339,7 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
   {
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
-import type { RequestParameters, ResponseMap, Operation } from "./types/get_simple.js"
+import type { RequestParameters, ResponseMap, Operation } from "./types/get_simple"
 
 
 
@@ -394,7 +394,7 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
   {
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
-import type { RequestParameters, ResponseMap, Operation } from "./types/post_simple.js"
+import type { RequestParameters, ResponseMap, Operation } from "./types/post_simple"
 
 
 
@@ -447,7 +447,7 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
   {
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
-import type { RequestParameters, ResponseMap, Operation } from "./types/delete_keyword.js"
+import type { RequestParameters, ResponseMap, Operation } from "./types/delete_keyword"
 
 
 
@@ -466,11 +466,11 @@ export function delete__keyword<STATUS extends keyof ResponseMap>(arg?: RequestP
     "path": "outdir/test/delete_keyword.ts",
   },
   {
-    "content": "export * from "./get.js"
-export * from "./post_id.js"
-export * from "./get_simple.js"
-export * from "./post_simple.js"
-export * from "./delete_keyword.js"
+    "content": "export * from "./get"
+export * from "./post_id"
+export * from "./get_simple"
+export * from "./post_simple"
+export * from "./delete_keyword"
 ",
     "name": "index.ts",
     "path": "outdir/test/index.ts",

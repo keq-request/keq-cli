@@ -1,6 +1,6 @@
 import { Keq } from 'keq'
 import { request } from '{{keq}}'
-import type { RequestParameters, ResponseMap, Operation } from "./types/{{h__change-case @root.fileNamingStyle (h__get-safe-operation-name pathname method operation)}}.js"
+import type { RequestParameters, ResponseMap, Operation } from "./types/{{h__change-case @root.fileNamingStyle (h__get-safe-operation-name pathname method operation)}}{{#if @root.esm}}.js{{/if}}"
 
 
 

@@ -13,7 +13,7 @@ import type { KeqOperation } from '{{keq}}'
     )
   )
 }}
-import type { {{h__ref-name this}} } from "../components/schemas/{{h__change-case @root.fileNamingStyle (h__ref-name this)}}.js"
+import type { {{h__ref-name this}} } from "../components/schemas/{{h__change-case @root.fileNamingStyle (h__ref-name this)}}{{#if @root.esm}}.js{{/if}}"
 {{/each}}
 
 

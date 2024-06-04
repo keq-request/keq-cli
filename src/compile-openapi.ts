@@ -26,6 +26,7 @@ const templates = {
 
 
 export async function compile(options: CompileOpenapiOptions): Promise<CompileResult[]> {
+  const esm = !!options.esm
   const moduleName = options.moduleName
   const document = options.document
   const fileNamingStyle = options?.fileNamingStyle || 'snakeCase'
@@ -39,8 +40,11 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
     for (const [name, jsonSchema] of R.toPairs(document.components.schemas)) {
       const context = {
         name,
+
         jsonSchema,
         document,
+
+        esm,
         fileNamingStyle,
         keq,
       }
@@ -60,6 +64,7 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
     const schemaExportsFileContent = templates.t_schema_exports({
       jsonSchemas: document.components.schemas,
       fileNamingStyle,
+      esm,
     })
 
     results.push({
@@ -82,8 +87,9 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
 
             document,
             moduleName,
-            fileNamingStyle,
 
+            fileNamingStyle,
+            esm,
             keq,
           }
 
@@ -123,8 +129,10 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
     const operationExportsFilepath = path.join(output, 'index.ts')
     const operationExportsFileContent = templates.t_operation_exports({
       document,
+
       fileNamingStyle,
       keq,
+      esm,
     })
 
     results.push({
