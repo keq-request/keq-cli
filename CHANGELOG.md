@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.1](https://github.com/keq-request/keq-cli/compare/v4.5.0...v4.5.1) (2024-06-04)
+
+
+### Bug Fixes
+
+* add esm configuration to control the generated code to comply with esm specifications ([04fda6a](https://github.com/keq-request/keq-cli/commit/04fda6aa330f59d1ab3432b26f2c154dd51643a7))
+
 ## [4.5.0](https://github.com/keq-request/keq-cli/compare/v4.4.1...v4.5.0) (2024-06-02)
 
 
