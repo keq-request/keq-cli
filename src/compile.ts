@@ -10,6 +10,7 @@ export async function compile(options: CompileOptions): Promise<void> {
 
   const compileOpenapiOptions: CompileOpenapiOptions = {
     outdir: options.outdir,
+    esm: options.esm,
     strict: options.strict,
     request: options.request,
     fileNamingStyle: options.fileNamingStyle || FileNamingStyle.snakeCase,

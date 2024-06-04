@@ -10,6 +10,7 @@ export async function build(options: BuildOptions): Promise<void> {
   const promises = Object.keys(options.modules).map(async (moduleName) => {
     try {
       const compileOptions: CompileOptions = {
+        esm: options.esm,
         outdir: options.outdir,
         strict: options.strict,
         request: options.request,
