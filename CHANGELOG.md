@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.3](https://github.com/keq-request/keq-cli/compare/v4.5.2...v4.5.3) (2024-06-07)
+
+
+### Bug Fixes
+
+* cannot import KeqOperation type ([578fd00](https://github.com/keq-request/keq-cli/commit/578fd00789c0957b6360cca5e969d9f4eacab899))
+
 ## [4.5.2](https://github.com/keq-request/keq-cli/compare/v4.5.1...v4.5.2) (2024-06-04)
 
 
