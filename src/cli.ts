@@ -15,7 +15,7 @@ const explore = cosmiconfig('keq')
 
 program
   .command('build')
-  .option('-c --config', 'The build config file')
+  .option('-c --config <config>', 'The build config file')
   .action(async (options) => {
     let result: CosmiconfigResult
     if (options.config) {
