@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.4](https://github.com/keq-request/keq-cli/compare/v4.5.3...v4.5.4) (2024-06-21)
+
+
+### Bug Fixes
+
+* cli config option not work ([c991369](https://github.com/keq-request/keq-cli/commit/c991369bbfba4127a9b6d4f3e70bbef94b25df61))
+
+
+### Performance Improvements
+
+* check node version and lock typescript version ([3dbb509](https://github.com/keq-request/keq-cli/commit/3dbb50968846a3a117936cd4dfc1242e15a8bfa0))
+
 ## [4.5.3](https://github.com/keq-request/keq-cli/compare/v4.5.2...v4.5.3) (2024-06-07)
 
 
