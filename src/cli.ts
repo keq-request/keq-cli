@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import chalk from 'chalk'
+import semver from 'semver'
 import { Command, Option } from 'commander'
 import { cosmiconfig } from 'cosmiconfig'
 import { CosmiconfigResult } from 'cosmiconfig/dist/types'
@@ -8,6 +9,10 @@ import { compile } from './compile'
 import { BuildOptions } from './types/build-options.js'
 import { Value } from '@sinclair/typebox/value'
 
+
+if (semver.lt(process.version, '18.0.0')) {
+  throw new Error('Node.js version must be greater than 18')
+}
 
 const program = new Command()
 const explore = cosmiconfig('keq')

@@ -7,6 +7,9 @@
   "description": "Transform Swagger 3.0 to the function that send request by keq",
   "version": "4.5.3",
   "packageManager": "pnpm@9.1.4",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "directories": {
     "lib": "lib",
     "test": "test"
@@ -62,12 +65,12 @@
     "ts-jest": "^29.1.5",
     "ts-node": "^10.9.2",
     "ts-patch": "^3.2.0",
-    "typescript": "^5.4.5",
     "typescript-transform-paths": "^3.4.7"
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.0",
     "@sinclair/typebox": "^0.32.33",
+    "@types/semver": "^7.5.8",
     "chalk": "4.1.2",
     "change-case": "4.1.2",
     "commander": "^9.5.0",
@@ -84,6 +87,7 @@
     "swagger-fix": "^1.0.3",
     "swagger2openapi": "^7.0.8",
     "ts-custom-error": "^3.3.1",
+    "typescript": "^5.4.5",
     "valid-url": "^1.0.9",
     "word-wrap": "^1.2.5"
   },
