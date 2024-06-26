@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.5](https://github.com/keq-request/keq-cli/compare/v4.5.4...v4.5.5) (2024-06-26)
+
+
+### Bug Fixes
+
+* compilation error caused by trace and option interfaces in swagger file ([2032aae](https://github.com/keq-request/keq-cli/commit/2032aae9ff9bb21e8a2a8746c9a6447cf8598811))
+
 ## [4.5.4](https://github.com/keq-request/keq-cli/compare/v4.5.3...v4.5.4) (2024-06-21)
 
 
