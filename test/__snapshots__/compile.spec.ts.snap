@@ -176,16 +176,16 @@ export interface ResponseMap {
 
 
 export type QueryParameters = {
-    "requiredQueryProp": number
-    "optionalQueryProp"?: number
+  "requiredQueryProp": string
+  "optionalQueryProp"?: string
 }
 
 export type RouteParameters = {
-    "id": string
+  "id": string
 }
 
 export type HeaderParameters = {
-    "headerProp": string
+  "headerProp": string
 }
 
 export type BodyParameters ={}
@@ -244,7 +244,7 @@ export type QueryParameters = {
 }
 
 export type RouteParameters = {
-    "id": string
+  "id": string
 }
 
 export type HeaderParameters = {
