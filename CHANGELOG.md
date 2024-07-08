@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.6](https://github.com/keq-request/keq-cli/compare/v4.5.5...v4.5.6) (2024-07-08)
+
+
+### Bug Fixes
+
+* build fails when there is a boolean attribute in the query ([ea4d06e](https://github.com/keq-request/keq-cli/commit/ea4d06ec13ec76f92e8bb9a1cf72e6511e6d893b))
+
 ## [4.5.5](https://github.com/keq-request/keq-cli/compare/v4.5.4...v4.5.5) (2024-06-26)
 
 
