@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.7](https://github.com/keq-request/keq-cli/compare/v4.5.6...v4.5.7) (2024-07-24)
+
+
+### Bug Fixes
+
+* wrong typescript definition ([bb2856e](https://github.com/keq-request/keq-cli/commit/bb2856e68ea84f22d54f61dffe197efaf0d8e8f9))
+
 ## [4.5.6](https://github.com/keq-request/keq-cli/compare/v4.5.5...v4.5.6) (2024-07-08)
 
 
