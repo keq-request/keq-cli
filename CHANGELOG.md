@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.6.0](https://github.com/keq-request/keq-cli/compare/v4.5.7...v4.6.0) (2024-08-09)
+
+
+### Features
+
+* add interactive filter ([6908d2b](https://github.com/keq-request/keq-cli/commit/6908d2bc25bcf8a3388dc753e988347c066b4ca2))
+* add operation filter ([772c614](https://github.com/keq-request/keq-cli/commit/772c6145f2e7bd1e2e84f82e110ad1a1f05b9176))
+
 ## [4.5.7](https://github.com/keq-request/keq-cli/compare/v4.5.6...v4.5.7) (2024-07-24)
 
 
