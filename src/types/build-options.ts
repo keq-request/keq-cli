@@ -1,6 +1,7 @@
 import { Type, type Static } from '@sinclair/typebox'
 import { FileNamingStyle } from './file-naming-style'
 import { OperationContext } from './operation-context.js'
+import { OperationFilter } from './operation-filter'
 
 
 export const BuildOptions = Type.Object({
@@ -14,6 +15,8 @@ export const BuildOptions = Type.Object({
   operationId: Type.Optional(Type.Function([Type.Any()], Type.String())),
 
   modules: Type.Record(Type.String(), Type.String()),
+
+  filter: OperationFilter,
 })
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare, no-redeclare

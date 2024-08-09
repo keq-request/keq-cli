@@ -9,13 +9,8 @@ export async function compile(options: CompileOptions): Promise<void> {
   const document = await fetchOpenapiFile(options.filepath)
 
   const compileOpenapiOptions: CompileOpenapiOptions = {
-    outdir: options.outdir,
-    esm: options.esm,
-    strict: options.strict,
-    request: options.request,
+    ...options,
     fileNamingStyle: options.fileNamingStyle || FileNamingStyle.snakeCase,
-    moduleName: options.moduleName,
-    operationId: options.operationId,
     document,
   }
 

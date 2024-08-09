@@ -1,12 +1,15 @@
 import { Type, type Static } from '@sinclair/typebox'
 import { BuildOptions } from './build-options.js'
+import { OperationFilter } from './operation-filter.js'
 
 
 export const CompileOptions = Type.Intersect([
-  Type.Pick(BuildOptions, ['strict', 'esm', 'outdir', 'fileNamingStyle', 'request', 'operationId']),
+  Type.Omit(BuildOptions, ['modules', 'filter']),
+
   Type.Object({
     moduleName: Type.String(),
     filepath: Type.String(),
+    filter: Type.Omit(OperationFilter, ['moduleName']),
   }),
 ])
 

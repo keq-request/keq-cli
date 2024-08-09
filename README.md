@@ -28,7 +28,7 @@ Transform Swagger 3.0/2.0 to the function that send request by [keq](https://git
 
 You need prepare a [Swagger 3.0 file](./tests/swagger.json) first.
 
-### Compile
+### `keq-cli compile`
 
 `keq-cli compile` is use to compile a local swagger file.
 
@@ -44,6 +44,97 @@ Options:
 | `-m --module-name`    | The module name                                                                                               |
 | `--file-naming-style` | File naming style.(default 'snakeCase', see more in [change-case](https://www.npmjs.com/package/change-case)) |
 | `--request`           | The request package used in compiled result.(default 'keq')                                                   |
+
+### `keq-cli build [methodName]`
+
+`keq-cli build` will compile according to the config file.
+This makes it possible to compile multiple swaggers at once and makes recompiling easier.
+By default, it will search for `.keqrc.yml`, `.keqrc.json`, `.keqrc.js`, `.keqrc.ts`.
+And you can use `-c --config <config_file_path>` to set the config filepath you wanted.
+
+Options:
+
+| option                           | description                                             |
+| :------------------------------- | :------------------------------------------------------ |
+| `[moduleName]                    | Only generate files of the specified module
+| `-c --config <config_file_path>` | The config filepath                                     |
+| `--method <method>`              | Only generate files of the specified operation method   |
+| `--pathname <pathname>`          | Only generate files of the specified operation pathname |
+| `--no-append`                    | Don't generate files that not exist                     |
+| `--no-update`                    | Don't generate files that existed                       |
+
+### Configuration file
+
+
+| option          | required | default                                    | description                                                                                          |
+| :-------------- | :------- | :----------------------------------------- | :--------------------------------------------------------------------------------------------------- |
+| outdir          | true     | -                                          | The directory generate files                                                                         |
+| fileNamingStyle | `false`  | -                                          | The naming style of files                                                                            |
+| modules         | true     | -                                          | Swagger files address. a url or local filepath.                                                      |
+| operationId     | `false`  | `({ operation }) => operation.operationId` | By default, `operationId` is used as the function name. You could customize it to avoid duplication. |
+| strict          | false    | `false`                                    | Whether remove files that generated last.                                                            |
+| esm             | false    | `false`                                    | Comply with esm specifications.                                                                      |
+
+#### FileNamingStyle
+
+| enum                           | example       |
+| :----------------------------- | :------------ |
+| `FileNamingStyle.camelCase`    | `"twoWords"`  |
+| `FileNamingStyle.capitalCase`  | `"Two Words"` |
+| `FileNamingStyle.constantCase` | `"TWO_WORDS"` |
+| `FileNamingStyle.dotCase`      | `"two.words"` |
+| `FileNamingStyle.headerCase`   | `"Tow-Words"` |
+| `FileNamingStyle.noCase`       | `"two words"` |
+| `FileNamingStyle.paramCase`    | `"two-words"` |
+| `FileNamingStyle.pascalCase`   | `"TwoWords"`  |
+| `FileNamingStyle.pathCase`     | `"two/words"` |
+| `FileNamingStyle.sentenceCase` | `"Two words"` |
+| `FileNamingStyle.snakeCase`    | `"two_words"` |
+
+#### Example
+
+##### Yaml
+
+The yml configuration file Example:
+
+```yml
+outdir: ./output
+fileNamingStyle: snakeCase
+modules:
+  userService: ./swagger.json
+  coreService: http://example.com/swagger.json
+```
+
+##### Json
+
+```json
+{
+  "outdir": "./output",
+  "fileNamingStyle": "snakeCase",
+  "modules": {
+    "userService": "./swagger.json",
+    "coreService": "http://example.com/swagger.json"
+  }
+}
+```
+
+##### Typescript
+
+```typescript
+import { defineKeqConfig, FileNamingStyle } from "keq-cli";
+
+export default defineKeqConfig({
+  outdir: "./output",
+  fileNamingStyle: FileNamingStyle.snakeCase,
+  modules: {
+    userService: "./swagger.json",
+    coreService: "http://example.com/swagger.json",
+  },
+
+  operationId: ({ method, pathname, operation }) =>
+    `${method}#${pathname.replace("/", ".")}`,
+});
+```
 
 ### Use In Coding
 
@@ -69,87 +160,4 @@ async function action() {
     name: "Marry",
   });
 }
-```
-
-## Configuration file
-
-Use configuration files is easy to regeneration.
-By default, `keq-cli` will search for `.keqrc.yml`, `.keqrc.json`, `.keqrc.js`, `.keqrc.ts`.
-You can use `-c --config <config_file_path>` to set the config file you wanted.
-
-```bash
-npx keq-cli build
-npx keq-cli build -c ./.keqrc.yml
-```
-
-Compared with `keq-cli compile`, the configuration file can set multiple modules with multiple url for different environments.
-
-| option          | required | default | description |
-| :-------------- | :------- | :------ | :---------- |
-| outdir          | true     | -       | The directory generate files
-| fileNamingStyle | `false`  | -       | The naming style of files
-| modules         | true     | -       | Swagger files address. a url or local filepath.
-| operationId     | `false`  | `({ operation }) => operation.operationId`       | By default, `operationId` is used as the function name. You could customize it to avoid duplication.
-| strict          | false    | `false` | Whether remove files that generated last.
-| esm             | false    | `false` | Comply with esm specifications.
-
-### FileNamingStyle
-
-| enum                           | example       |
-| :----------------------------- | :------------ |
-| `FileNamingStyle.camelCase`    | `"twoWords"`  |
-| `FileNamingStyle.capitalCase`  | `"Two Words"` |
-| `FileNamingStyle.constantCase` | `"TWO_WORDS"` |
-| `FileNamingStyle.dotCase`      | `"two.words"` |
-| `FileNamingStyle.headerCase`   | `"Tow-Words"` |
-| `FileNamingStyle.noCase`       | `"two words"` |
-| `FileNamingStyle.paramCase`    | `"two-words"` |
-| `FileNamingStyle.pascalCase`   | `"TwoWords"`  |
-| `FileNamingStyle.pathCase`     | `"two/words"` |
-| `FileNamingStyle.sentenceCase` | `"Two words"` |
-| `FileNamingStyle.snakeCase`    | `"two_words"` |
-
-
-### Example
-
-#### Yaml
-
-The yml configuration file Example:
-
-```yml
-outdir: ./output
-fileNamingStyle: snakeCase
-modules:
-  userService: ./swagger.json
-  coreService: http://example.com/swagger.json
-```
-
-#### Json
-
-```json
-{
-  "outdir": "./output",
-  "fileNamingStyle": "snakeCase",
-  "modules": {
-    "userService": "./swagger.json",
-    "coreService": "http://example.com/swagger.json"
-  }
-}
-```
-
-#### Typescript
-
-```typescript
-import { defineKeqConfig, FileNamingStyle } from 'keq-cli'
-
-export default defineKeqConfig({
-  outdir: "./output",
-  fileNamingStyle: FileNamingStyle.snakeCase,
-  modules: {
-    userService: "./swagger.json",
-    coreService: "http://example.com/swagger.json",
-  },
-
-  operationId: ({ method, pathname, operation }) => `${method}#${pathname.replace('/', '.')}`
-})
 ```

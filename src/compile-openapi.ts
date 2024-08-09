@@ -12,6 +12,9 @@ import './handlebar/register-helper.js'
 import './handlebar/register-partial.js'
 import { CompileResult } from './types/compile-result.js'
 import { CompileOpenapiOptions } from './types/compile-openapi-options.js'
+import { OperationFilter } from './types/operation-filter'
+import { OperationContext } from './types/operation-context'
+import { FileNamingStyle } from './types/file-naming-style'
 
 
 const readAndCompileTemplate = (filename: string): ReturnType<typeof Handlebars.compile> => Handlebars.compile(readTemplate(filename))
@@ -24,17 +27,28 @@ const templates = {
   t_type: readAndCompileTemplate('openapi-core/type'),
 }
 
+async function ignoreOperation(filter: OperationFilter, ctx: OperationContext, filepath: string): Promise<boolean> {
+  if (!filter || R.isEmpty(filter)) return false
+
+  if (filter.operationMethod && ctx.method !== filter.operationMethod.toLowerCase().trim()) return true
+  if (filter.operationPathname && ctx.pathname !== filter.operationPathname.trim()) return true
+  if (!filter.append && !(await fs.exists(filepath))) return true
+  if (!filter.update && (await fs.exists(filepath))) return true
+  return false
+}
+
 
 export async function compile(options: CompileOpenapiOptions): Promise<CompileResult[]> {
   const esm = !!options.esm
   const moduleName = options.moduleName
   const document = options.document
-  const fileNamingStyle = options?.fileNamingStyle || 'snakeCase'
+  const fileNamingStyle: FileNamingStyle = options?.fileNamingStyle || FileNamingStyle.snakeCase
   const formatFilename = changeCase[fileNamingStyle]
   const outdir = options?.outdir || `${process.cwd()}/api`
   const output = path.join(outdir, formatFilename(moduleName))
   const keq = options?.request ? path.relative(output, options.request) : 'keq'
 
+  const ignoredOperations: string[] = []
   const results: CompileResult[] = []
   if (document.components?.schemas && !R.isEmpty(document.components.schemas)) {
     for (const [name, jsonSchema] of R.toPairs(document.components.schemas)) {
@@ -103,29 +117,32 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
             context.operation.operationId = options.operationId(context)
           }
 
-          {
-            const fileContent = templates.t_type({ ...context })
-            const filename = formatFilename(getSafeOperationName(pathname, method, operation))
-            const filepath = path.join(output, 'types', `${filename}.ts`)
+          const filename = formatFilename(getSafeOperationName(pathname, method, operation))
+          const operationFilepath = path.join(output, `${filename}.ts`)
+          const operationTypeFilepath = path.join(output, 'types', `${filename}.ts`)
 
-            results.push({
-              name: filename,
-              path: filepath,
-              content: fileContent,
-            })
+          if (await ignoreOperation(options.filter, context, operationFilepath)) {
+            ignoredOperations.push(filename)
+            continue
           }
 
-          {
-            const fileContent = templates.t_operation({ ...context })
-            const filename = formatFilename(getSafeOperationName(pathname, method, operation))
-            const filepath = path.join(output, `${filename}.ts`)
+          const operationFileContent = templates.t_operation({ ...context })
+          const operationTypeFileContent = templates.t_type({ ...context })
 
-            results.push({
-              name: filename,
-              path: filepath,
-              content: fileContent,
-            })
-          }
+
+          // operation type file
+          results.push({
+            name: filename,
+            path: operationTypeFilepath,
+            content: operationTypeFileContent,
+          })
+
+          // operation file
+          results.push({
+            name: filename,
+            path: operationFilepath,
+            content: operationFileContent,
+          })
         } else {
           console.warn(chalk.yellow(`Operation ${String(method)} on path ${String(pathname)} cannot compiled, skipping`))
         }

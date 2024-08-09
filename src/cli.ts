@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import * as R from 'ramda'
 import chalk from 'chalk'
 import semver from 'semver'
 import { Command, Option } from 'commander'
@@ -8,6 +9,8 @@ import { build } from './build'
 import { compile } from './compile'
 import { BuildOptions } from './types/build-options.js'
 import { Value } from '@sinclair/typebox/value'
+import { RuntimeConfig } from './types/runtime-config'
+import { OperationFilter } from './types/operation-filter'
 
 
 if (semver.lt(process.version, '18.0.0')) {
@@ -19,9 +22,13 @@ const explore = cosmiconfig('keq')
 
 
 program
-  .command('build')
+  .command('build [moduleName]')
   .option('-c --config <config>', 'The build config file')
-  .action(async (options) => {
+  .option('--method <method>', 'Only generate files of the specified operation method')
+  .option('--pathname <pathname>', 'Only generate files of the specified operation pathname')
+  .option('--no-append', 'Whether to generate files that not exist')
+  .option('--no-update', 'Whether to generate files that exist')
+  .action(async (moduleName, options) => {
     let result: CosmiconfigResult
     if (options.config) {
       result = await explore.load(options.config)
@@ -34,13 +41,27 @@ program
     }
 
 
-    if (!Value.Check(BuildOptions, result.config)) {
-      const errors = [...Value.Errors(BuildOptions, result.config)]
+    if (!Value.Check(RuntimeConfig, result.config)) {
+      const errors = [...Value.Errors(RuntimeConfig, result.config)]
       const message = errors.map(({ path, message }) => `${path}: ${message}`).join('\n')
       throw new Error(chalk.red(`Invalid Config: ${message}`))
     }
 
-    const config: BuildOptions = result.config
+    const rc = result.config as RuntimeConfig
+    if (moduleName && !(moduleName in rc.modules)) {
+      throw new Error(`Cannot find module ${moduleName} in config file.`)
+    }
+
+    const filter: OperationFilter = R.reject(R.isNil, <OperationFilter>{
+      moduleName,
+      operationMethod: options.method,
+      operationPathname: options.pathname,
+      append: options.append,
+      update: options.update,
+    })
+    console.log('🚀 ~ .action ~ filter:', filter)
+
+    const config: BuildOptions = { ...rc, filter }
     await build(config)
   })
 
