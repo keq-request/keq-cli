@@ -11,6 +11,7 @@ import { BuildOptions } from './types/build-options.js'
 import { Value } from '@sinclair/typebox/value'
 import { RuntimeConfig } from './types/runtime-config'
 import { OperationFilter } from './types/operation-filter'
+import { cliPrompt } from './cli-prompt'
 
 
 if (semver.lt(process.version, '18.0.0')) {
@@ -24,6 +25,7 @@ const explore = cosmiconfig('keq')
 program
   .command('build [moduleName]')
   .option('-c --config <config>', 'The build config file')
+  .option('-i --interactive', 'Interactive select the scope of generation')
   .option('--method <method>', 'Only generate files of the specified operation method')
   .option('--pathname <pathname>', 'Only generate files of the specified operation pathname')
   .option('--no-append', 'Whether to generate files that not exist')
@@ -52,14 +54,22 @@ program
       throw new Error(`Cannot find module ${moduleName} in config file.`)
     }
 
-    const filter: OperationFilter = R.reject(R.isNil, <OperationFilter>{
+    let filter: OperationFilter[] = [R.reject(R.isNil, <OperationFilter>{
       moduleName,
-      operationMethod: options.method,
-      operationPathname: options.pathname,
       append: options.append,
       update: options.update,
-    })
-    console.log('🚀 ~ .action ~ filter:', filter)
+
+      operationMethod: options.method,
+      operationPathname: options.pathname,
+    })]
+
+    if (options.interactive) {
+      filter = await cliPrompt(rc, {
+        moduleName,
+        append: options.append,
+        update: options.update,
+      })
+    }
 
     const config: BuildOptions = { ...rc, filter }
     await build(config)

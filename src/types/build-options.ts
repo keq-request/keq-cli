@@ -16,7 +16,7 @@ export const BuildOptions = Type.Object({
 
   modules: Type.Record(Type.String(), Type.String()),
 
-  filter: OperationFilter,
+  filter: Type.Array(OperationFilter),
 })
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare, no-redeclare

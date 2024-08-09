@@ -27,14 +27,17 @@ const templates = {
   t_type: readAndCompileTemplate('openapi-core/type'),
 }
 
-async function ignoreOperation(filter: OperationFilter, ctx: OperationContext, filepath: string): Promise<boolean> {
-  if (!filter || R.isEmpty(filter)) return false
+async function ignoreOperation(filter: OperationFilter[], ctx: OperationContext, filepath: string): Promise<boolean> {
+  const existed = await fs.exists(filepath)
 
-  if (filter.operationMethod && ctx.method !== filter.operationMethod.toLowerCase().trim()) return true
-  if (filter.operationPathname && ctx.pathname !== filter.operationPathname.trim()) return true
-  if (!filter.append && !(await fs.exists(filepath))) return true
-  if (!filter.update && (await fs.exists(filepath))) return true
-  return false
+  return filter.every((f) => {
+    if (f.operationMethod && ctx.method !== f.operationMethod.toLowerCase().trim()) return true
+    if (f.operationPathname && ctx.pathname !== f.operationPathname.trim()) return true
+    if (!f.append && !existed) return true
+    if (!f.update && existed) return true
+
+    return false
+  })
 }
 
 

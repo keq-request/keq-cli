@@ -9,7 +9,7 @@ import { FileNamingStyle } from './types/file-naming-style.js'
 export async function build(options: BuildOptions): Promise<void> {
   const promises = Object.keys(options.modules)
     .filter((moduleName) => {
-      if (options.filter.moduleName && options.filter.moduleName !== moduleName) {
+      if (options.filter.every((f) => f.moduleName !== moduleName && !!f.moduleName)) {
         console.log(chalk.yellow(`${moduleName} module skipped.`))
         return false
       }

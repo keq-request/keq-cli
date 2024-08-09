@@ -9,7 +9,7 @@ export const CompileOptions = Type.Intersect([
   Type.Object({
     moduleName: Type.String(),
     filepath: Type.String(),
-    filter: Type.Omit(OperationFilter, ['moduleName']),
+    filter: Type.Array(Type.Omit(OperationFilter, ['moduleName'])),
   }),
 ])
 
