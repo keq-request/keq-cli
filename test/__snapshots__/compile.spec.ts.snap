@@ -224,7 +224,7 @@ export function get<STATUS extends keyof ResponseMap>(arg?: RequestParameters): 
   if (arg && "headerProp" in arg) req.set("headerProp", arg["headerProp"])
   if (arg && "id" in arg) req.params("id", String(arg["id"]))
 
-  return req
+  return req as unknown as Keq<ResponseMap[STATUS], Operation<STATUS>>
 }
 ",
     "name": "get",
@@ -298,7 +298,7 @@ export function post__$id<STATUS extends keyof ResponseMap>(arg?: RequestParamet
   if (arg && "refProp" in arg) req.send({ "refProp": arg["refProp"] })
   if (arg && "objectProp" in arg) req.send({ "objectProp": arg["objectProp"] })
 
-  return req
+  return req as unknown as Keq<ResponseMap[STATUS], Operation<STATUS>>
 }
 ",
     "name": "post_id",
@@ -351,7 +351,7 @@ export function get__simple<STATUS extends keyof ResponseMap>(arg?: RequestParam
     })
 
 
-  return req
+  return req as unknown as Keq<ResponseMap[STATUS], Operation<STATUS>>
 }
 ",
     "name": "get_simple",
@@ -406,7 +406,7 @@ export function post__simple<STATUS extends keyof ResponseMap>(arg?: RequestPara
     })
 
 
-  return req
+  return req as unknown as Keq<ResponseMap[STATUS], Operation<STATUS>>
 }
 ",
     "name": "post_simple",
@@ -459,7 +459,7 @@ export function delete__keyword<STATUS extends keyof ResponseMap>(arg?: RequestP
     })
 
 
-  return req
+  return req as unknown as Keq<ResponseMap[STATUS], Operation<STATUS>>
 }
 ",
     "name": "delete_keyword",

@@ -29,6 +29,7 @@ const templates = {
 
 async function ignoreOperation(filter: OperationFilter[], ctx: OperationContext, filepath: string): Promise<boolean> {
   const existed = await fs.exists(filepath)
+  if (!filter.length) return false
 
   return filter.every((f) => {
     if (f.operationMethod && ctx.method !== f.operationMethod.toLowerCase().trim()) return true

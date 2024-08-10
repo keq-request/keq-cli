@@ -16,7 +16,7 @@ async function querySwagger(modules: RuntimeConfig['modules']): Promise<[string,
   }))
 
   return results
-    .filter((result) => result.status !== 'rejected')
+    .filter((result): result is PromiseFulfilledResult<[string, OpenAPIV3.Document]> => result.status === 'fulfilled')
     .map((result) => result.value)
 }
 
