@@ -56,9 +56,9 @@ Options:
 
 | option                           | description                                             |
 | :------------------------------- | :------------------------------------------------------ |
-| `[moduleName]                    | Only generate files of the specified module             |
+| `[moduleName]`                   | Only generate files of the specified module             |
 | `-c --config <config_file_path>` | The config filepath                                     |
-| `-i --interactive                | Interactive select the scope of generation              |
+| `-i --interactive`               | Interactive select the scope of generation              |
 | `--method <method>`              | Only generate files of the specified operation method   |
 | `--pathname <pathname>`          | Only generate files of the specified operation pathname |
 | `--no-append`                    | Don't generate files that not exist                     |
