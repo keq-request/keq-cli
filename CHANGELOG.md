@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.6.1](https://github.com/keq-request/keq-cli/compare/v4.6.0...v4.6.1) (2024-08-10)
+
+
+### Bug Fixes
+
+* requestBody,response and paramaters cannot be parsed correctly when $ref appears ([d2f5871](https://github.com/keq-request/keq-cli/commit/d2f587152ff22514c6ac364773bd4f08a5a6a079))
+
 ## [4.6.0](https://github.com/keq-request/keq-cli/compare/v4.5.7...v4.6.0) (2024-08-09)
 
 
