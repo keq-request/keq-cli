@@ -69,9 +69,9 @@ Options:
 | option          | required | default                                    | description                                                                                          |
 | :-------------- | :------- | :----------------------------------------- | :--------------------------------------------------------------------------------------------------- |
 | outdir          | true     | -                                          | The directory generate files                                                                         |
-| fileNamingStyle | `false`  | -                                          | The naming style of files                                                                            |
+| fileNamingStyle | false    | -                                          | The naming style of files                                                                            |
 | modules         | true     | -                                          | Swagger files address. a url or local filepath.                                                      |
-| operationId     | `false`  | `({ operation }) => operation.operationId` | By default, `operationId` is used as the function name. You could customize it to avoid duplication. |
+| operationId     | false    | `({ operation }) => operation.operationId` | By default, `operationId` is used as the function name. You could customize it to avoid duplication. |
 | strict          | false    | `false`                                    | Whether remove files that generated last.                                                            |
 | esm             | false    | `false`                                    | Comply with esm specifications.                                                                      |
 
