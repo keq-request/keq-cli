@@ -7,12 +7,15 @@ import { OperationFilter } from './types/operation-filter'
 import { RuntimeConfig } from './types/runtime-config'
 import { fetchOpenapiFile } from './utils/fetch-openapi-file'
 import { OpenAPIV3 } from 'openapi-types'
+import { disinfect } from './utils/disinfect'
 
 
 async function querySwagger(modules: RuntimeConfig['modules']): Promise<[string, OpenAPIV3.Document][]> {
   const results = await Promise.allSettled(Object.entries(modules).map(async ([moduleName, filepath]): Promise<[string, OpenAPIV3.Document]> => {
     const swagger = await fetchOpenapiFile(filepath)
-    return [moduleName, swagger]
+    const swagger3 = await disinfect(swagger)
+
+    return [moduleName, swagger3]
   }))
 
   return results

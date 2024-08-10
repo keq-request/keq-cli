@@ -182,6 +182,18 @@
           }
         ]
       }
+    },
+    "requestBodies": {
+      "id_post": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/RootSchema"
+            }
+          }
+        }
+      }
     }
   },
   "paths": {
@@ -241,14 +253,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RootSchema"
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/id_post"
         },
         "responses": {
           "200": {
@@ -283,7 +288,7 @@
     },
     "/keyword": {
       "delete": {
-        "operationId": "delete"
+        "operationId": "deleteKeyword"
       }
     }
   }

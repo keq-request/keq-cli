@@ -15,6 +15,7 @@ import { CompileOpenapiOptions } from './types/compile-openapi-options.js'
 import { OperationFilter } from './types/operation-filter'
 import { OperationContext } from './types/operation-context'
 import { FileNamingStyle } from './types/file-naming-style'
+import { disinfect } from './utils/disinfect'
 
 
 const readAndCompileTemplate = (filename: string): ReturnType<typeof Handlebars.compile> => Handlebars.compile(readTemplate(filename))
@@ -45,7 +46,7 @@ async function ignoreOperation(filter: OperationFilter[], ctx: OperationContext,
 export async function compile(options: CompileOpenapiOptions): Promise<CompileResult[]> {
   const esm = !!options.esm
   const moduleName = options.moduleName
-  const document = options.document
+  const document = await disinfect(options.document)
   const fileNamingStyle: FileNamingStyle = options?.fileNamingStyle || FileNamingStyle.snakeCase
   const formatFilename = changeCase[fileNamingStyle]
   const outdir = options?.outdir || `${process.cwd()}/api`
