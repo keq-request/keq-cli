@@ -26,7 +26,10 @@ program
   .command('build [moduleName]')
   .option('-c --config <config>', 'The build config file')
   .option('-i --interactive', 'Interactive select the scope of generation')
-  .option('--method <method>', 'Only generate files of the specified operation method')
+  .addOption(
+    new Option('--method <method>', 'Only generate files of the specified operation method')
+      .choices(['get', 'post', 'put', 'delete', 'patch', 'head', 'option'])
+  )
   .option('--pathname <pathname>', 'Only generate files of the specified operation pathname')
   .option('--no-append', 'Whether to generate files that not exist')
   .option('--no-update', 'Whether to generate files that exist')
@@ -68,6 +71,8 @@ program
         moduleName,
         append: options.append,
         update: options.update,
+        operationMethod: options.method,
+        operationPathname: options.pathname,
       })
     }
 

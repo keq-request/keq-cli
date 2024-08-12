@@ -37,6 +37,7 @@ export async function cliPrompt(rc: RuntimeConfig, filter: OperationFilter): Pro
 
   const operationMethods = await select({
     message: 'Select Method',
+    defaultValue: [filter.operationMethod],
     options: (input) => {
       const items = [
         { name: 'Get', value: 'get' },
