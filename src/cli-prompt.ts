@@ -50,8 +50,9 @@ export async function cliPrompt(rc: RuntimeConfig, filter: OperationFilter): Pro
       ].filter((method) => methodsInSwagger.includes(method.value))
 
       if (!input) return items
+      const q = input.trim().toLowerCase()
 
-      return items.filter((method) => method.name.toLowerCase().includes(input.toLowerCase()))
+      return items.filter((method) => method.name.toLowerCase().includes(q))
     },
   })
 
@@ -66,8 +67,9 @@ export async function cliPrompt(rc: RuntimeConfig, filter: OperationFilter): Pro
       const items = pathnames.map((pathname) => ({ name: pathname, value: pathname }))
 
       if (!input) return items
+      const q = input.trim().toLowerCase()
 
-      return items.filter((p) => p.name.toLowerCase().includes(input.toLowerCase()))
+      return items.filter((p) => p.name.toLowerCase().includes(q))
     },
   })
 
