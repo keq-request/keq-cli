@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.6.2](https://github.com/keq-request/keq-cli/compare/v4.6.1...v4.6.2) (2024-08-12)
+
+
+### Performance Improvements
+
+* prompt when no method is selected in interactive mode ([3adeb81](https://github.com/keq-request/keq-cli/commit/3adeb8118f720102ffab5b487646945e621dfae7))
+* set default method in interactive mode ([3b9bf5b](https://github.com/keq-request/keq-cli/commit/3b9bf5b7390d5278fe609cc6c7d6ee22103d46fe))
+* trim space in search ([1526d2a](https://github.com/keq-request/keq-cli/commit/1526d2af410ea59aa5ad891b3de18c38687e3f0b))
+
 ## [4.6.1](https://github.com/keq-request/keq-cli/compare/v4.6.0...v4.6.1) (2024-08-10)
 
 
