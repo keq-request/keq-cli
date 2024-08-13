@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.6.3](https://github.com/keq-request/keq-cli/compare/v4.6.2...v4.6.3) (2024-08-13)
+
+
+### Performance Improvements
+
+* allow header to add number type fields ([37ab442](https://github.com/keq-request/keq-cli/commit/37ab44235d01690b4e88971842ebc95866172ba1))
+
 ## [4.6.2](https://github.com/keq-request/keq-cli/compare/v4.6.1...v4.6.2) (2024-08-12)
 
 
