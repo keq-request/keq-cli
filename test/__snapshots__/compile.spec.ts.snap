@@ -176,8 +176,8 @@ export interface ResponseMap {
 
 
 export type QueryParameters = {
-  "requiredQueryProp": string
-  "optionalQueryProp"?: string
+  "requiredQueryProp": number
+  "optionalQueryProp"?: number
 }
 
 export type RouteParameters = {
