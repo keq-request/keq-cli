@@ -94,6 +94,6 @@
     "word-wrap": "^1.2.5"
   },
   "peerDependencies": {
-    "keq": "^2.6.4"
+    "keq": "^2.7.2"
   }
 }

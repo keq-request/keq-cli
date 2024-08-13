@@ -28,9 +28,9 @@ export interface ResponseMap {
 }
 
 {{#*inline "parameterProperty"}}
-{{#if (r__equals type "number")}}
+{{#if (r__equals schema.type "number")}}
   "{{name}}"{{#unless required}}?{{/unless}}: number
-{{else if (r__equals type "integer")}}
+{{else if (r__equals schema.type "integer")}}
   "{{name}}"{{#unless required}}?{{/unless}}: number
 {{else}}
   "{{name}}"{{#unless required}}?{{/unless}}: string
