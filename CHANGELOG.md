@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.6.4](https://github.com/keq-request/keq-cli/compare/v4.6.3...v4.6.4) (2024-08-13)
+
+
+### Bug Fixes
+
+* the number type defined in header/routeParams/query is incorrectly compiled into string type ([d2ad9d1](https://github.com/keq-request/keq-cli/commit/d2ad9d17c6775fc31a3a4f18e1ea1b145526806c))
+
 ## [4.6.3](https://github.com/keq-request/keq-cli/compare/v4.6.2...v4.6.3) (2024-08-13)
 
 
