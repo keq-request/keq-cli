@@ -12,7 +12,6 @@ test('compile swagger', async () => {
     outdir: './outdir',
     fileNamingStyle: FileNamingStyle.snakeCase,
     strict: false,
-    filter: [],
   })
 
   expect(files).toMatchSnapshot()

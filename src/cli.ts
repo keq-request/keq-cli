@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 import * as R from 'ramda'
+import * as fs from 'fs-extra'
+import ora from 'ora'
 import chalk from 'chalk'
 import semver from 'semver'
 import { Command, Option } from 'commander'
@@ -12,6 +14,9 @@ import { Value } from '@sinclair/typebox/value'
 import { RuntimeConfig } from './types/runtime-config'
 import { OperationFilter } from './types/operation-filter'
 import { cliPrompt } from './cli-prompt'
+import { fetchModules } from './utils/fetch-openapi-file'
+import { sharkingModules } from './utils/sharking-modules'
+import { regenerateName } from './utils/regenerate-name'
 
 
 if (semver.lt(process.version, '18.0.0')) {
@@ -33,6 +38,7 @@ program
   .option('--pathname <pathname>', 'Only generate files of the specified operation pathname')
   .option('--no-append', 'Whether to generate files that not exist')
   .option('--no-update', 'Whether to generate files that exist')
+  .option('--debug', 'Print debug information')
   .action(async (moduleName, options) => {
     let result: CosmiconfigResult
     if (options.config) {
@@ -52,13 +58,32 @@ program
       throw new Error(chalk.red(`Invalid Config: ${message}`))
     }
 
-    const rc = result.config as RuntimeConfig
-    if (moduleName && !(moduleName in rc.modules)) {
-      throw new Error(`Cannot find module ${moduleName} in config file.`)
+    const rc = Value.Default(RuntimeConfig, result.config) as RuntimeConfig
+
+    // Filter module
+    if (moduleName) {
+      if (!(moduleName in rc.modules)) {
+        throw new Error(`Cannot find module ${moduleName} in config file.`)
+      }
+
+      for (const key of Object.keys(rc.modules)) {
+        if (key !== moduleName) {
+          console.log(chalk.yellow(`${key} module skipped.`))
+        }
+      }
+
+      rc.modules = { [moduleName]: rc.modules[moduleName] }
     }
 
-    let filter: OperationFilter[] = [R.reject(R.isNil, <OperationFilter>{
-      moduleName,
+    const loadingModules = ora({
+      text: 'loading modules',
+      spinner: 'arc',
+    }).start()
+    let modules = await fetchModules(rc)
+    modules = regenerateName(modules, rc)
+    loadingModules.succeed()
+
+    let filters: OperationFilter[] = [R.reject(R.isNil, <OperationFilter>{
       append: options.append,
       update: options.update,
 
@@ -67,17 +92,19 @@ program
     })]
 
     if (options.interactive) {
-      filter = await cliPrompt(rc, {
-        moduleName,
-        append: options.append,
-        update: options.update,
-        operationMethod: options.method,
-        operationPathname: options.pathname,
-      })
+      filters = await cliPrompt(modules, filters[0])
     }
 
-    const config: BuildOptions = { ...rc, filter }
-    await build(config)
+    const buildOptions: BuildOptions = {
+      ...rc,
+      modules: await sharkingModules(modules, filters, rc),
+    }
+
+    if (rc.debug) {
+      await fs.writeJSON('.keq/build-options.json', buildOptions, { spaces: 2 })
+    }
+
+    await build(buildOptions)
   })
 
 program
@@ -105,6 +132,7 @@ async function main(): Promise<void> {
   try {
     await program.parseAsync(process.argv)
   } catch (e) {
+    console.log('🚀 ~ main ~ e:', e)
     console.error(chalk.red(e instanceof Error ? e.message : String(e)))
   }
 }

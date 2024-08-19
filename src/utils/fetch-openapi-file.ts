@@ -4,6 +4,9 @@ import { request } from 'keq'
 import { OpenAPI, OpenAPIV3 } from 'openapi-types'
 import * as path from 'path'
 import * as validUrl from 'valid-url'
+import chalk from 'chalk'
+import { disinfect } from './disinfect'
+import { RuntimeConfig } from '~/types/runtime-config'
 
 async function fetchFromUrl(url: string): Promise<OpenAPIV3.Document> {
   let content: string
@@ -46,4 +49,35 @@ export async function fetchOpenapiFile(filepath: string): Promise<OpenAPI.Docume
   }
 
   return swagger
+}
+
+export async function fetchModules(rc: RuntimeConfig): Promise<Record<string, OpenAPIV3.Document>> {
+  const promises = Object.entries(rc.modules)
+    .map(async ([moduleName, filepath]) => {
+      const swagger = await fetchOpenapiFile(filepath)
+      const swagger3 = await disinfect(moduleName, swagger)
+
+      return [moduleName, swagger3] as const
+    })
+
+
+  const results = await Promise.allSettled(promises)
+
+
+  const modulesMap: Record<string, OpenAPIV3.Document> = {}
+
+  for (const result of results) {
+    if (result.status === 'rejected') {
+      console.log(chalk.red(String(result.reason.message)))
+    } else {
+      const [moduleName, swagger] = result.value
+      modulesMap[moduleName] = swagger
+
+      if (rc.debug) {
+        await fs.writeJSON(`.keq/${moduleName}.swagger.json`, swagger, { spaces: 2 })
+      }
+    }
+  }
+
+  return modulesMap
 }

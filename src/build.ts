@@ -8,14 +8,6 @@ import { FileNamingStyle } from './types/file-naming-style.js'
 
 export async function build(options: BuildOptions): Promise<void> {
   const promises = Object.keys(options.modules)
-    .filter((moduleName) => {
-      if (options.filter.every((f) => f.moduleName !== moduleName && !!f.moduleName)) {
-        console.log(chalk.yellow(`${moduleName} module skipped.`))
-        return false
-      }
-
-      return true
-    })
     .map(async (moduleName): Promise<string> => {
       try {
         const compileOptions: CompileOptions = {
@@ -24,11 +16,9 @@ export async function build(options: BuildOptions): Promise<void> {
           strict: options.strict,
           request: options.request,
           fileNamingStyle: options.fileNamingStyle || FileNamingStyle.snakeCase,
-          operationId: options.operationId,
-          filter: options.filter,
 
           moduleName,
-          filepath: options.modules[moduleName],
+          document: options.modules[moduleName],
         }
 
         await compile(compileOptions)

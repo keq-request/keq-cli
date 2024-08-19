@@ -12,48 +12,35 @@ import './handlebar/register-helper.js'
 import './handlebar/register-partial.js'
 import { CompileResult } from './types/compile-result.js'
 import { CompileOpenapiOptions } from './types/compile-openapi-options.js'
-import { OperationFilter } from './types/operation-filter'
-import { OperationContext } from './types/operation-context'
 import { FileNamingStyle } from './types/file-naming-style'
-import { disinfect } from './utils/disinfect'
 
 
 const readAndCompileTemplate = (filename: string): ReturnType<typeof Handlebars.compile> => Handlebars.compile(readTemplate(filename))
 const templates = {
   t_schema: readAndCompileTemplate('json-schema/file'),
-  t_schema_exports: readAndCompileTemplate('json-schema/exports'),
-
   t_operation: readAndCompileTemplate('openapi-core/operation'),
-  t_operation_exports: readAndCompileTemplate('openapi-core/operation-exports'),
   t_type: readAndCompileTemplate('openapi-core/type'),
 }
 
-async function ignoreOperation(filter: OperationFilter[], ctx: OperationContext, filepath: string): Promise<boolean> {
-  const existed = await fs.exists(filepath)
-  if (!filter.length) return false
 
-  return filter.every((f) => {
-    if (f.operationMethod && ctx.method !== f.operationMethod.toLowerCase().trim()) return true
-    if (f.operationPathname && ctx.pathname !== f.operationPathname.trim()) return true
-    if (!f.append && !existed) return true
-    if (!f.update && existed) return true
-
-    return false
-  })
+function getModuleOutput(options: CompileOpenapiOptions): string {
+  const moduleName = options.moduleName
+  const fileNamingStyle: FileNamingStyle = options?.fileNamingStyle || FileNamingStyle.snakeCase
+  const formatFilename = changeCase[fileNamingStyle]
+  const outdir = options?.outdir || `${process.cwd()}/api`
+  return path.join(outdir, formatFilename(moduleName))
 }
-
 
 export async function compile(options: CompileOpenapiOptions): Promise<CompileResult[]> {
   const esm = !!options.esm
   const moduleName = options.moduleName
-  const document = await disinfect(options.document)
+  const document = options.document
   const fileNamingStyle: FileNamingStyle = options?.fileNamingStyle || FileNamingStyle.snakeCase
   const formatFilename = changeCase[fileNamingStyle]
-  const outdir = options?.outdir || `${process.cwd()}/api`
-  const output = path.join(outdir, formatFilename(moduleName))
+  const output = getModuleOutput(options)
   const keq = options?.request ? path.relative(output, options.request) : 'keq'
 
-  const ignoredOperations: string[] = []
+  // const ignoredOperations: string[] = []
   const results: CompileResult[] = []
   if (document.components?.schemas && !R.isEmpty(document.components.schemas)) {
     for (const [name, jsonSchema] of R.toPairs(document.components.schemas)) {
@@ -78,19 +65,6 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
         content: fileContent,
       })
     }
-
-    const schemaExportsFilepath = path.join(output, 'components', 'schemas', 'index.ts')
-    const schemaExportsFileContent = templates.t_schema_exports({
-      jsonSchemas: document.components.schemas,
-      fileNamingStyle,
-      esm,
-    })
-
-    results.push({
-      name: 'index.ts',
-      path: schemaExportsFilepath,
-      content: schemaExportsFileContent,
-    })
   }
 
   if (document.paths && !R.isEmpty(document.paths)) {
@@ -99,7 +73,7 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
 
       for (const [m, operation] of Object.entries(pathItem)) {
         const method = m.toLowerCase()
-        if (!['get', 'post', 'put', 'delete', 'patch', 'head'].includes(method)) {
+        if (!['get', 'post', 'put', 'delete', 'patch', 'head', 'options'].includes(method)) {
           console.warn(chalk.yellow(`Method ${String(method).toUpperCase()} on path ${String(pathname)} cannot compiled, skipping`))
           continue
         }
@@ -118,18 +92,9 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
             keq,
           }
 
-          if (options.operationId) {
-            context.operation.operationId = options.operationId(context)
-          }
-
           const filename = formatFilename(getSafeOperationName(pathname, method, operation))
           const operationFilepath = path.join(output, `${filename}.ts`)
           const operationTypeFilepath = path.join(output, 'types', `${filename}.ts`)
-
-          if (await ignoreOperation(options.filter, context, operationFilepath)) {
-            ignoredOperations.push(filename)
-            continue
-          }
 
           const operationFileContent = templates.t_operation({ ...context })
           const operationTypeFileContent = templates.t_type({ ...context })
@@ -153,25 +118,28 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
         }
       }
     }
-
-    const operationExportsFilepath = path.join(output, 'index.ts')
-    const operationExportsFileContent = templates.t_operation_exports({
-      document,
-
-      fileNamingStyle,
-      keq,
-      esm,
-    })
-
-    results.push({
-      name: 'index.ts',
-      path: operationExportsFilepath,
-      content: operationExportsFileContent,
-    })
   }
 
   return results
 }
+
+
+async function genIndexFile(dir: string, options: CompileOpenapiOptions): Promise<void> {
+  const names = await fs.readdir(dir)
+
+  const pairs = await Promise.all(names.map(async (name) => [name, await fs.stat(path.join(dir, name))] as const))
+
+  const filenames = pairs
+    .filter(([name, fileStat]) => fileStat.isFile() && name.endsWith('.ts') && name !== 'index.ts')
+    .map(([filename]) => filename)
+
+  const content = filenames
+    .map((filename) => `export * from "./${filename.slice(0, -3)}${options.esm ? '.js' : ''}"`)
+    .join('\n')
+
+  await fs.writeFile(path.join(dir, 'index.ts'), content)
+}
+
 
 export async function CompileOpenapi(option: CompileOpenapiOptions): Promise<void> {
   const results = await compile(option)
@@ -184,4 +152,8 @@ export async function CompileOpenapi(option: CompileOpenapiOptions): Promise<voi
     },
     { concurrency: 10 },
   )
+
+  const output = getModuleOutput(option)
+  await genIndexFile(output, option)
+  await genIndexFile(path.join(output, 'components', 'schemas'), option)
 }
