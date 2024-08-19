@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.1](https://github.com/keq-request/keq-cli/compare/v4.7.0...v4.7.1) (2024-08-19)
+
+
+### Bug Fixes
+
+* throw error when swagger has null property ([e556e1f](https://github.com/keq-request/keq-cli/commit/e556e1f7ca229dca1dd89896978cd5e07315b42f))
+
 ## [4.7.0](https://github.com/keq-request/keq-cli/compare/v4.6.4...v4.7.0) (2024-08-19)
 
 
