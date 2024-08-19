@@ -17,6 +17,7 @@ import { cliPrompt } from './cli-prompt'
 import { fetchModules } from './utils/fetch-openapi-file'
 import { sharkingModules } from './utils/sharking-modules'
 import { regenerateName } from './utils/regenerate-name'
+import { JSONPath } from 'jsonpath-plus'
 
 
 if (semver.lt(process.version, '18.0.0')) {
@@ -105,6 +106,16 @@ program
     }
 
     await build(buildOptions)
+
+    for (const [moduleName, document] of Object.entries(buildOptions.modules)) {
+      const operationIds: string[] = JSONPath({
+        path: '$..operationId',
+        json: document.paths,
+      })
+
+      const schemas = Object.values(document.components?.schemas || {})
+      console.log(chalk.green(`${moduleName} module: ${operationIds.length} Operation generated, ${schemas.length} Schema generated`))
+    }
   })
 
 program
