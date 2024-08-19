@@ -8,8 +8,6 @@ export const OperationFilter = Type.Object({
   // whether to update files that already exist
   update: Type.Optional(Type.Boolean({ default: false })),
 
-  // Only generate files of the specified module
-  moduleName: Type.Optional(Type.String()),
   // Only generate files of the specified operation method
   operationMethod: Type.Optional(Type.String()),
   // Only generate files of the specified operation pathname

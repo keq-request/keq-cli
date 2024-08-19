@@ -1,7 +1,7 @@
 import { CompileOptions } from './compile-options.js'
-import { OpenAPI } from 'openapi-types'
+import { OpenAPIV3 } from 'openapi-types'
 
 
 export interface CompileOpenapiOptions extends Omit<CompileOptions, 'filepath'> {
-  document: OpenAPI.Document
+  document: OpenAPIV3.Document
 }

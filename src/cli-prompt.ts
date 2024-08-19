@@ -4,25 +4,9 @@ import { select } from 'inquirer-select-pro'
 import { JSONPath } from 'jsonpath-plus'
 
 import { OperationFilter } from './types/operation-filter'
-import { RuntimeConfig } from './types/runtime-config'
-import { fetchOpenapiFile } from './utils/fetch-openapi-file'
-import { OpenAPIV3 } from 'openapi-types'
-import { disinfect } from './utils/disinfect'
 import chalk from 'chalk'
+import { OpenAPIV3 } from 'openapi-types'
 
-
-async function querySwagger(modules: RuntimeConfig['modules']): Promise<[string, OpenAPIV3.Document][]> {
-  const results = await Promise.allSettled(Object.entries(modules).map(async ([moduleName, filepath]): Promise<[string, OpenAPIV3.Document]> => {
-    const swagger = await fetchOpenapiFile(filepath)
-    const swagger3 = await disinfect(swagger)
-
-    return [moduleName, swagger3]
-  }))
-
-  return results
-    .filter((result): result is PromiseFulfilledResult<[string, OpenAPIV3.Document]> => result.status === 'fulfilled')
-    .map((result) => result.value)
-}
 
 async function selectMethods(methodsInSwagger: string[], defaultValue?: string): Promise<string[]> {
   return await select({
@@ -47,15 +31,10 @@ async function selectMethods(methodsInSwagger: string[], defaultValue?: string):
   })
 }
 
-export async function cliPrompt(rc: RuntimeConfig, filter: OperationFilter): Promise<OperationFilter[]> {
-  const modules = filter.moduleName ? R.pick([filter.moduleName], rc.modules) : rc.modules
-
-  console.log('loading prompts...')
-  const pairs = await querySwagger(modules)
-
+export async function cliPrompt(modules: Record<string, OpenAPIV3.Document>, filter: OperationFilter): Promise<OperationFilter[]> {
   const methodsInSwagger: string[] = R.uniq(JSONPath({
     path: '$..paths.*.*~',
-    json: pairs.map(([, swagger]) => swagger),
+    json: Object.values(modules),
   }))
 
 
@@ -67,7 +46,7 @@ export async function cliPrompt(rc: RuntimeConfig, filter: OperationFilter): Pro
 
   const pathnames: string[] = R.uniq(JSONPath({
     path: `$..paths.[${operationMethods.join(',')}]^~`,
-    json: pairs.map(([, swagger]) => swagger),
+    json: Object.values(modules),
   }))
 
   const operationPathnames = await select({
@@ -85,7 +64,6 @@ export async function cliPrompt(rc: RuntimeConfig, filter: OperationFilter): Pro
 
   return R.xprod(operationMethods, operationPathnames)
     .map(([operationMethod, operationPathname]) => R.reject(R.isNil, {
-      moduleName: filter.moduleName,
       append: filter.append,
       update: filter.update,
 

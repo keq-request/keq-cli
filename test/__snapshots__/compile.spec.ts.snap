@@ -153,20 +153,6 @@ export type AllOfSchema = {
     "path": "outdir/test/components/schemas/all_of_schema.ts",
   },
   {
-    "content": "export * from "./root_schema"
-export * from "./array_of_strings_schema"
-export * from "./object_with_additional_properties_schema"
-export * from "./object_with_specified_type_additional_properties_schema"
-export * from "./ref_schema"
-export * from "./nullable_object_schema"
-export * from "./one_of_schema"
-export * from "./any_of_schema"
-export * from "./all_of_schema"
-",
-    "name": "index.ts",
-    "path": "outdir/test/components/schemas/index.ts",
-  },
-  {
     "content": "import type { KeqOperation } from 'keq'
 
 
@@ -464,16 +450,6 @@ export function deleteKeyword<STATUS extends keyof ResponseMap>(arg?: RequestPar
 ",
     "name": "delete_keyword",
     "path": "outdir/test/delete_keyword.ts",
-  },
-  {
-    "content": "export * from "./get"
-export * from "./post_id"
-export * from "./get_simple"
-export * from "./post_simple"
-export * from "./delete_keyword"
-",
-    "name": "index.ts",
-    "path": "outdir/test/index.ts",
   },
 ]
 `;
