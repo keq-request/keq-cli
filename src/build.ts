@@ -42,8 +42,6 @@ export async function build(options: BuildOptions): Promise<void> {
   for (const result of results) {
     if (result.status === 'rejected') {
       console.log(chalk.red(String(result.reason.message)))
-    } else {
-      console.log(chalk.green(`${result.value} module compiled successfully.`))
     }
   }
 }
