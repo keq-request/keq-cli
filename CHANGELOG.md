@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.0](https://github.com/keq-request/keq-cli/compare/v4.6.4...v4.7.0) (2024-08-19)
+
+
+### Features
+
+* sharking unselected schemas ([f73b738](https://github.com/keq-request/keq-cli/commit/f73b7387bad6be362cf033f6de9270b7bc71d04b))
+
+
+### Performance Improvements
+
+* log the number of impacts after generated ([7d7da39](https://github.com/keq-request/keq-cli/commit/7d7da39a0c6c3ea730aed6f139fc99bf0fded026))
+
 ## [4.6.4](https://github.com/keq-request/keq-cli/compare/v4.6.3...v4.6.4) (2024-08-13)
 
 
