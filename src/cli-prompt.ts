@@ -31,6 +31,21 @@ async function selectMethods(methodsInSwagger: string[], defaultValue?: string):
   })
 }
 
+async function selectPathnames(pathnames: string[], defaultValue?: string): Promise<string[]> {
+  return await select({
+    message: 'Select Pathname',
+    defaultValue: defaultValue ? [defaultValue] : [],
+    options: (input) => {
+      const items = pathnames.map((pathname) => ({ name: pathname, value: pathname }))
+
+      if (!input) return items
+      const q = input.trim().toLowerCase()
+
+      return items.filter((p) => p.name.toLowerCase().includes(q))
+    },
+  })
+}
+
 export async function cliPrompt(modules: Record<string, OpenAPIV3.Document>, filter: OperationFilter): Promise<OperationFilter[]> {
   const methodsInSwagger: string[] = R.uniq(JSONPath({
     path: '$..paths.*.*~',
@@ -49,18 +64,11 @@ export async function cliPrompt(modules: Record<string, OpenAPIV3.Document>, fil
     json: Object.values(modules),
   }))
 
-  const operationPathnames = await select({
-    message: 'Select Pathname',
-    options: (input) => {
-      const items = pathnames.map((pathname) => ({ name: pathname, value: pathname }))
-
-      if (!input) return items
-      const q = input.trim().toLowerCase()
-
-      return items.filter((p) => p.name.toLowerCase().includes(q))
-    },
-  })
-
+  let operationPathnames = await selectPathnames(pathnames, filter.operationPathname)
+  while (operationPathnames.length === 0) {
+    console.log(chalk.red('Please select at least one pathname'))
+    operationPathnames = await selectPathnames(pathnames)
+  }
 
   return R.xprod(operationMethods, operationPathnames)
     .map(([operationMethod, operationPathname]) => R.reject(R.isNil, {
