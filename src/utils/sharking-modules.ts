@@ -159,8 +159,12 @@ export async function sharkingModules(modules: Record<string, OpenAPIV3.Document
 
   // Remove module without paths
   pairs = pairs.filter(([moduleName, module]) => {
-    console.log(chalk.yellow(`${moduleName} module skipped.`))
-    return !R.isEmpty(module.paths)
+    if (R.isEmpty(module.paths)) {
+      console.log(chalk.yellow(`${moduleName} module skipped.`))
+      return false
+    }
+
+    return true
   })
 
   return R.fromPairs(pairs)
