@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.3](https://github.com/keq-request/keq-cli/compare/v4.7.2...v4.7.3) (2024-08-22)
+
+
+### Bug Fixes
+
+* prompts the wrong skip module ([3621e01](https://github.com/keq-request/keq-cli/commit/3621e0160293e5be4aa01c6ce7b3b43574b4eac8))
+
 ## [4.7.2](https://github.com/keq-request/keq-cli/compare/v4.7.1...v4.7.2) (2024-08-21)
 
 
