@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.4](https://github.com/keq-request/keq-cli/compare/v4.7.3...v4.7.4) (2024-09-04)
+
+
+### Bug Fixes
+
+* --debug not work ([dda42cc](https://github.com/keq-request/keq-cli/commit/dda42ccf11d9a830c7eaac6794ef58179b2a6ca9))
+* error when allof without $ref ([4339583](https://github.com/keq-request/keq-cli/commit/4339583bc07fa78f544f0610a39db312250e1723))
+
 ## [4.7.3](https://github.com/keq-request/keq-cli/compare/v4.7.2...v4.7.3) (2024-08-22)
 
 
