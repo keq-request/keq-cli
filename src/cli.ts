@@ -60,6 +60,10 @@ program
     }
 
     const rc = Value.Default(RuntimeConfig, result.config) as RuntimeConfig
+    if (options.debug) {
+      await fs.ensureDir('.keq')
+      rc.debug = true
+    }
 
     // Filter module
     if (moduleName) {
