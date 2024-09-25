@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.5](https://github.com/keq-request/keq-cli/compare/v4.7.4...v4.7.5) (2024-09-25)
+
+
+### Bug Fixes
+
+* special characters cause Chinese replacement to fail ([08ec464](https://github.com/keq-request/keq-cli/commit/08ec464d63adb74ead9b1a233325e7a3b0e674be))
+
 ## [4.7.4](https://github.com/keq-request/keq-cli/compare/v4.7.3...v4.7.4) (2024-09-04)
 
 
