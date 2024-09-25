@@ -26,7 +26,7 @@ jobs:
           node-version: 18
           registry-url: https://registry.npmjs.org/
         if: ${{ steps.release.outputs.release_created }}
-      - run: corepack pnpm install
+      - run: corepack pnpm install --frozen-lockfile
         if: ${{ steps.release.outputs.release_created }}
       - run: npm publish --provenance
         env:
