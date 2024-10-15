@@ -1,6 +1,6 @@
 <!-- title -->
 <p align="center" style="padding-top: 41px">
-  <img src="./images/logo.svg?sanitize=true" width="121" alt="logo" />
+  <img src="https://raw.githubusercontent.com/keq-request/keq/refs/heads/master/images/logo.svg" width="121" alt="logo" />
 </p>
 
 <h2 align="center" style="text-align: center">KEQ-CLI</h2>
