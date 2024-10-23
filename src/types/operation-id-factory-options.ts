@@ -8,5 +8,4 @@ export interface OperationIdFactoryOptions {
   pathname: string
   method: string
   operation: OpenAPIV3.OperationObject
-
 }

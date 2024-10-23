@@ -5,7 +5,7 @@ import { getSafeOperationName } from './get-safe-operation-name'
 
 
 function regenerateOperationId(moduleName: string, document: OpenAPIV3.Document, rc: RuntimeConfig): OpenAPIV3.Document {
-  const operationIdFactory = rc.operationId
+  const operationIdFactory = rc.operationIdFactory || rc.operationId
   if (!operationIdFactory) return document
 
   for (const [pathname, pathItem] of Object.entries(document.paths)) {

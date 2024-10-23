@@ -12,10 +12,15 @@ export const RuntimeConfig = Type.Intersect([
   Type.Object({
     modules: Type.Record(Type.String(), Type.String()),
     operationId: Type.Optional(Type.Function([Type.Any()], Type.String())),
+    operationIdFactory: Type.Optional(Type.Function([Type.Any()], Type.String())),
     debug: Type.Optional(Type.Boolean({ default: false })),
   }),
 ])
 
 export interface RuntimeConfig extends Omit<Static<typeof RuntimeConfig>, 'operationId'> {
+  /**
+   * @deprecated Use `operationIdFactory` instead
+   */
   operationId?: (context: OperationIdFactoryOptions) => string
+  operationIdFactory?: (context: OperationIdFactoryOptions) => string
 }
