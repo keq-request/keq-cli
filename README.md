@@ -18,8 +18,6 @@
 
 <!-- description -->
 
-[简体中文](./doc/zh-cn/README.md)
-
 [**Document**][Document EN] | [**中文文档**][Document CN]
 
 Transform Swagger 3.0/2.0 to the function that send request by [keq](https://github.com/keq-request/keq).
