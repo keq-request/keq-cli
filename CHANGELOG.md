@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.7](https://github.com/keq-request/keq-cli/compare/v4.7.6...v4.7.7) (2024-10-23)
+
+
+### Performance Improvements
+
+* use operationIdFactory replace operationId ([ed1d8d3](https://github.com/keq-request/keq-cli/commit/ed1d8d34eda4b5b3e1acec693c3c1149fbb680e9))
+
 ## [4.7.6](https://github.com/keq-request/keq-cli/compare/v4.7.5...v4.7.6) (2024-09-27)
 
 
