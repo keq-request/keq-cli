@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.8](https://github.com/keq-request/keq-cli/compare/v4.7.7...v4.7.8) (2024-11-29)
+
+
+### Performance Improvements
+
+* explicit error messages when cannot find schema ([0a35364](https://github.com/keq-request/keq-cli/commit/0a35364a452a6ad3471738cb9efe6b8677c1be87))
+
 ## [4.7.7](https://github.com/keq-request/keq-cli/compare/v4.7.6...v4.7.7) (2024-10-23)
 
 
