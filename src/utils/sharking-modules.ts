@@ -34,6 +34,10 @@ function getDependencies(document: OpenAPIV3.Document): Record<string, string[]>
       return R.without(dependencies, componentsDependencies[schemaRef])
     }
 
+    if (!componentsDirectDependencies[schemaRef]) {
+      throw new Error(`Cannot find $ref: ${schemaRef}`)
+    }
+
     const directDependencies = R.without(dependencies, componentsDirectDependencies[schemaRef])
     if (!directDependencies.length) {
       return []
@@ -154,7 +158,7 @@ export async function sharkingModules(modules: Record<string, OpenAPIV3.Document
       .map(async ([moduleName, document]): Promise<[string, OpenAPIV3.Document]> => [
         moduleName,
         await sharkingModule(moduleName, R.clone(document), filters, rc),
-      ])
+      ]),
   )
 
   // Remove module without paths

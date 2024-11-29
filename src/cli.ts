@@ -34,7 +34,7 @@ program
   .option('-i --interactive', 'Interactive select the scope of generation')
   .addOption(
     new Option('--method <method>', 'Only generate files of the specified operation method')
-      .choices(['get', 'post', 'put', 'delete', 'patch', 'head', 'option'])
+      .choices(['get', 'post', 'put', 'delete', 'patch', 'head', 'option']),
   )
   .option('--pathname <pathname>', 'Only generate files of the specified operation pathname')
   .option('--no-append', 'Whether to generate files that not exist')
@@ -146,9 +146,12 @@ async function main(): Promise<void> {
 
   try {
     await program.parseAsync(process.argv)
-  } catch (e) {
-    console.log('🚀 ~ main ~ e:', e)
-    console.error(chalk.red(e instanceof Error ? e.message : String(e)))
+  } catch (err) {
+    if (process.argv.includes('--debug')) {
+      console.error(err)
+    } else {
+      console.error(chalk.red(err instanceof Error ? err.message : String(err)))
+    }
   }
 }
 
