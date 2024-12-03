@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.9](https://github.com/keq-request/keq-cli/compare/v4.7.8...v4.7.9) (2024-12-03)
+
+
+### Bug Fixes
+
+* generation error when allOf and properties are present at the same time ([d51b39e](https://github.com/keq-request/keq-cli/commit/d51b39ec362a189a7c35601649e3caf83cb9b6e5))
+
 ## [4.7.8](https://github.com/keq-request/keq-cli/compare/v4.7.7...v4.7.8) (2024-11-29)
 
 
