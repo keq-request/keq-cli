@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.10](https://github.com/keq-request/keq-cli/compare/v4.7.9...v4.7.10) (2024-12-10)
+
+
+### Bug Fixes
+
+* update peer dependency keq to version 2.7.4 ([fab64c8](https://github.com/keq-request/keq-cli/commit/fab64c8472db307035d4c105b771193a22a7f147))
+
 ## [4.7.9](https://github.com/keq-request/keq-cli/compare/v4.7.8...v4.7.9) (2024-12-03)
 
 
