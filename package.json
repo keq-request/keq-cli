@@ -93,6 +93,6 @@
     "word-wrap": "^1.2.5"
   },
   "peerDependencies": {
-    "keq": "^2.7.2"
+    "keq": "^2.7.4"
   }
 }
