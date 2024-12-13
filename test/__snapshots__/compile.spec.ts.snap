@@ -451,5 +451,65 @@ export function deleteKeyword<STATUS extends keyof ResponseMap>(arg?: RequestPar
     "name": "delete_keyword",
     "path": "outdir/test/delete_keyword.ts",
   },
+  {
+    "content": "import type { KeqOperation } from 'keq'
+
+
+export interface ResponseMap {
+}
+
+
+export type QueryParameters = {
+}
+
+export type RouteParameters = {
+}
+
+export type HeaderParameters = {
+}
+
+export type BodyParameters =({
+  /**
+   * @type binary
+   * file
+   */
+  "file": Blob | Buffer
+})
+
+export type RequestParameters = QueryParameters & RouteParameters & HeaderParameters & BodyParameters
+
+
+export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperation {
+  requestParams: RouteParameters
+  requestQuery: QueryParameters
+  requestHeaders: HeaderParameters
+  requestBody: BodyParameters
+  responseBody: ResponseMap[STATUS]
+}
+",
+    "name": "upload",
+    "path": "outdir/test/types/upload.ts",
+  },
+  {
+    "content": "import { Keq } from 'keq'
+import { request } from 'keq'
+import type { RequestParameters, ResponseMap, Operation } from "./types/upload"
+
+
+
+export function upload<STATUS extends keyof ResponseMap>(arg?: RequestParameters): Keq<ResponseMap[STATUS], Operation<STATUS>> {
+  const req = request.post<ResponseMap[STATUS]>("/upload")
+    .option('module', {
+      name: "test",
+      pathname: "/upload",
+    })
+
+  if (arg && "file" in arg) req.attach({ "file": arg["file"] })
+  return req as unknown as Keq<ResponseMap[STATUS], Operation<STATUS>>
+}
+",
+    "name": "upload",
+    "path": "outdir/test/upload.ts",
+  },
 ]
 `;

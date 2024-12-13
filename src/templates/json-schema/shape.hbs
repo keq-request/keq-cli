@@ -23,7 +23,12 @@ number
 number
 
 {{~else if (r__equals type "string")~}}
+
+  {{~#if (r__equals format "binary")}}
+Blob | Buffer
+  {{~else~}}
 string
+  {{~/if~}}
 
 {{~else if (r__equals type "boolean")~}}
 boolean
