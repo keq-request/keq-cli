@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.8.0](https://github.com/keq-request/keq-cli/compare/v4.7.10...v4.8.0) (2024-12-15)
+
+
+### Features
+
+* support form-data ([35da404](https://github.com/keq-request/keq-cli/commit/35da40438d8284143fd7407d6eda2f1cc91b6bdc)), closes [#102](https://github.com/keq-request/keq-cli/issues/102)
+
+
+### Bug Fixes
+
+* [#102](https://github.com/keq-request/keq-cli/issues/102) ([35da404](https://github.com/keq-request/keq-cli/commit/35da40438d8284143fd7407d6eda2f1cc91b6bdc))
+
 ## [4.7.10](https://github.com/keq-request/keq-cli/compare/v4.7.9...v4.7.10) (2024-12-10)
 
 
