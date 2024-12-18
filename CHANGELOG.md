@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.8.1](https://github.com/keq-request/keq-cli/compare/v4.8.0...v4.8.1) (2024-12-18)
+
+
+### Performance Improvements
+
+* support summary in comments ([59320e0](https://github.com/keq-request/keq-cli/commit/59320e0bdd78342b3c2402916ceb04d2c1b9cbdb))
+
 ## [4.8.0](https://github.com/keq-request/keq-cli/compare/v4.7.10...v4.8.0) (2024-12-15)
 
 
