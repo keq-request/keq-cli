@@ -293,6 +293,8 @@
     },
     "/upload": {
       "post": {
+        "summary": "Upload File",
+        "description": "Upload File \nDescription",
         "operationId": "upload",
         "requestBody": {
           "content": {

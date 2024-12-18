@@ -470,8 +470,9 @@ export type HeaderParameters = {
 
 export type BodyParameters =({
   /**
-   * @type binary
    * file
+   *
+   * @type binary
    */
   "file": Blob | Buffer
 })
@@ -497,6 +498,12 @@ import type { RequestParameters, ResponseMap, Operation } from "./types/upload"
 
 
 
+/**
+ * Upload File 
+ * Description
+ *
+ * @summary Upload File
+ */
 export function upload<STATUS extends keyof ResponseMap>(arg?: RequestParameters): Keq<ResponseMap[STATUS], Operation<STATUS>> {
   const req = request.post<ResponseMap[STATUS]>("/upload")
     .option('module', {
