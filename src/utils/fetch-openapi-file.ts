@@ -11,12 +11,16 @@ import { RuntimeConfig } from '~/types/runtime-config'
 async function fetchFromUrl(url: string): Promise<OpenAPIV3.Document> {
   let content: string
   try {
-    content = await request
+    const res = await request
       .get(url)
-      .resolveWith('text')
-  } catch (e: any) {
+      .resolveWith('response')
+
+    if (res.status >= 400) throw new Error(`Request failed with status code ${res.status}`)
+
+    content = await res.text()
+  } catch (e) {
     if (e instanceof Error) {
-      e.message = `Unable get the swagger file from ${url}. ${e.message}`
+      e.message = `Unable get the swagger file from ${url}: ${e.message}`
     }
 
     throw e
@@ -42,7 +46,7 @@ export async function fetchOpenapiFile(filepath: string): Promise<OpenAPI.Docume
     if (['.yml', '.yaml'].includes(fileExt)) {
       swagger = yaml.load(content) as OpenAPIV3.Document
     } else if (fileExt === '.json') {
-      swagger = JSON.parse(content)as OpenAPIV3.Document
+      swagger = JSON.parse(content) as OpenAPIV3.Document
     } else {
       throw new Error(`File ${fileExt} not support.`)
     }
