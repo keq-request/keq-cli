@@ -1,6 +1,11 @@
 import { Keq } from 'keq'
 import { request } from '{{keq}}'
-import type { RequestParameters, ResponseMap, Operation } from "./types/{{h__change-case @root.fileNamingStyle (h__get-safe-operation-name pathname method operation)}}{{#if @root.esm}}.js{{/if}}"
+import type { RequestParameters, ResponseMap, Operation, QueryParameters, HeaderParameters, BodyParameters } from "./types/{{h__change-case @root.fileNamingStyle (h__get-safe-operation-name pathname method operation)}}{{#if @root.esm}}.js{{/if}}"
+
+
+export type {{h__change-case "pascalCase" (h__get-safe-operation-name pathname method operation)}}RequestQuery = QueryParameters
+export type {{h__change-case "pascalCase" (h__get-safe-operation-name pathname method operation)}}RequestBody = BodyParameters
+export type {{h__change-case "pascalCase" (h__get-safe-operation-name pathname method operation)}}RequestHeaders = HeaderParameters
 
 
 const pathname = "{{{r__replace (h__regexp "{(.*?)}" flags="g") ":$1" pathname}}}"
