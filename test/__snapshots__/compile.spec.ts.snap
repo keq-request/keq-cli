@@ -192,15 +192,21 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
   {
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
-import type { RequestParameters, ResponseMap, Operation } from "./types/get"
+import type { RequestParameters, ResponseMap, Operation, QueryParameters, HeaderParameters, BodyParameters } from "./types/get"
 
 
+export type GetRequestQuery = QueryParameters
+export type GetRequestBody = BodyParameters
+export type GetRequestHeaders = HeaderParameters
+
+
+const pathname = "/:id"
 
 export function get<STATUS extends keyof ResponseMap>(arg?: RequestParameters): Keq<ResponseMap[STATUS], Operation<STATUS>> {
   const req = request.get<ResponseMap[STATUS]>("/:id")
     .option('module', {
       name: "test",
-      pathname: "/:id",
+      pathname,
     })
 
   const queryWrap = (value: any) => typeof value === 'boolean' ? String(value) : value
@@ -212,6 +218,8 @@ export function get<STATUS extends keyof ResponseMap>(arg?: RequestParameters): 
 
   return req as unknown as Keq<ResponseMap[STATUS], Operation<STATUS>>
 }
+
+get.pathname = pathname
 ",
     "name": "get",
     "path": "outdir/test/get.ts",
@@ -255,15 +263,21 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
   {
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
-import type { RequestParameters, ResponseMap, Operation } from "./types/post_id"
+import type { RequestParameters, ResponseMap, Operation, QueryParameters, HeaderParameters, BodyParameters } from "./types/post_id"
 
 
+export type PostIdRequestQuery = QueryParameters
+export type PostIdRequestBody = BodyParameters
+export type PostIdRequestHeaders = HeaderParameters
+
+
+const pathname = "/:id"
 
 export function post__$id<STATUS extends keyof ResponseMap>(arg?: RequestParameters): Keq<ResponseMap[STATUS], Operation<STATUS>> {
   const req = request.post<ResponseMap[STATUS]>("/:id")
     .option('module', {
       name: "test",
-      pathname: "/:id",
+      pathname,
     })
 
   if (arg && "id" in arg) req.params("id", String(arg["id"]))
@@ -286,6 +300,8 @@ export function post__$id<STATUS extends keyof ResponseMap>(arg?: RequestParamet
 
   return req as unknown as Keq<ResponseMap[STATUS], Operation<STATUS>>
 }
+
+post__$id.pathname = pathname
 ",
     "name": "post_id",
     "path": "outdir/test/post_id.ts",
@@ -325,20 +341,28 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
   {
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
-import type { RequestParameters, ResponseMap, Operation } from "./types/get_simple"
+import type { RequestParameters, ResponseMap, Operation, QueryParameters, HeaderParameters, BodyParameters } from "./types/get_simple"
 
 
+export type GetSimpleRequestQuery = QueryParameters
+export type GetSimpleRequestBody = BodyParameters
+export type GetSimpleRequestHeaders = HeaderParameters
+
+
+const pathname = "/simple"
 
 export function get__simple<STATUS extends keyof ResponseMap>(arg?: RequestParameters): Keq<ResponseMap[STATUS], Operation<STATUS>> {
   const req = request.get<ResponseMap[STATUS]>("/simple")
     .option('module', {
       name: "test",
-      pathname: "/simple",
+      pathname,
     })
 
 
   return req as unknown as Keq<ResponseMap[STATUS], Operation<STATUS>>
 }
+
+get__simple.pathname = pathname
 ",
     "name": "get_simple",
     "path": "outdir/test/get_simple.ts",
@@ -380,20 +404,28 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
   {
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
-import type { RequestParameters, ResponseMap, Operation } from "./types/post_simple"
+import type { RequestParameters, ResponseMap, Operation, QueryParameters, HeaderParameters, BodyParameters } from "./types/post_simple"
 
 
+export type PostSimpleRequestQuery = QueryParameters
+export type PostSimpleRequestBody = BodyParameters
+export type PostSimpleRequestHeaders = HeaderParameters
+
+
+const pathname = "/simple"
 
 export function post__simple<STATUS extends keyof ResponseMap>(arg?: RequestParameters): Keq<ResponseMap[STATUS], Operation<STATUS>> {
   const req = request.post<ResponseMap[STATUS]>("/simple")
     .option('module', {
       name: "test",
-      pathname: "/simple",
+      pathname,
     })
 
 
   return req as unknown as Keq<ResponseMap[STATUS], Operation<STATUS>>
 }
+
+post__simple.pathname = pathname
 ",
     "name": "post_simple",
     "path": "outdir/test/post_simple.ts",
@@ -433,20 +465,28 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
   {
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
-import type { RequestParameters, ResponseMap, Operation } from "./types/delete_keyword"
+import type { RequestParameters, ResponseMap, Operation, QueryParameters, HeaderParameters, BodyParameters } from "./types/delete_keyword"
 
 
+export type DeleteKeywordRequestQuery = QueryParameters
+export type DeleteKeywordRequestBody = BodyParameters
+export type DeleteKeywordRequestHeaders = HeaderParameters
+
+
+const pathname = "/keyword"
 
 export function deleteKeyword<STATUS extends keyof ResponseMap>(arg?: RequestParameters): Keq<ResponseMap[STATUS], Operation<STATUS>> {
   const req = request.delete<ResponseMap[STATUS]>("/keyword")
     .option('module', {
       name: "test",
-      pathname: "/keyword",
+      pathname,
     })
 
 
   return req as unknown as Keq<ResponseMap[STATUS], Operation<STATUS>>
 }
+
+deleteKeyword.pathname = pathname
 ",
     "name": "delete_keyword",
     "path": "outdir/test/delete_keyword.ts",
@@ -494,9 +534,15 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
   {
     "content": "import { Keq } from 'keq'
 import { request } from 'keq'
-import type { RequestParameters, ResponseMap, Operation } from "./types/upload"
+import type { RequestParameters, ResponseMap, Operation, QueryParameters, HeaderParameters, BodyParameters } from "./types/upload"
 
 
+export type UploadRequestQuery = QueryParameters
+export type UploadRequestBody = BodyParameters
+export type UploadRequestHeaders = HeaderParameters
+
+
+const pathname = "/upload"
 
 /**
  * Upload File 
@@ -508,12 +554,14 @@ export function upload<STATUS extends keyof ResponseMap>(arg?: RequestParameters
   const req = request.post<ResponseMap[STATUS]>("/upload")
     .option('module', {
       name: "test",
-      pathname: "/upload",
+      pathname,
     })
 
   if (arg && "file" in arg) req.attach({ "file": arg["file"] })
   return req as unknown as Keq<ResponseMap[STATUS], Operation<STATUS>>
 }
+
+upload.pathname = pathname
 ",
     "name": "upload",
     "path": "outdir/test/upload.ts",
