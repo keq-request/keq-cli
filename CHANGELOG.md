@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.9.0](https://github.com/keq-request/keq-cli/compare/v4.8.1...v4.9.0) (2024-12-23)
+
+
+### Features
+
+* you could get pathname form &lt;operation&gt;.pathname ([4cc4218](https://github.com/keq-request/keq-cli/commit/4cc4218f9893f86a986481dbf9d20c5b130ea45a))
+
+
+### Performance Improvements
+
+* beautify the error message when fetch wrong swagger url ([2295cdf](https://github.com/keq-request/keq-cli/commit/2295cdf15cf62b486b1f5819f0a0f9cf6e31dc03))
+* export operation types ([989c338](https://github.com/keq-request/keq-cli/commit/989c338730782707f830ad01fa0fc85d30e23f28))
+* unified quotation mark style ([dcf3bb3](https://github.com/keq-request/keq-cli/commit/dcf3bb32d026a44e7125f62a498c6a5066ef7063))
+
 ## [4.8.1](https://github.com/keq-request/keq-cli/compare/v4.8.0...v4.8.1) (2024-12-18)
 
 
