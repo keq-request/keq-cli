@@ -190,8 +190,8 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
     "path": "outdir/test/types/get.ts",
   },
   {
-    "content": "import { Keq } from 'keq'
-import { request } from 'keq'
+    "content": "import { Keq } from "keq"
+import { request } from "keq"
 import type { RequestParameters, ResponseMap, Operation, QueryParameters, HeaderParameters, BodyParameters } from "./types/get"
 
 
@@ -261,8 +261,8 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
     "path": "outdir/test/types/post_id.ts",
   },
   {
-    "content": "import { Keq } from 'keq'
-import { request } from 'keq'
+    "content": "import { Keq } from "keq"
+import { request } from "keq"
 import type { RequestParameters, ResponseMap, Operation, QueryParameters, HeaderParameters, BodyParameters } from "./types/post_id"
 
 
@@ -339,8 +339,8 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
     "path": "outdir/test/types/get_simple.ts",
   },
   {
-    "content": "import { Keq } from 'keq'
-import { request } from 'keq'
+    "content": "import { Keq } from "keq"
+import { request } from "keq"
 import type { RequestParameters, ResponseMap, Operation, QueryParameters, HeaderParameters, BodyParameters } from "./types/get_simple"
 
 
@@ -402,8 +402,8 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
     "path": "outdir/test/types/post_simple.ts",
   },
   {
-    "content": "import { Keq } from 'keq'
-import { request } from 'keq'
+    "content": "import { Keq } from "keq"
+import { request } from "keq"
 import type { RequestParameters, ResponseMap, Operation, QueryParameters, HeaderParameters, BodyParameters } from "./types/post_simple"
 
 
@@ -463,8 +463,8 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
     "path": "outdir/test/types/delete_keyword.ts",
   },
   {
-    "content": "import { Keq } from 'keq'
-import { request } from 'keq'
+    "content": "import { Keq } from "keq"
+import { request } from "keq"
 import type { RequestParameters, ResponseMap, Operation, QueryParameters, HeaderParameters, BodyParameters } from "./types/delete_keyword"
 
 
@@ -532,8 +532,8 @@ export interface Operation<STATUS extends keyof ResponseMap> extends KeqOperatio
     "path": "outdir/test/types/upload.ts",
   },
   {
-    "content": "import { Keq } from 'keq'
-import { request } from 'keq'
+    "content": "import { Keq } from "keq"
+import { request } from "keq"
 import type { RequestParameters, ResponseMap, Operation, QueryParameters, HeaderParameters, BodyParameters } from "./types/upload"
 
 
