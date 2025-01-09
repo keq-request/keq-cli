@@ -8,6 +8,8 @@ import { JSONPath } from 'jsonpath-plus'
 import { getSafeOperationName } from './get-safe-operation-name'
 import { OperationFilter } from '~/types/operation-filter'
 import chalk from 'chalk'
+import { getRefs } from './get-refs'
+import { validateRef } from './validate-ref'
 
 
 function getDependencies(document: OpenAPIV3.Document): Record<string, string[]> {
@@ -18,6 +20,7 @@ function getDependencies(document: OpenAPIV3.Document): Record<string, string[]>
       for (const [schemaName, schema] of Object.entries(group)) {
         const result: string[] = JSONPath({
           path: "$..*['$ref']",
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           json: schema as any,
         })
 
@@ -34,21 +37,13 @@ function getDependencies(document: OpenAPIV3.Document): Record<string, string[]>
       return R.without(dependencies, componentsDependencies[schemaRef])
     }
 
-    if (!componentsDirectDependencies[schemaRef]) {
-      throw new Error(`Cannot find $ref: ${schemaRef}`)
-    }
+    if (!componentsDirectDependencies[schemaRef]) return []
 
     const directDependencies = R.without(dependencies, componentsDirectDependencies[schemaRef])
-    if (!directDependencies.length) {
-      return []
-    }
+    if (!directDependencies.length) return []
 
-    // const allDependencies = R.concat(dependencies, directDependencies)
 
     const indirectDependencies: string[] = []
-    // const indirectDependencies = directDependencies.map(depRef => {
-    //   return collectDependencies(depRef, R.concat(dependencies, directDependencies))
-    // })
 
     for (const depRef of directDependencies) {
       const deps = collectDependencies(depRef, [...dependencies, ...directDependencies, ...indirectDependencies])
@@ -78,7 +73,7 @@ function getDependencies(document: OpenAPIV3.Document): Record<string, string[]>
         json: operation,
       })
 
-      operationDependencies[operationId] = R.uniq([...deps, ...deps.flatMap((dep) => componentsDependencies[dep])])
+      operationDependencies[operationId] = R.reject(R.isNil, R.uniq([...deps, ...deps.flatMap((dep) => componentsDependencies[dep])]))
     }
   }
 
@@ -139,7 +134,9 @@ async function sharkingModule(moduleName: string, document: OpenAPIV3.Document, 
             if (Object.values(dependencies).some((deps) => deps.includes(dep))) continue
 
             const [groupName, schemaName] = dep.split('/').slice(-2)
-            delete document.components[groupName][schemaName]
+            if (groupName in document.components && schemaName in document.components[groupName]) {
+              delete document.components[groupName][schemaName]
+            }
           }
         }
 
@@ -147,7 +144,36 @@ async function sharkingModule(moduleName: string, document: OpenAPIV3.Document, 
       }
     }
   }
+
+  sharkingFreeComponents(document)
+  validateRef(document)
+
+  if (rc.debug) {
+    await fs.writeJSON(`.keq/${moduleName}.sharked-swagger.json`, document, { spaces: 2 })
+  }
+
   return document
+}
+
+function sharkingFreeComponents(document: OpenAPIV3.Document): boolean {
+  const refs: string[] = getRefs(document)
+  const $refs: string[] = JSONPath({
+    path: "$..*['$ref']",
+    json: document.paths,
+  })
+
+  const freeRefs = R.difference(refs, $refs)
+
+  if (document.components && freeRefs.length) {
+    for (const ref of freeRefs) {
+      const [groupName, schemaName] = ref.split('/').slice(-2)
+      if (groupName in document.components && schemaName in document.components[groupName]) {
+        delete document.components[groupName][schemaName]
+      }
+    }
+  }
+
+  return $refs.every((ref) => refs.includes(ref))
 }
 
 export async function sharkingModules(modules: Record<string, OpenAPIV3.Document>, filters: OperationFilter[], rc: RuntimeConfig): Promise<Record<string, OpenAPIV3.Document>> {
