@@ -11,8 +11,7 @@ import chalk from 'chalk'
 import { getRefs } from './get-refs'
 import { validateRef } from './validate-ref'
 
-
-function getDependencies(document: OpenAPIV3.Document): Record<string, string[]> {
+function getComponentDependencies(document: OpenAPIV3.Document): Record<string, string[]> {
   const componentsDirectDependencies: Record<string, string[]> = {}
 
   if (document.components) {
@@ -58,6 +57,13 @@ function getDependencies(document: OpenAPIV3.Document): Record<string, string[]>
     componentsDependencies[schemaRef] = collectDependencies(schemaRef)
   }
 
+
+  return componentsDependencies
+}
+
+function getOperationDependencies(document: OpenAPIV3.Document): Record<string, string[]> {
+  const componentsDependencies = getComponentDependencies(document)
+
   const operationDependencies: Record<string, string[]> = {}
   for (const [pathname, pathItem] of Object.entries(document.paths)) {
     for (const m in pathItem) {
@@ -90,7 +96,7 @@ async function operationExists(rc: RuntimeConfig, moduleName: string, pathname: 
 }
 
 async function sharkingModule(moduleName: string, document: OpenAPIV3.Document, filters: OperationFilter[], rc: RuntimeConfig): Promise<OpenAPIV3.Document> {
-  const dependencies = getDependencies(document)
+  const dependencies = getOperationDependencies(document)
 
   if (rc.debug) {
     await fs.writeJSON(`.keq/${moduleName}.dependencies.json`, dependencies, { spaces: 2 })
@@ -155,14 +161,19 @@ async function sharkingModule(moduleName: string, document: OpenAPIV3.Document, 
   return document
 }
 
+// Remove schemas that are not used in operations
 function sharkingFreeComponents(document: OpenAPIV3.Document): boolean {
+  const componentsDependencies = getComponentDependencies(document)
+
   const refs: string[] = getRefs(document)
-  const $refs: string[] = JSONPath({
+  const operationDirectRefs: string[] = JSONPath({
     path: "$..*['$ref']",
     json: document.paths,
   })
+  const operationRefs = operationDirectRefs.flatMap((ref) => componentsDependencies[ref] || []).concat(operationDirectRefs)
 
-  const freeRefs = R.difference(refs, $refs)
+
+  const freeRefs = R.difference(refs, operationRefs)
 
   if (document.components && freeRefs.length) {
     for (const ref of freeRefs) {
@@ -173,7 +184,7 @@ function sharkingFreeComponents(document: OpenAPIV3.Document): boolean {
     }
   }
 
-  return $refs.every((ref) => refs.includes(ref))
+  return operationRefs.every((ref) => refs.includes(ref))
 }
 
 export async function sharkingModules(modules: Record<string, OpenAPIV3.Document>, filters: OperationFilter[], rc: RuntimeConfig): Promise<Record<string, OpenAPIV3.Document>> {
