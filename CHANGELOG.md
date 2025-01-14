@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.9.2](https://github.com/keq-request/keq-cli/compare/v4.9.1...v4.9.2) (2025-01-14)
+
+
+### Bug Fixes
+
+* effective schema be removed ([c273da3](https://github.com/keq-request/keq-cli/commit/c273da38ad51b6ebe1f011ebb04a43c4cc10ea36))
+
 ## [4.9.1](https://github.com/keq-request/keq-cli/compare/v4.9.0...v4.9.1) (2025-01-09)
 
 
