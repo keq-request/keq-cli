@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import * as R from 'ramda'
 import * as fs from 'fs-extra'
+import * as R from 'ramda'
 import ora from 'ora'
 import chalk from 'chalk'
 import semver from 'semver'
@@ -33,10 +33,10 @@ program
   .option('-c --config <config>', 'The build config file')
   .option('-i --interactive', 'Interactive select the scope of generation')
   .addOption(
-    new Option('--method <method>', 'Only generate files of the specified operation method')
+    new Option('--method <methods...>', 'Only generate files of the specified operation method')
       .choices(['get', 'post', 'put', 'delete', 'patch', 'head', 'option']),
   )
-  .option('--pathname <pathname>', 'Only generate files of the specified operation pathname')
+  .option('--pathname <pathnames...>', 'Only generate files of the specified operation pathname')
   .option('--no-append', 'Whether to generate files that not exist')
   .option('--no-update', 'Whether to generate files that exist')
   .option('--debug', 'Print debug information')
@@ -88,16 +88,16 @@ program
     modules = regenerateName(modules, rc)
     loadingModules.succeed()
 
-    let filters: OperationFilter[] = [R.reject(R.isNil, <OperationFilter>{
-      append: options.append,
-      update: options.update,
-
-      operationMethod: options.method,
-      operationPathname: options.pathname,
-    })]
-
+    let filters: OperationFilter[] = []
     if (options.interactive) {
-      filters = await cliPrompt(modules, filters[0])
+      filters = await cliPrompt(modules, {
+        methods: options.method || [],
+        pathnames: options.pathname || [],
+      })
+    }
+    for (const filter of filters) {
+      if (R.isNotNil(options.append)) filter.append = options.append
+      if (R.isNotNil(options.update)) filter.update = options.update
     }
 
     const buildOptions: BuildOptions = {

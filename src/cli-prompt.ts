@@ -8,10 +8,10 @@ import chalk from 'chalk'
 import { OpenAPIV3 } from 'openapi-types'
 
 
-async function selectMethods(methodsInSwagger: string[], defaultValue?: string): Promise<string[]> {
+async function selectMethods(methodsInSwagger: string[], defaultValue?: string[]): Promise<string[]> {
   return await select({
     message: 'Select Method',
-    defaultValue: defaultValue ? [defaultValue] : [],
+    defaultValue: defaultValue || [],
     options: (input) => {
       const items = [
         { name: 'Get', value: 'get' },
@@ -31,10 +31,10 @@ async function selectMethods(methodsInSwagger: string[], defaultValue?: string):
   })
 }
 
-async function selectPathnames(pathnames: string[], defaultValue?: string): Promise<string[]> {
+async function selectPathnames(pathnames: string[], defaultValue?: string[]): Promise<string[]> {
   return await select({
     message: 'Select Pathname',
-    defaultValue: defaultValue ? [defaultValue] : [],
+    defaultValue: defaultValue || [],
     options: (input) => {
       const items = pathnames.map((pathname) => ({ name: pathname, value: pathname }))
 
@@ -46,35 +46,37 @@ async function selectPathnames(pathnames: string[], defaultValue?: string): Prom
   })
 }
 
-export async function cliPrompt(modules: Record<string, OpenAPIV3.Document>, filter: OperationFilter): Promise<OperationFilter[]> {
+interface CliPromptDefaultValue {
+  methods: string[]
+  pathnames: string[]
+}
+
+export async function cliPrompt(modules: Record<string, OpenAPIV3.Document>, defaultValue: CliPromptDefaultValue): Promise<Pick<OperationFilter, 'method' | 'pathname'>[]> {
   const methodsInSwagger: string[] = R.uniq(JSONPath({
     path: '$..paths.*.*~',
     json: Object.values(modules),
   }))
 
 
-  let operationMethods = await selectMethods(methodsInSwagger, filter.operationMethod)
-  while (operationMethods.length === 0) {
+  let methods = await selectMethods(methodsInSwagger, defaultValue.methods)
+  while (methods.length === 0) {
     console.log(chalk.red('Please select at least one method'))
-    operationMethods = await selectMethods(methodsInSwagger)
+    methods = await selectMethods(methodsInSwagger)
   }
 
   const pathnames: string[] = R.uniq(JSONPath({
-    path: `$..paths.[${operationMethods.join(',')}]^~`,
+    path: `$..paths.[${methods.join(',')}]^~`,
     json: Object.values(modules),
   }))
 
-  let operationPathnames = await selectPathnames(pathnames, filter.operationPathname)
+  let operationPathnames = await selectPathnames(pathnames, defaultValue.pathnames)
   while (operationPathnames.length === 0) {
     console.log(chalk.red('Please select at least one pathname'))
     operationPathnames = await selectPathnames(pathnames)
   }
 
-  return R.xprod(operationMethods, operationPathnames)
+  return R.xprod(methods, operationPathnames)
     .map(([operationMethod, operationPathname]) => R.reject(R.isNil, {
-      append: filter.append,
-      update: filter.update,
-
       operationMethod,
       operationPathname,
     }))

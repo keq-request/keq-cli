@@ -9,9 +9,9 @@ export const OperationFilter = Type.Object({
   update: Type.Optional(Type.Boolean({ default: false })),
 
   // Only generate files of the specified operation method
-  operationMethod: Type.Optional(Type.String()),
+  method: Type.Optional(Type.String()),
   // Only generate files of the specified operation pathname
-  operationPathname: Type.Optional(Type.String()),
+  pathname: Type.Optional(Type.String()),
 })
 
 

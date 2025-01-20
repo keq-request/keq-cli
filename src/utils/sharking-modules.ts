@@ -114,8 +114,8 @@ async function sharkingModule(moduleName: string, document: OpenAPIV3.Document, 
 
       const existed = await operationExists(rc, moduleName, pathname, method, operation)
       const ignore = filters.every((f) => {
-        if (f.operationMethod && method !== f.operationMethod.toLowerCase().trim()) return true
-        if (f.operationPathname && pathname !== f.operationPathname.trim()) return true
+        if (f.method && method !== f.method.toLowerCase().trim()) return true
+        if (f.pathname && pathname !== f.pathname.trim()) return true
         if (!f.append && !existed) return true
         if (!f.update && existed) return true
 
