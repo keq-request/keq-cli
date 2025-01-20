@@ -34,7 +34,22 @@ program
   .option('-i --interactive', 'Interactive select the scope of generation')
   .addOption(
     new Option('--method <methods...>', 'Only generate files of the specified operation method')
-      .choices(['get', 'post', 'put', 'delete', 'patch', 'head', 'option']),
+      .choices([
+        'get',
+        'post',
+        'put',
+        'delete',
+        'patch',
+        'head',
+        'option',
+        'GET',
+        'POST',
+        'PUT',
+        'DELETE',
+        'PATCH',
+        'HEAD',
+        'OPTION',
+      ]),
   )
   .option('--pathname <pathnames...>', 'Only generate files of the specified operation pathname')
   .option('--no-append', 'Whether to generate files that not exist')
@@ -91,7 +106,7 @@ program
     let filters: OperationFilter[] = []
     if (options.interactive) {
       filters = await cliPrompt(modules, {
-        methods: options.method || [],
+        methods: R.uniq(R.map(R.toLower, <string[]>(options.method || []))),
         pathnames: options.pathname || [],
       })
     }
