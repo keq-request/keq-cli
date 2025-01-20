@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.0](https://github.com/keq-request/keq-cli/compare/v4.9.2...v4.10.0) (2025-01-20)
+
+
+### Features
+
+* cli could accept arrays for method and pathname ([db872e5](https://github.com/keq-request/keq-cli/commit/db872e53da2b388af69538b2d3fd5b65cbddb555))
+
+
+### Performance Improvements
+
+* cli method option case insensitive ([93c8095](https://github.com/keq-request/keq-cli/commit/93c8095d1ae80a77e2ef519f378f344eb216b550))
+
 ## [4.9.2](https://github.com/keq-request/keq-cli/compare/v4.9.1...v4.9.2) (2025-01-14)
 
 
