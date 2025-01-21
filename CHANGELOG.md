@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.2](https://github.com/keq-request/keq-cli/compare/v4.10.1...v4.10.2) (2025-01-21)
+
+
+### Bug Fixes
+
+* cli --pathname and --method not work without -i ([3ee73e9](https://github.com/keq-request/keq-cli/commit/3ee73e90e1e7fde3e3d1aad1544021657d0044d4))
+
+
+### Performance Improvements
+
+* sharking unsupported methods ([efce73a](https://github.com/keq-request/keq-cli/commit/efce73ae3e67fc3cda5379c78c383af9458ffd5f))
+
 ## [4.10.1](https://github.com/keq-request/keq-cli/compare/v4.10.0...v4.10.1) (2025-01-21)
 
 
