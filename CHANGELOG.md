@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.1](https://github.com/keq-request/keq-cli/compare/v4.10.0...v4.10.1) (2025-01-21)
+
+
+### Bug Fixes
+
+* cli filters not work ([dd41863](https://github.com/keq-request/keq-cli/commit/dd4186325c0960abe65ada4fcf937732498af95b))
+
 ## [4.10.0](https://github.com/keq-request/keq-cli/compare/v4.9.2...v4.10.0) (2025-01-20)
 
 
