@@ -64,18 +64,18 @@ export async function cliPrompt(modules: Record<string, OpenAPIV3.Document>, def
     methods = await selectMethods(methodsInSwagger)
   }
 
-  const pathnames: string[] = R.uniq(JSONPath({
+  const pathnamesInSwagger: string[] = R.uniq(JSONPath({
     path: `$..paths.[${methods.join(',')}]^~`,
     json: Object.values(modules),
   }))
 
-  let operationPathnames = await selectPathnames(pathnames, defaultValue.pathnames)
-  while (operationPathnames.length === 0) {
+  let pathnames = await selectPathnames(pathnamesInSwagger, defaultValue.pathnames)
+  while (pathnames.length === 0) {
     console.log(chalk.red('Please select at least one pathname'))
-    operationPathnames = await selectPathnames(pathnames)
+    pathnames = await selectPathnames(pathnamesInSwagger)
   }
 
-  return R.xprod(methods, operationPathnames)
+  return R.xprod(methods, pathnames)
     .map(([method, pathname]): Pick<OperationFilter, 'method' | 'pathname'> => R.reject(R.isNil, {
       method,
       pathname,
