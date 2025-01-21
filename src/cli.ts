@@ -103,12 +103,14 @@ program
     modules = regenerateName(modules, rc)
     loadingModules.succeed()
 
+    const optionMethods: string[] = R.uniq(R.map(R.toLower, <string[]>(options.method || [])))
+    const optionPathnames: string[] = options.pathname || []
     let filters: OperationFilter[] = []
     if (options.interactive) {
-      filters = await cliPrompt(modules, {
-        methods: R.uniq(R.map(R.toLower, <string[]>(options.method || []))),
-        pathnames: options.pathname || [],
-      })
+      filters = await cliPrompt(modules, { methods: optionMethods, pathnames: optionPathnames })
+    } else {
+      filters = R.xprod(optionMethods, optionPathnames)
+        .map(([method, pathname]): OperationFilter => ({ method, pathname }))
     }
     for (const filter of filters) {
       if (R.isNotNil(options.append)) filter.append = options.append
