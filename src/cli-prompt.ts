@@ -76,8 +76,8 @@ export async function cliPrompt(modules: Record<string, OpenAPIV3.Document>, def
   }
 
   return R.xprod(methods, operationPathnames)
-    .map(([operationMethod, operationPathname]) => R.reject(R.isNil, {
-      operationMethod,
-      operationPathname,
+    .map(([method, pathname]): Pick<OperationFilter, 'method' | 'pathname'> => R.reject(R.isNil, {
+      method,
+      pathname,
     }))
 }
