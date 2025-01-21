@@ -13,6 +13,7 @@ import './handlebar/register-partial.js'
 import { CompileResult } from './types/compile-result.js'
 import { CompileOpenapiOptions } from './types/compile-openapi-options.js'
 import { FileNamingStyle } from './types/file-naming-style'
+import { SupportedMethods } from './constants/supported-methods'
 
 
 const readAndCompileTemplate = (filename: string): ReturnType<typeof Handlebars.compile> => Handlebars.compile(readTemplate(filename))
@@ -73,7 +74,7 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
 
       for (const [m, operation] of Object.entries(pathItem)) {
         const method = m.toLowerCase()
-        if (!['get', 'post', 'put', 'delete', 'patch', 'head', 'options'].includes(method)) {
+        if (!SupportedMethods.includes(method)) {
           console.warn(chalk.yellow(`Method ${String(method).toUpperCase()} on path ${String(pathname)} cannot compiled, skipping`))
           continue
         }

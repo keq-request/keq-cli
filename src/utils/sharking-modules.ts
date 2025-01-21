@@ -10,6 +10,7 @@ import { OperationFilter } from '~/types/operation-filter'
 import chalk from 'chalk'
 import { getRefs } from './get-refs'
 import { validateRef } from './validate-ref'
+import { SupportedMethods } from '~/constants/supported-methods'
 
 function getComponentDependencies(document: OpenAPIV3.Document): Record<string, string[]> {
   const componentsDirectDependencies: Record<string, string[]> = {}
@@ -68,7 +69,7 @@ function getOperationDependencies(document: OpenAPIV3.Document): Record<string, 
   for (const [pathname, pathItem] of Object.entries(document.paths)) {
     for (const m in pathItem) {
       const method = m.toLowerCase()
-      if (!['get', 'post', 'put', 'delete', 'patch', 'head', 'options'].includes(method)) continue
+      if (!SupportedMethods.includes(method)) continue
       if (typeof pathItem[m] !== 'object' || Array.isArray(pathItem[m])) continue
 
       const operation: OpenAPIV3.OperationObject = pathItem[m]
@@ -106,7 +107,7 @@ async function sharkingModule(moduleName: string, document: OpenAPIV3.Document, 
     for (const m in pathItems) {
       const method = m.toLowerCase()
 
-      if (!['get', 'post', 'put', 'delete', 'patch', 'head', 'options'].includes(method)) continue
+      if (!SupportedMethods.includes(method)) continue
       if (typeof pathItems[m] !== 'object' || Array.isArray(pathItems[m])) continue
 
       const operation: OpenAPIV3.OperationObject = pathItems[m]
@@ -187,11 +188,36 @@ function sharkingFreeComponents(document: OpenAPIV3.Document): boolean {
   return operationRefs.every((ref) => refs.includes(ref))
 }
 
+
+function sharkingUnsupportedMethods(document: OpenAPIV3.Document): OpenAPIV3.Document {
+  for (const [pathname, pathItems] of Object.entries(document.paths)) {
+    for (const m in pathItems) {
+      const method = m.toLowerCase()
+
+      if (!SupportedMethods.includes(method)) {
+        delete pathItems[m]
+
+        if (R.isEmpty(document.paths[pathname])) {
+          delete document.paths[pathname]
+        }
+      }
+    }
+  }
+
+  return document
+}
+
 export async function sharkingModules(modules: Record<string, OpenAPIV3.Document>, filters: OperationFilter[], rc: RuntimeConfig): Promise<Record<string, OpenAPIV3.Document>> {
+  let pairs = Object.entries(modules)
+    .map(([moduleName, document]): [string, OpenAPIV3.Document] => [
+      moduleName,
+      sharkingUnsupportedMethods(R.clone(document)),
+    ])
+
   if (!filters.length) return modules
 
-  let pairs = await Promise.all(
-    Object.entries(modules)
+  pairs = await Promise.all(
+    pairs
       .map(async ([moduleName, document]): Promise<[string, OpenAPIV3.Document]> => [
         moduleName,
         await sharkingModule(moduleName, R.clone(document), filters, rc),
