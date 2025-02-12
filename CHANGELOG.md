@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.3](https://github.com/keq-request/keq-cli/compare/v4.10.2...v4.10.3) (2025-02-12)
+
+
+### Performance Improvements
+
+* use @opendoc/openapi-shaking to simplify code ([c5b55d5](https://github.com/keq-request/keq-cli/commit/c5b55d5a3d390df96c07b97a0bed1c9f263d2647))
+
 ## [4.10.2](https://github.com/keq-request/keq-cli/compare/v4.10.1...v4.10.2) (2025-01-21)
 
 
