@@ -7,10 +7,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version-file: ".node-version"
           registry-url: "https://registry.npmjs.org"
-      - run: corepack pnpm install
-      - run: corepack pnpm test
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install
+      - run: pnpm test
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:

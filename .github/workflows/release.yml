@@ -23,12 +23,14 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version-file: ".node-version"
           registry-url: https://registry.npmjs.org/
         if: ${{ steps.release.outputs.release_created }}
-      - run: corepack pnpm install
+      - uses: pnpm/action-setup@v4
         if: ${{ steps.release.outputs.release_created }}
-      - run: npm publish --provenance
+      - run: pnpm install
+        if: ${{ steps.release.outputs.release_created }}
+      - run: pnpm publish --provenance
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.release.outputs.release_created }}
