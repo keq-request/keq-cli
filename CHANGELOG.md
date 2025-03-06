@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.4](https://github.com/keq-request/keq-cli/compare/v4.10.3...v4.10.4) (2025-03-06)
+
+
+### Bug Fixes
+
+* ensure header parameters are set only if they have a value ([0cd82a6](https://github.com/keq-request/keq-cli/commit/0cd82a648f0ac248cb069c76c1415b2c050c0ca4))
+
 ## [4.10.3](https://github.com/keq-request/keq-cli/compare/v4.10.2...v4.10.3) (2025-02-12)
 
 
