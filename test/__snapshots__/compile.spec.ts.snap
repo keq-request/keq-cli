@@ -213,7 +213,7 @@ export function get<STATUS extends keyof ResponseMap>(arg?: RequestParameters): 
 
   if (arg && "requiredQueryProp" in arg) req.query("requiredQueryProp", queryWrap(arg["requiredQueryProp"]))
   if (arg && "optionalQueryProp" in arg) req.query("optionalQueryProp", queryWrap(arg["optionalQueryProp"]))
-  if (arg && "headerProp" in arg) req.set("headerProp", arg["headerProp"])
+  if (arg && "headerProp" in arg && arg["headerProp"]) req.set("headerProp", arg["headerProp"])
   if (arg && "id" in arg) req.params("id", String(arg["id"]))
 
   return req as unknown as Keq<ResponseMap[STATUS], Operation<STATUS>>
