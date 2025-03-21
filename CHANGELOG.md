@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.5](https://github.com/keq-request/keq-cli/compare/v4.10.4...v4.10.5) (2025-03-21)
+
+
+### Bug Fixes
+
+* wrong form data renderer ([869935d](https://github.com/keq-request/keq-cli/commit/869935d4be1e631c10f25e6cd30f2bf27b58a833))
+
 ## [4.10.4](https://github.com/keq-request/keq-cli/compare/v4.10.3...v4.10.4) (2025-03-06)
 
 
