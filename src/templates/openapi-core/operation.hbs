@@ -88,11 +88,11 @@ export function {{h__get-safe-operation-name pathname method operation}}<STATUS 
             {{/each}}
           {{~else}}
             {{#each this.properties as |prop key|}}
-              {{~#if (r__equals prop.format "binary")}}
+              {{#if (r__equals prop.format "binary")}}
   if (arg && "{{key}}" in arg) req.attach({ "{{key}}": arg["{{key}}"] })
-              {{~else}}
+              {{else}}
   if (arg && "{{key}}" in arg) req.field({ "{{key}}": arg["{{key}}"] })
-              {{~/if}}
+              {{/if}}
             {{/each}}
           {{~/if}}
         {{/inline}}
