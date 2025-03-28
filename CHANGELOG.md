@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.6](https://github.com/keq-request/keq-cli/compare/v4.10.5...v4.10.6) (2025-03-28)
+
+
+### Bug Fixes
+
+* wrong code with binary file ([d432c43](https://github.com/keq-request/keq-cli/commit/d432c43c2459990129f2de732efebb36d894b148))
+
 ## [4.10.5](https://github.com/keq-request/keq-cli/compare/v4.10.4...v4.10.5) (2025-03-21)
 
 
