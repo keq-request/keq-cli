@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.7](https://github.com/keq-request/keq-cli/compare/v4.10.6...v4.10.7) (2025-03-28)
+
+
+### Bug Fixes
+
+* wrong typescript types with binary property ([ccad920](https://github.com/keq-request/keq-cli/commit/ccad92056f5902176b76f74899a0151304f55172))
+
 ## [4.10.6](https://github.com/keq-request/keq-cli/compare/v4.10.5...v4.10.6) (2025-03-28)
 
 
