@@ -557,7 +557,8 @@ export function upload<STATUS extends keyof ResponseMap>(arg?: RequestParameters
       pathname,
     })
 
-  if (arg && "file" in arg) req.attach({ "file": arg["file"] })
+  if (arg && "file" in arg) req.attach("file", arg["file"])
+
   return req as unknown as Keq<ResponseMap[STATUS], Operation<STATUS>>
 }
 
