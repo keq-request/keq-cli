@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.8](https://github.com/keq-request/keq-cli/compare/v4.10.7...v4.10.8) (2025-06-13)
+
+
+### Bug Fixes
+
+* undefined should not set into form-data ([4ebc9fe](https://github.com/keq-request/keq-cli/commit/4ebc9fe425ef5ab221d8b1da3880eeb9a19437b8))
+
 ## [4.10.7](https://github.com/keq-request/keq-cli/compare/v4.10.6...v4.10.7) (2025-03-28)
 
 
