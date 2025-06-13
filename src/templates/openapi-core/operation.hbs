@@ -91,7 +91,7 @@ export function {{h__get-safe-operation-name pathname method operation}}<STATUS 
               {{#if (r__equals prop.format "binary")}}
   if (arg && "{{key}}" in arg && arg["{{key}}"]) req.attach("{{key}}", arg["{{key}}"])
               {{else}}
-  if (arg && "{{key}}" in arg) req.field({ "{{key}}": arg["{{key}}"] })
+  if (arg && "{{key}}" in arg && arg["{{key}}"] !== undefined) req.field({ "{{key}}": arg["{{key}}"] })
               {{/if}}
             {{/each}}
           {{~/if}}
