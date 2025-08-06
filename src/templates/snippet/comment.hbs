@@ -7,7 +7,7 @@
 /**
 {{#if description}}
 {{#each (r__split (newline) description)}}
- * {{this}}
+ * {{r__replace '*/' '*\/' this}}
 {{/each}}
 {{#if (h__or summary deprecated type interface export)}}
  *
@@ -15,7 +15,7 @@
 {{/if}}
 {{!-- summary --}}
 {{#if summary}}
- * @summary {{summary}}
+ * @summary {{r__replace '*/' '*\/' summary}}
 {{/if}}
 {{!-- deprecated --}}
 {{#if deprecated}}
