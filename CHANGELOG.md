@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.9](https://github.com/keq-request/keq-cli/compare/v4.10.8...v4.10.9) (2025-08-06)
+
+
+### Bug Fixes
+
+* escape asterisks in comment template ([c02a76b](https://github.com/keq-request/keq-cli/commit/c02a76bdbf80f5883a959f305a5e2d5ad8a488f9))
+* wrong import paths ([5648e02](https://github.com/keq-request/keq-cli/commit/5648e02fc60eb39281fb0bdb1b7437e133df6920))
+
 ## [4.10.8](https://github.com/keq-request/keq-cli/compare/v4.10.7...v4.10.8) (2025-06-13)
 
 
