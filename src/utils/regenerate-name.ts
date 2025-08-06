@@ -1,8 +1,8 @@
 import * as R from 'ramda'
 import { OpenAPIV3 } from 'openapi-types'
-import { RuntimeConfig } from '~/types/runtime-config'
-import { getSafeOperationName } from './get-safe-operation-name'
-import { SupportedMethods } from '~/constants/supported-methods'
+import { RuntimeConfig } from '~/types/runtime-config.js'
+import { getSafeOperationName } from './get-safe-operation-name.js'
+import { SupportedMethods } from '~/constants/supported-methods.js'
 
 
 function regenerateOperationId(moduleName: string, document: OpenAPIV3.Document, rc: RuntimeConfig): OpenAPIV3.Document {

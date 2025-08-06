@@ -133,8 +133,8 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0
       keq:
-        specifier: ^2.8.8
-        version: 2.8.8
+        specifier: ^2.8.11
+        version: 2.8.11
       standard-version:
         specifier: ^9.5.0
         version: 9.5.0
@@ -1558,6 +1558,9 @@ packages:
   fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
 
+  fastq@1.19.1:
+    resolution: {integrity: sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ==}
+
   fb-watchman@2.0.2:
     resolution: {integrity: sha512-p5161BqbuCaSnB8jIbzQHOlpgsPmK5rJVDfDKO91Axs5NC1uu3HRQm6wt9cd9/+GtQQIO53JdGXXoyDpTAsgYA==}
 
@@ -2244,8 +2247,8 @@ packages:
     resolution: {integrity: sha512-ZZow9HBI5O6EPgSJLUb8n2NKgmVWTwCvHGwFuJlMjvLFqlGG6pjirPhtdsseaLZjSibD8eegzmYpUZwoIlj2cQ==}
     engines: {node: '>=4.0'}
 
-  keq@2.8.8:
-    resolution: {integrity: sha512-TRNAkJBpYAq94K3309Ue+hQ/KaX3nPFszCBWQrJnhssCmbsQo6xeqIT5ChxlPxZtv7bRsD4uc85WQakj8ZHdIA==}
+  keq@2.8.11:
+    resolution: {integrity: sha512-TrBblOFFZ7qtAztz+t29Im/A1lbSShs6+Y6K+Fn7Ux/Udhw6Byho1Q6RVFlUFEzapUkUcZE4RUpoFZORFzHFuA==}
     engines: {node: '>=18.0.0'}
 
   keyv@4.5.4:
@@ -2820,6 +2823,10 @@ packages:
 
   reusify@1.0.4:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
+    engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
+
+  reusify@1.1.0:
+    resolution: {integrity: sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
   run-parallel@1.2.0:
@@ -5300,6 +5307,10 @@ snapshots:
     dependencies:
       reusify: 1.0.4
 
+  fastq@1.19.1:
+    dependencies:
+      reusify: 1.1.0
+
   fb-watchman@2.0.2:
     dependencies:
       bser: 2.1.1
@@ -6159,9 +6170,9 @@ snapshots:
       object.assign: 4.1.5
       object.values: 1.2.0
 
-  keq@2.8.8:
+  keq@2.8.11:
     dependencies:
-      fastq: 1.17.1
+      fastq: 1.19.1
       minimatch: 9.0.5
       mitt: 3.0.1
       ts-custom-error: 3.3.1
@@ -6732,6 +6743,8 @@ snapshots:
       signal-exit: 3.0.7
 
   reusify@1.0.4: {}
+
+  reusify@1.1.0: {}
 
   run-parallel@1.2.0:
     dependencies:

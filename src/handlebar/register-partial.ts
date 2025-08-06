@@ -1,7 +1,7 @@
 
 
 import * as Handlebars from 'handlebars'
-import { readTemplate } from '../utils/read-template'
+import { readTemplate } from '../utils/read-template.js'
 
 
 Handlebars.registerPartial('snippet/comment', readTemplate('snippet/comment'))

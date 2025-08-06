@@ -4,16 +4,16 @@ import * as fs from 'fs-extra'
 import pMap from 'p-map'
 import * as path from 'path'
 import * as R from 'ramda'
-import { getSafeOperationName } from './utils/get-safe-operation-name'
-import { readTemplate } from './utils/read-template'
+import { getSafeOperationName } from './utils/get-safe-operation-name.js'
+import { readTemplate } from './utils/read-template.js'
 
 import Handlebars from 'handlebars'
 import './handlebar/register-helper.js'
 import './handlebar/register-partial.js'
 import { CompileResult } from './types/compile-result.js'
 import { CompileOpenapiOptions } from './types/compile-openapi-options.js'
-import { FileNamingStyle } from './types/file-naming-style'
-import { SupportedMethods } from './constants/supported-methods'
+import { FileNamingStyle } from './types/file-naming-style.js'
+import { SupportedMethods } from './constants/supported-methods.js'
 
 
 const readAndCompileTemplate = (filename: string): ReturnType<typeof Handlebars.compile> => Handlebars.compile(readTemplate(filename))

@@ -1,7 +1,7 @@
 import { JSONPath } from 'jsonpath-plus'
 import { OpenAPIV3 } from 'openapi-types'
 import * as R from 'ramda'
-import { getRefs } from './get-refs'
+import { getRefs } from './get-refs.js'
 
 
 export function validateRef(document: OpenAPIV3.Document): boolean {

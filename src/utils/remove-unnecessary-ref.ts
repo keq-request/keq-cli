@@ -1,5 +1,5 @@
 import { OpenAPIV3 } from 'openapi-types'
-import { dereference } from './dereference'
+import { dereference } from './dereference.js'
 
 export function removeUnnecessaryRef(doc: OpenAPIV3.Document): void {
   for (const path in doc.paths) {

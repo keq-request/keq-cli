@@ -5,8 +5,8 @@ import { OpenAPI, OpenAPIV3 } from 'openapi-types'
 import * as path from 'path'
 import * as validUrl from 'valid-url'
 import chalk from 'chalk'
-import { disinfect } from './disinfect'
-import { RuntimeConfig } from '~/types/runtime-config'
+import { disinfect } from './disinfect.js'
+import { RuntimeConfig } from '~/types/runtime-config.js'
 
 async function fetchFromUrl(url: string): Promise<OpenAPIV3.Document> {
   let content: string

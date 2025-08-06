@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from 'openapi-types'
-import { isKeywords } from './is-keywords'
-import { isReservedWord } from './is-reserved-word'
+import { isKeywords } from './is-keywords.js'
+import { isReservedWord } from './is-reserved-word.js'
 
 
 /**

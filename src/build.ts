@@ -1,6 +1,6 @@
 import chalk from 'chalk'
-import { compile } from './compile'
-import { Exception } from './exception'
+import { compile } from './compile.js'
+import { Exception } from './exception.js'
 import { BuildOptions } from './types/build-options.js'
 import { CompileOptions } from './types/compile-options.js'
 import { FileNamingStyle } from './types/file-naming-style.js'

@@ -3,7 +3,7 @@ import * as R from 'ramda'
 import { select } from 'inquirer-select-pro'
 import { JSONPath } from 'jsonpath-plus'
 
-import { OperationFilter } from './types/operation-filter'
+import { OperationFilter } from './types/operation-filter.js'
 import chalk from 'chalk'
 import { OpenAPIV3 } from 'openapi-types'
 
