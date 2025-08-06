@@ -11,26 +11,18 @@ permissions:
   pull-requests: write
 
 jobs:
-  release:
+  Release:
     runs-on: ubuntu-latest
+    outputs:
+      released: ${{ steps.release.outputs.release_created }}
     steps:
       - uses: GoogleCloudPlatform/release-please-action@v4
         id: release
         with:
           token: ${{secrets.GITHUB_TOKEN}}
           release-type: node
-      - uses: actions/checkout@v4
-        if: ${{ steps.release.outputs.release_created }}
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: ".node-version"
-          registry-url: https://registry.npmjs.org/
-        if: ${{ steps.release.outputs.release_created }}
-      - uses: pnpm/action-setup@v4
-        if: ${{ steps.release.outputs.release_created }}
-      - run: pnpm install
-        if: ${{ steps.release.outputs.release_created }}
-      - run: pnpm publish --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        if: ${{ steps.release.outputs.release_created }}
+  Publish:
+    needs: [Release]
+    if: needs.release.outputs.released == 'true'
+    uses: ./.github/workflows/publish.yaml
+    secrets: inherit

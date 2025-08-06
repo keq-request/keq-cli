@@ -1,0 +1,24 @@
+name: Publish
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: ".node-version"
+          registry-url: https://registry.npmjs.org/
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install
+      - run: pnpm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
