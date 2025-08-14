@@ -13,6 +13,7 @@ import type { KeqOperation } from 'keq'
     )
   )
 }}
+{{#unless (h__is-local-ref-name this)}}// {{/unless~}}
 import type { {{h__ref-name this}} } from "../components/schemas/{{h__change-case @root.fileNamingStyle (h__ref-name this)}}{{#if @root.esm}}.js{{/if}}"
 {{/each}}
 

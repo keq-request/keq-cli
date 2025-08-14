@@ -14,6 +14,11 @@ export const RuntimeConfig = Type.Intersect([
     operationId: Type.Optional(Type.Function([Type.Any()], Type.String())),
     operationIdFactory: Type.Optional(Type.Function([Type.Any()], Type.String())),
     debug: Type.Optional(Type.Boolean({ default: false })),
+
+    /**
+     * Whether to tolerate wrong swagger structure
+     */
+    tolerant: Type.Optional(Type.Boolean({ default: false })),
   }),
 ])
 

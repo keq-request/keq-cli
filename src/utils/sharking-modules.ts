@@ -41,7 +41,7 @@ export async function sharkingModules(modules: Record<string, OpenAPIV3.Document
       if (!SupportedMethods.includes(method)) return false
       if (isOperationIgnored(mName, pathname, method, operation)) return false
       return true
-    }),
+    }, { tolerant: rc.tolerant }),
     modules,
   )
 

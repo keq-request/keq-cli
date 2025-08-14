@@ -55,6 +55,7 @@ program
   .option('--no-append', 'Whether to generate files that not exist')
   .option('--no-update', 'Whether to generate files that exist')
   .option('--debug', 'Print debug information')
+  .option('--tolerant', 'tolerate wrong swagger structure')
   .action(async (moduleName, options) => {
     let result: CosmiconfigResult
     if (options.config) {
@@ -78,6 +79,9 @@ program
     if (options.debug) {
       await fs.ensureDir('.keq')
       rc.debug = true
+    }
+    if (options.tolerant) {
+      rc.tolerant = true
     }
 
     // Filter module

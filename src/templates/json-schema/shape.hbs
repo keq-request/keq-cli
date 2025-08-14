@@ -5,7 +5,11 @@
 {{> t_json_schema_shape__enum}}
 
 {{~else if (r__isString $ref)~}}
+{{~#if (h__is-local-ref-name $ref)}}
 {{h__ref-name $ref}}
+{{~else}}
+any /* {{h__ref-name $ref}} */
+{{~/if}}
 
 {{~else if (r__isArray anyOf)~}}
 {{> t_json_schema_shape__any_of}}
