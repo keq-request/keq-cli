@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.10](https://github.com/keq-request/keq-cli/compare/v4.10.9...v4.10.10) (2025-08-14)
+
+
+### Performance Improvements
+
+* add option to tolerate wrong swagger ([1399ec7](https://github.com/keq-request/keq-cli/commit/1399ec7cea9e82a926375554bd3189fe295b51c2))
+
 ## [4.10.9](https://github.com/keq-request/keq-cli/compare/v4.10.8...v4.10.9) (2025-08-06)
 
 
