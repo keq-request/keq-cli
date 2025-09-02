@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.11](https://github.com/keq-request/keq-cli/compare/v4.10.10...v4.10.11) (2025-09-02)
+
+
+### Performance Improvements
+
+* update generated comments in templates to prevent editing ([6cb6069](https://github.com/keq-request/keq-cli/commit/6cb606924fd895a0a954cb3d32ce7d50db1f6847))
+
 ## [4.10.10](https://github.com/keq-request/keq-cli/compare/v4.10.9...v4.10.10) (2025-08-14)
 
 
