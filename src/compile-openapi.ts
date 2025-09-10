@@ -57,7 +57,8 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
       }
 
       const fileContent = templates.t_schema(context)
-      const filename = formatFilename(name)
+      let filename = formatFilename(name)
+      filename = filename === 'index' ? 'index.schema' : filename
       const filepath = path.join(output, 'components', 'schemas', `${filename}.ts`)
 
       results.push({

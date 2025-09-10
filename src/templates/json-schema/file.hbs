@@ -8,8 +8,12 @@
     (r__uniq (h__json-path "$..*['$ref']" jsonSchema))
   )
 }}
+{{#if (r__equals 'index' (r__toLower (h__ref-name this)))}}
+import type { {{h__ref-name this}} } from "./{{h__change-case @root.fileNamingStyle (h__ref-name this)}}.schema{{#if @root.esm}}.js{{/if}}"
+{{else}}
 {{#unless (h__is-local-ref-name this)}}// {{/unless~}}
 import type { {{h__ref-name this}} } from "./{{h__change-case @root.fileNamingStyle (h__ref-name this)}}{{#if @root.esm}}.js{{/if}}"
+{{/if}}
 {{#if @last}}
 
 
