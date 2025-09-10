@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.12](https://github.com/keq-request/keq-cli/compare/v4.10.11...v4.10.12) (2025-09-10)
+
+
+### Bug Fixes
+
+* cannot generete schema named index ([9c0c841](https://github.com/keq-request/keq-cli/commit/9c0c84196158e056c35132824da5b5da6e025fc7))
+
 ## [4.10.11](https://github.com/keq-request/keq-cli/compare/v4.10.10...v4.10.11) (2025-09-02)
 
 
