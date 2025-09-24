@@ -4,7 +4,7 @@
 
 {{#each
   (r__filter
-    (r__compose (r__complement) (r__equals name) (h__ref-name))
+    (r__compose (r__not) (r__equals name) (h__ref-name))
     (r__uniq (h__json-path "$..*['$ref']" jsonSchema))
   )
 }}
