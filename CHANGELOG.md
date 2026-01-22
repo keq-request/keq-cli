@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.14](https://github.com/keq-request/keq-cli/compare/v4.10.13...v4.10.14) (2026-01-22)
+
+
+### Performance Improvements
+
+* support add custom headers ([6fe36ae](https://github.com/keq-request/keq-cli/commit/6fe36aeb9c271fa7f2d084ef419bc68f9ff83da3))
+
 ## [4.10.13](https://github.com/keq-request/keq-cli/compare/v4.10.12...v4.10.13) (2025-09-24)
 
 
