@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.15](https://github.com/keq-request/keq-cli/compare/v4.10.14...v4.10.15) (2026-01-22)
+
+
+### Bug Fixes
+
+* oidc publish ([760e159](https://github.com/keq-request/keq-cli/commit/760e159c8562f8b1a2e0d79d243c1b15f9395928))
+
 ## [4.10.14](https://github.com/keq-request/keq-cli/compare/v4.10.13...v4.10.14) (2026-01-22)
 
 
