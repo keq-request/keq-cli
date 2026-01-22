@@ -12,12 +12,22 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
       - uses: actions/setup-node@v6
         with:
           # node-version-file: ".node-version"
           node-version: "24" # npm must be >= 11.5.1 to support trusted publish
-          registry-url: https://registry.npmjs.org/
-      - uses: pnpm/action-setup@v4
-      - run: pnpm install
-      - run: pnpm publish
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Publish Package
+        run: pnpm publish --provenance
