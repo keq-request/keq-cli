@@ -6,13 +6,14 @@ import * as path from 'path'
 import * as validUrl from 'valid-url'
 import chalk from 'chalk'
 import { disinfect } from './disinfect.js'
-import { RuntimeConfig } from '~/types/runtime-config.js'
+import { Address, RuntimeConfig } from '~/types/runtime-config.js'
 
-async function fetchFromUrl(url: string): Promise<OpenAPIV3.Document> {
+async function fetchFromUrl(address: Address): Promise<OpenAPIV3.Document> {
   let content: string
   try {
     const res = await request
-      .get(url)
+      .get(address.url)
+      .set(address.headers || {})
       .resolveWith('response')
 
     if (res.status >= 400) throw new Error(`Request failed with status code ${res.status}`)
@@ -20,7 +21,7 @@ async function fetchFromUrl(url: string): Promise<OpenAPIV3.Document> {
     content = await res.text()
   } catch (e) {
     if (e instanceof Error) {
-      e.message = `Unable get the swagger file from ${url}: ${e.message}`
+      e.message = `Unable get the swagger file from ${address.url}: ${e.message}`
     }
 
     throw e
@@ -30,18 +31,20 @@ async function fetchFromUrl(url: string): Promise<OpenAPIV3.Document> {
   try {
     return JSON.parse(content) as OpenAPIV3.Document
   } catch (e) {
-    throw new Error(`The swagger file get from url isn't json: ${url}`)
+    throw new Error(`The swagger file get from url isn't json: ${address.url}`)
   }
 }
 
 
-export async function fetchOpenapiFile(filepath: string): Promise<OpenAPI.Document> {
+export async function fetchOpenapiFile(address: string | Address): Promise<OpenAPI.Document> {
   let swagger: OpenAPIV3.Document
-  if (validUrl.isUri(filepath)) {
-    swagger = await fetchFromUrl(filepath)
+  const url = typeof address === 'string' ? address : address.url
+
+  if (validUrl.isUri(url)) {
+    swagger = await fetchFromUrl(typeof address === 'string' ? { url } : address)
   } else {
-    const fileExt = path.extname(filepath)
-    const content = await fs.readFile(filepath, 'utf8')
+    const fileExt = path.extname(url)
+    const content = await fs.readFile(url, 'utf8')
 
     if (['.yml', '.yaml'].includes(fileExt)) {
       swagger = yaml.load(content) as OpenAPIV3.Document
@@ -57,8 +60,8 @@ export async function fetchOpenapiFile(filepath: string): Promise<OpenAPI.Docume
 
 export async function fetchModules(rc: RuntimeConfig): Promise<Record<string, OpenAPIV3.Document>> {
   const promises = Object.entries(rc.modules)
-    .map(async ([moduleName, filepath]) => {
-      const swagger = await fetchOpenapiFile(filepath)
+    .map(async ([moduleName, address]) => {
+      const swagger = await fetchOpenapiFile(address)
       const swagger3 = await disinfect(moduleName, swagger)
 
       return [moduleName, swagger3] as const

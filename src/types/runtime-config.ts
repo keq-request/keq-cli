@@ -6,11 +6,22 @@ import { Static, Type } from '@sinclair/typebox'
 import { BuildOptions } from './build-options'
 import { OperationIdFactoryOptions } from './operation-id-factory-options'
 
+export const Address = Type.Object({
+  url: Type.String(),
+  headers: Type.Optional(Type.Record(Type.String(), Type.String())),
+})
+
+export type Address = Static<typeof Address>
 
 export const RuntimeConfig = Type.Intersect([
   Type.Omit(BuildOptions, ['modules']),
   Type.Object({
-    modules: Type.Record(Type.String(), Type.String()),
+    modules: Type.Record(Type.String(),
+      Type.Union([
+        Type.String(),
+        Address,
+      ]),
+    ),
     operationId: Type.Optional(Type.Function([Type.Any()], Type.String())),
     operationIdFactory: Type.Optional(Type.Function([Type.Any()], Type.String())),
     debug: Type.Optional(Type.Boolean({ default: false })),
