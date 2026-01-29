@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.11.0](https://github.com/keq-request/keq-cli/compare/v4.10.16...v4.11.0) (2026-01-29)
+
+
+### Features
+
+* add list command ([df2c904](https://github.com/keq-request/keq-cli/commit/df2c90405acf4cf7fd835fa38c4c6a7adca20e4a))
+
 ## [4.10.16](https://github.com/keq-request/keq-cli/compare/v4.10.15...v4.10.16) (2026-01-22)
 
 
