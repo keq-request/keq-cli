@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import * as fs from 'fs-extra'
 import * as R from 'ramda'
+import * as path from 'path'
 import ora from 'ora'
 import chalk from 'chalk'
 import semver from 'semver'
@@ -18,6 +19,7 @@ import { fetchModules } from './utils/fetch-openapi-file.js'
 import { sharkingModules } from './utils/sharking-modules.js'
 import { regenerateName } from './utils/regenerate-name.js'
 import { JSONPath } from 'jsonpath-plus'
+import { listGeneratedFiles, listInvalidFiles } from './list-files.js'
 
 
 if (semver.lt(process.version, '18.0.0')) {
@@ -158,6 +160,71 @@ program
       filepath,
       ...options,
     })
+  })
+
+program
+  .command('list [moduleName]')
+  .description('List all files to be generated')
+  .option('-c --config <config>', 'The build config file')
+  .option('--invalid', 'List files in outdir that are not in the generated list')
+  .option('--tolerant', 'tolerate wrong swagger structure')
+  .action(async (moduleName, options) => {
+    let result: CosmiconfigResult
+    if (options.config) {
+      result = await explore.load(options.config)
+    } else {
+      result = await explore.search()
+    }
+
+    if (!result || ('isEmpty' in result && result.isEmpty)) {
+      throw new Error('Cannot find config file.')
+    }
+
+    if (!Value.Check(RuntimeConfig, result.config)) {
+      const errors = [...Value.Errors(RuntimeConfig, result.config)]
+      const message = errors.map(({ path, message }) => `${path}: ${message}`).join('\n')
+      throw new Error(chalk.red(`Invalid Config: ${message}`))
+    }
+
+    const rc = Value.Default(RuntimeConfig, result.config) as RuntimeConfig
+    if (options.tolerant) {
+      rc.tolerant = true
+    }
+
+    // Filter module
+    if (moduleName) {
+      if (!(moduleName in rc.modules)) {
+        throw new Error(`Cannot find module ${moduleName} in config file.`)
+      }
+
+      rc.modules = { [moduleName]: rc.modules[moduleName] }
+    }
+
+    let modules = await fetchModules(rc)
+    modules = regenerateName(modules, rc)
+
+    const buildOptions: BuildOptions = {
+      ...rc,
+      modules: await sharkingModules(modules, [], rc),
+    }
+
+    if (options.invalid) {
+      // List invalid files in outdir
+      const invalidFiles = await listInvalidFiles(buildOptions)
+
+      for (const file of invalidFiles) {
+        const relativePath = path.relative(process.cwd(), file)
+        console.log(`./${relativePath}`)
+      }
+    } else {
+      // List all files to be generated
+      const files = await listGeneratedFiles(buildOptions)
+
+      for (const file of files) {
+        const relativePath = path.relative(process.cwd(), file)
+        console.log(`./${relativePath}`)
+      }
+    }
   })
 
 async function main(): Promise<void> {
