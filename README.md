@@ -7,8 +7,8 @@
 <!-- title -->
 
 [npm]: https://www.npmjs.com/package/keq-cli
-[Document EN]: https://keq-request.github.io/guide/cli
-[Document CN]: https://keq-request.github.io/zh/guide/cli
+[Document EN]: https://keq-request.github.io/en/docs/libraries/keq-cli
+[Document CN]: https://keq-request.github.io/docs/libraries/keq-cli
 
 [![version](https://img.shields.io/npm/v/keq-cli.svg?logo=npm&style=for-the-badge)][npm]
 [![downloads](https://img.shields.io/npm/dm/keq-cli.svg?logo=npm&style=for-the-badge)][npm]
