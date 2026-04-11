@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.12.0](https://github.com/keq-request/keq-cli/compare/v4.11.0...v4.12.0) (2026-04-11)
+
+
+### Features
+
+* add skipIndex option to disable index.ts generation ([e45e1d7](https://github.com/keq-request/keq-cli/commit/e45e1d7f5dd4792765ef85ef4115add65175b3b3))
+
 ## [4.11.0](https://github.com/keq-request/keq-cli/compare/v4.10.16...v4.11.0) (2026-01-29)
 
 
