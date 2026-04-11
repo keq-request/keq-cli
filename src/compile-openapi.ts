@@ -155,7 +155,9 @@ export async function CompileOpenapi(option: CompileOpenapiOptions): Promise<voi
     { concurrency: 10 },
   )
 
-  const output = getModuleOutput(option)
-  await genIndexFile(output, option)
-  await genIndexFile(path.join(output, 'components', 'schemas'), option)
+  if (!option.skipIndex) {
+    const output = getModuleOutput(option)
+    await genIndexFile(output, option)
+    await genIndexFile(path.join(output, 'components', 'schemas'), option)
+  }
 }

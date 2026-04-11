@@ -16,6 +16,7 @@ export async function build(options: BuildOptions): Promise<void> {
           strict: options.strict,
           request: options.request,
           fileNamingStyle: options.fileNamingStyle || FileNamingStyle.snakeCase,
+          skipIndex: options.skipIndex,
 
           moduleName,
           document: options.modules[moduleName],

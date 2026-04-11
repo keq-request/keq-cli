@@ -10,7 +10,7 @@ export const BuildOptions = Type.Object({
   outdir: Type.String({ default: `${process.cwd()}/api` }),
   fileNamingStyle: Type.Enum(FileNamingStyle, { default: FileNamingStyle.snakeCase }),
   request: Type.Optional(Type.String()),
-
+  skipIndex: Type.Optional(Type.Boolean({ default: false })),
 
   modules: Type.Record(Type.String(), Type.Any()),
 })

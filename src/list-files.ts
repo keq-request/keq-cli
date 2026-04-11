@@ -38,8 +38,10 @@ export async function listGeneratedFiles(options: BuildOptions): Promise<string[
     const outdir = options?.outdir || `${process.cwd()}/api`
     const output = path.join(outdir, formatFilename(moduleName))
 
-    allFiles.push(path.join(output, 'index.ts'))
-    allFiles.push(path.join(output, 'components', 'schemas', 'index.ts'))
+    if (!options.skipIndex) {
+      allFiles.push(path.join(output, 'index.ts'))
+      allFiles.push(path.join(output, 'components', 'schemas', 'index.ts'))
+    }
   }
 
   return allFiles
