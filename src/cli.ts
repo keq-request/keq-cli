@@ -20,6 +20,7 @@ import { sharkingModules } from './utils/sharking-modules.js'
 import { regenerateName } from './utils/regenerate-name.js'
 import { JSONPath } from 'jsonpath-plus'
 import { listGeneratedFiles, listInvalidFiles } from './list-files.js'
+import { generateSkill } from './generate-skill.js'
 
 
 if (semver.lt(process.version, '18.0.0')) {
@@ -226,6 +227,14 @@ program
         console.log(`./${relativePath}`)
       }
     }
+  })
+
+program
+  .command('install-skill')
+  .description('Install Claude Code skill file to .claude/skills/')
+  .action(async () => {
+    await generateSkill()
+    console.log(chalk.green('Skill installed to .claude/skills/keq-cli.md'))
   })
 
 async function main(): Promise<void> {

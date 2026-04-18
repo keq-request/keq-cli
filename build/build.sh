@@ -2,7 +2,7 @@
 function umd() {
   # Build UMD
   echo 'Building UMD...'
-  cpx "./src/**/*.{hbs,json}" "dist/umd/src"
+  cpx "./src/**/*.{hbs,json,md}" "dist/umd/src"
   tsc -p ./build/tsconfig.umd.json
   echo 'Build UMD Finished'
 }
@@ -10,7 +10,7 @@ function umd() {
 function esm() {
   # Build ESM
   echo 'Building ESM...'
-  cpx "./src/**/*.{hbs,json}" "dist/esm/src"
+  cpx "./src/**/*.{hbs,json,md}" "dist/esm/src"
   tsc -p ./build/tsconfig.esm.json
   echo 'Build ESM Finished'
 }
