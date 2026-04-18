@@ -20,7 +20,7 @@ async function selectMethods(methodsInSwagger: string[], defaultValue?: string[]
         { name: 'Delete', value: 'delete' },
         { name: 'Patch', value: 'patch' },
         { name: 'Head', value: 'head' },
-        { name: 'Option', value: 'option' },
+        { name: 'Options', value: 'options' },
       ].filter((method) => methodsInSwagger.includes(method.value))
 
       if (!input) return items

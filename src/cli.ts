@@ -44,14 +44,14 @@ program
         'delete',
         'patch',
         'head',
-        'option',
+        'options',
         'GET',
         'POST',
         'PUT',
         'DELETE',
         'PATCH',
         'HEAD',
-        'OPTION',
+        'OPTIONS',
       ]),
   )
   .option('--pathname <pathnames...>', 'Only generate files of the specified operation pathname')
