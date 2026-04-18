@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.13.0](https://github.com/keq-request/keq-cli/compare/v4.12.0...v4.13.0) (2026-04-18)
+
+
+### Features
+
+* add install-skill command ([e1a9eaa](https://github.com/keq-request/keq-cli/commit/e1a9eaaa083c080cb79d1c35a9ba519555d9cc18))
+
+
+### Bug Fixes
+
+* correct --method option to options for HTTP OPTIONS method ([20809d2](https://github.com/keq-request/keq-cli/commit/20809d2818c6289bd606941773b9937b30e6d017))
+
 ## [4.12.0](https://github.com/keq-request/keq-cli/compare/v4.11.0...v4.12.0) (2026-04-11)
 
 
