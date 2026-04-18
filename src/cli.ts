@@ -28,6 +28,8 @@ if (semver.lt(process.version, '18.0.0')) {
 }
 
 const program = new Command()
+const pkg = fs.readJSONSync(path.resolve(__dirname, '../../../package.json'))
+program.version(pkg.version, '-V, --version')
 const explore = cosmiconfig('keq')
 
 
