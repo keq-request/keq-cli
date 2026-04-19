@@ -236,7 +236,7 @@ program
   .description('Install Claude Code skill file to .claude/skills/')
   .action(async () => {
     await generateSkill()
-    console.log(chalk.green('Skill installed to .claude/skills/keq-cli.md'))
+    console.log(chalk.green('Skill installed to .claude/skills/keq-cli/SKILL.md'))
   })
 
 async function main(): Promise<void> {
