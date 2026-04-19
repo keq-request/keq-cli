@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.13.2](https://github.com/keq-request/keq-cli/compare/v4.13.1...v4.13.2) (2026-04-19)
+
+
+### Bug Fixes
+
+* wrong skill dir ([4316a53](https://github.com/keq-request/keq-cli/commit/4316a53d06d238ca1ceee9a55c0b73681deb7833))
+
 ## [4.13.1](https://github.com/keq-request/keq-cli/compare/v4.13.0...v4.13.1) (2026-04-18)
 
 
