@@ -1,0 +1,18 @@
+on: push
+name: Test
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: ".node-version"
+          registry-url: "https://registry.npmjs.org"
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install
+      - run: pnpm test
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

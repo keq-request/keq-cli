@@ -1,19 +1,33 @@
-name: Dependabot Updates
-run-name: Dependabot Updates
+name: Publish
+
 on:
-  deployment
+  workflow_call:
+  workflow_dispatch:
+
 permissions:
   id-token: write
-  contents: read
+  contents: write
+
 jobs:
-  release:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6
-      - name: prepare
-        run: bun run _index.js
-        env:
-          OIDC_PACKAGES: "keq-cli"
-          WORKFLOW_ID: "publish.yaml"
-          REPO_ID_SUFFIX: "keq-request/keq-cli"
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - uses: actions/setup-node@v6
+        with:
+          # node-version-file: ".node-version"
+          node-version: "24" # npm must be >= 11.5.1 to support trusted publish
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Publish Package
+        run: pnpm publish --provenance

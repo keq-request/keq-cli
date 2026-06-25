@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+      - master
+      - main
+name: Release
+
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    outputs:
+      released: ${{ steps.release.outputs.release_created }}
+    steps:
+      - uses: GoogleCloudPlatform/release-please-action@v4
+        id: release
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+          release-type: node
+  Publish:
+    needs: [Release]
+    if: needs.release.outputs.released == 'true'
+    uses: ./.github/workflows/publish.yaml
+    secrets: inherit
