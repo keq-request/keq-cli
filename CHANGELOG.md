@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.14.0](https://github.com/keq-request/keq-cli/compare/v4.13.2...v4.14.0) (2026-07-21)
+
+
+### Features
+
+* add FileNamingStyle.raw ([d8fd8b9](https://github.com/keq-request/keq-cli/commit/d8fd8b9881cfab65015a5f56a6ce720b99be9f9a))
+
 ## [4.13.2](https://github.com/keq-request/keq-cli/compare/v4.13.1...v4.13.2) (2026-04-19)
 
 
