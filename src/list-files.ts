@@ -34,7 +34,9 @@ export async function listGeneratedFiles(options: BuildOptions): Promise<string[
 
     // Add index files
     const fileNamingStyle: FileNamingStyle = options?.fileNamingStyle || FileNamingStyle.snakeCase
-    const formatFilename = changeCase[fileNamingStyle]
+    const formatFilename = fileNamingStyle === FileNamingStyle.raw
+      ? (name: string) => name
+      : changeCase[fileNamingStyle]
     const outdir = options?.outdir || `${process.cwd()}/api`
     const output = path.join(outdir, formatFilename(moduleName))
 

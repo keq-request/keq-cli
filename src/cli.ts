@@ -153,7 +153,7 @@ program
   .description('Build the swagger file')
   .requiredOption('-o, --outdir <outdir>', 'The output directory')
   .requiredOption('-m --module-name <module_name>', 'The module name')
-  .addOption(new Option('--file-naming-style <fileNamingStyle>').choices(['camelCase', 'capitalCase', 'constantCase', 'dotCase', 'headerCase', 'noCase', 'paramCase', 'pascalCase', 'pathCase', 'sentenceCase', 'snakeCase'])
+  .addOption(new Option('--file-naming-style <fileNamingStyle>').choices(['raw', 'camelCase', 'capitalCase', 'constantCase', 'dotCase', 'headerCase', 'noCase', 'paramCase', 'pascalCase', 'pathCase', 'sentenceCase', 'snakeCase'])
     .default('snakeCase'))
   .option('--request <request>', 'The request package used in compiled result')
   .option('--skip-index', 'Skip generating index.ts files')

@@ -1,5 +1,6 @@
 
 export enum FileNamingStyle {
+  raw = 'raw',
   camelCase = 'camelCase',
   capitalCase = 'capitalCase',
   constantCase = 'constantCase',

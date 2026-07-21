@@ -27,7 +27,9 @@ const templates = {
 function getModuleOutput(options: CompileOpenapiOptions): string {
   const moduleName = options.moduleName
   const fileNamingStyle: FileNamingStyle = options?.fileNamingStyle || FileNamingStyle.snakeCase
-  const formatFilename = changeCase[fileNamingStyle]
+  const formatFilename = fileNamingStyle === FileNamingStyle.raw
+    ? (name: string) => name
+    : changeCase[fileNamingStyle]
   const outdir = options?.outdir || `${process.cwd()}/api`
   return path.join(outdir, formatFilename(moduleName))
 }
@@ -37,7 +39,9 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
   const moduleName = options.moduleName
   const document = options.document
   const fileNamingStyle: FileNamingStyle = options?.fileNamingStyle || FileNamingStyle.snakeCase
-  const formatFilename = changeCase[fileNamingStyle]
+  const formatFilename = fileNamingStyle === FileNamingStyle.raw
+    ? (name: string) => name
+    : changeCase[fileNamingStyle]
   const output = getModuleOutput(options)
   const keq = options?.request ? path.relative(output, options.request) : 'keq'
 
