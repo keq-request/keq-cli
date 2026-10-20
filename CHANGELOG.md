@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.14.1](https://github.com/keq-request/keq-cli/compare/v4.14.0...v4.14.1) (2026-10-20)
+
+
+### Bug Fixes
+
+* generate empty schemas index when no schemas exist ([8032ea9](https://github.com/keq-request/keq-cli/commit/8032ea90cdb75256194eac85248d8f18ace4d65a)), closes [#132](https://github.com/keq-request/keq-cli/issues/132)
+
 ## [4.14.0](https://github.com/keq-request/keq-cli/compare/v4.13.2...v4.14.0) (2026-07-21)
 
 
