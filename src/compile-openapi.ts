@@ -131,6 +131,8 @@ export async function compile(options: CompileOpenapiOptions): Promise<CompileRe
 
 
 async function genIndexFile(dir: string, options: CompileOpenapiOptions): Promise<void> {
+  await fs.ensureDir(dir)
+
   const names = await fs.readdir(dir)
 
   const pairs = await Promise.all(names.map(async (name) => [name, await fs.stat(path.join(dir, name))] as const))
@@ -139,9 +141,9 @@ async function genIndexFile(dir: string, options: CompileOpenapiOptions): Promis
     .filter(([name, fileStat]) => fileStat.isFile() && name.endsWith('.ts') && name !== 'index.ts')
     .map(([filename]) => filename)
 
-  const content = filenames
-    .map((filename) => `export * from "./${filename.slice(0, -3)}${options.esm ? '.js' : ''}"`)
-    .join('\n')
+  const content = filenames.length > 0
+    ? filenames.map((filename) => `export * from "./${filename.slice(0, -3)}${options.esm ? '.js' : ''}"`).join('\n')
+    : 'export {}\n'
 
   await fs.writeFile(path.join(dir, 'index.ts'), content)
 }
